@@ -6,6 +6,7 @@ import logging
 import os
 import re
 import time
+from datetime import datetime
 from typing import Any
 
 import requests
@@ -274,24 +275,69 @@ def fetch_all_recruitments(
     ongoing_yn: str | None = "Y",
     page_size: int = 100,
     max_pages: int = 30,
-) -> list[dict]:
-    """진행중(기본) 채용공고 전수 수집 — 스냅샷·집계용."""
-    first = list_recruitments(page_no=1, num_of_rows=page_size, ongoing_yn=ongoing_yn)
+    pblnt_inst_cd: str | None = None,
+    title: str | None = None,
+    hire_type_lst: str | None = None,
+    work_rgn_lst: str | None = None,
+    acbg_cond_lst: str | None = None,
+    recrut_se: str | None = None,
+    ncs_cd_lst: str | None = None,
+) -> tuple[list[dict], int]:
+    """채용공고 전수 수집 — (rows, totalCount). API 필터가 있으면 필터된 집합을 페이지네이션."""
+    list_kwargs = {
+        "pblnt_inst_cd": pblnt_inst_cd,
+        "title": title,
+        "hire_type_lst": hire_type_lst,
+        "work_rgn_lst": work_rgn_lst,
+        "acbg_cond_lst": acbg_cond_lst,
+        "recrut_se": recrut_se,
+        "ncs_cd_lst": ncs_cd_lst,
+    }
+    first = list_recruitments(
+        page_no=1,
+        num_of_rows=page_size,
+        ongoing_yn=ongoing_yn,
+        **list_kwargs,
+    )
     total = int(first.get("totalCount") or 0)
     rows = list(first.get("result") or [])
     page = 2
     while len(rows) < total and page <= max_pages:
-        chunk = list_recruitments(page_no=page, num_of_rows=page_size, ongoing_yn=ongoing_yn)
+        chunk = list_recruitments(
+            page_no=page,
+            num_of_rows=page_size,
+            ongoing_yn=ongoing_yn,
+            **list_kwargs,
+        )
         batch = chunk.get("result") or []
         if not batch:
             break
         rows.extend(batch)
         page += 1
-    return rows
+    return rows, total
+
+
+def _normalize_apply_url(url: str | None) -> str | None:
+    u = (url or "").strip()
+    if not u:
+        return None
+    if not u.lower().startswith(("http://", "https://")):
+        u = f"https://{u}"
+    return u
+
+
+def _deadline_display(period_end: str | None) -> str | None:
+    if period_end and len(str(period_end)) == 8:
+        try:
+            return datetime.strptime(str(period_end), "%Y%m%d").strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+    return None
 
 
 def normalize_recruitment(row: dict) -> dict:
     """채용 API 응답 1건 → MCP 공통 스키마."""
+    period_end = row.get("pbancEndYmd")
     return {
         "recruitment_sn": row.get("recrutPblntSn"),
         "org_code": row.get("pblntInstCd"),
@@ -304,10 +350,11 @@ def normalize_recruitment(row: dict) -> dict:
         "ncs": row.get("ncsCdNmLst"),
         "education": row.get("acbgCondNmLst"),
         "period_start": row.get("pbancBgngYmd"),
-        "period_end": row.get("pbancEndYmd"),
+        "period_end": period_end,
         "ongoing": row.get("ongoingYn"),
         "days_remaining": row.get("decimalDay"),
-        "apply_url": row.get("srcUrl"),
+        "deadline_display": _deadline_display(period_end),
+        "apply_url": _normalize_apply_url(row.get("srcUrl")),
         "pref_conditions": row.get("prefCondCn"),
     }
 

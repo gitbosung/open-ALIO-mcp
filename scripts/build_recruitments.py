@@ -27,7 +27,7 @@ OUT = ROOT / "data" / "snapshots" / "recruitments_ongoing.json"
 
 def main() -> int:
     try:
-        rows = fetch_all_recruitments(ongoing_yn="Y")
+        rows, _total = fetch_all_recruitments(ongoing_yn="Y")
     except AlioAPIError as e:
         print(f"[ERROR] API 호출 실패: {e}")
         return 1

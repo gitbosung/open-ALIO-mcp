@@ -79,6 +79,56 @@ def _split_multi(value: str | None) -> list[str]:
     return parts or ["(미지정)"]
 
 
+def build_recruitment_api_params(
+    *,
+    org_code: str = "",
+    query: str = "",
+    work_region_code: str = "",
+    region: str = "",
+    ncs: str = "",
+    hire_type: str = "",
+    recruit_type: str = "",
+    education: str = "",
+) -> dict[str, str]:
+    """MCP 검색 인자 → list_recruitments API 파라미터 (서버 측 필터)."""
+    params: dict[str, str] = {}
+    if org_code:
+        params["pblnt_inst_cd"] = org_code
+    if query:
+        params["title"] = query
+    if work_region_code:
+        params["work_rgn_lst"] = work_region_code
+    elif region:
+        params["work_rgn_lst"] = region
+    if hire_type:
+        params["hire_type_lst"] = hire_type
+    if ncs:
+        params["ncs_cd_lst"] = ncs
+    if education:
+        params["acbg_cond_lst"] = education
+    if recruit_type:
+        params["recrut_se"] = recruit_type
+    return params
+
+
+def needs_client_side_recruitment_filter(
+    *,
+    region: str = "",
+    ncs: str = "",
+    hire_type: str = "",
+    recruit_type: str = "",
+    education: str = "",
+    pref: str = "",
+    closing_within_days: int = 0,
+    sort: str = "latest",
+) -> bool:
+    """전수 조회·스냅샷이 필요한 필터·정렬 여부."""
+    return bool(
+        region or ncs or hire_type or recruit_type or education or pref
+        or closing_within_days or sort != "latest"
+    )
+
+
 def filter_records(
     records: list[dict],
     *,

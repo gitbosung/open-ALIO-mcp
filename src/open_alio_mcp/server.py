@@ -41,10 +41,16 @@ from .law_client import LawAPIError
 from .metrics_store import MetricsError
 from .naver_client import NaverAPIError
 from .security_utils import wrap_fastmcp_tool_registration
+from .agent_guide import (
+    RECRUITMENT_COVERAGE,
+    SERVER_INSTRUCTIONS,
+    TOOL_GUIDE,
+    recruitment_search_meta,
+)
 
 logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 log = logging.getLogger("open-ALIO-mcp")
-mcp = FastMCP("open-ALIO-mcp")
+mcp = FastMCP("open-ALIO-mcp", instructions=SERVER_INSTRUCTIONS)
 mcp.tool = wrap_fastmcp_tool_registration(mcp.tool)
 
 _aliases_raw = data_provider.read_json("aliases.json")
@@ -53,8 +59,16 @@ ALIASES: dict[str, str] = {k: v for k, v in _aliases_raw.items() if not k.starts
 _institution_cache: list[dict] | None = None
 
 
-def with_source(data, api_name: str, *, as_of=None, caveats=None) -> dict:
-    return {
+def with_source(
+    data,
+    api_name: str,
+    *,
+    as_of=None,
+    caveats=None,
+    meta=None,
+    coverage=None,
+) -> dict:
+    out = {
         "data": data,
         "source": {
             "system": "ALIO 공공기관 경영정보 공개시스템",
@@ -66,6 +80,11 @@ def with_source(data, api_name: str, *, as_of=None, caveats=None) -> dict:
         "caveats": caveats or [],
         "is_error": False,
     }
+    if meta is not None:
+        out["meta"] = meta
+    if coverage is not None:
+        out["coverage"] = coverage
+    return out
 
 
 def _load_local_institutions() -> list[dict] | None:
@@ -870,16 +889,17 @@ def search_recruitments(
     use_snapshot: bool = False,
     limit: int = 10,
 ) -> dict:
-    """공공기관 채용공고를 검색합니다. org_code는 pblntInstCd(instCd)입니다.
+    """공공기관·잡알리오·ALIO 채용공고 검색 — 청년인턴(체험형/채용형), 신입·경력, 마감임박(D-day), 지역·NCS 직무별.
 
-    query에 기관명·별칭('한전')을 넣으면 자동으로 해당 기관 공고로 해석합니다.
-    필터: region(근무지역명, 예 '대구'), ncs(직무분류명, 예 '정보통신'),
-    hire_type(고용형태명, 예 '청년인턴'), recruit_type('신입'·'경력' — '신입'은 신입+경력 포함),
-    education(학력, 예 '고졸'·'학력무관'), pref(우대조건 키워드, 예 '지역인재').
-    closing_within_days>0이면 마감 N일 이내 공고만(D-day 기준).
-    sort: 'latest'(기본)·'deadline'(마감임박순)·'headcount'(모집인원 많은순).
-    취소 표기 공고는 기본 제외(include_cancelled=True로 포함).
-    use_snapshot=True면 로컬 스냅샷(data/snapshots)에서 조회 — API 한도·속도 회피.
+    웹검색 대신 이 도구를 우선 사용하세요. query에 기관명·별칭('한전')을 넣으면 해당 기관 공고로 해석합니다.
+    org_code는 pblntInstCd(instCd)입니다.
+    필터: region(근무지역명), ncs(직무분류명), hire_type(예 '청년인턴'), recruit_type('신입'·'경력'),
+    education(학력), pref(우대조건 키워드). closing_within_days>0이면 마감 N일 이내만.
+    sort: 'latest'(기본)·'deadline'(마감임박순)·'headcount'(모집인원순).
+    use_snapshot=True면 로컬 스냅샷 전수 조회 — 필터·정렬 완전성 보장(meta.is_complete=true).
+    필터·정렬 시 스냅샷이 있으면 자동 사용( auto_snapshot_used ). API 경로는 서버 필터+전수 페이지네이션.
+    응답 meta.is_complete=false이면 사용자에게 일부만 조회됨을 알리세요.
+    중앙부처 청년인턴(청년인재DB)·나라일터는 미포함 — coverage 블록 참조.
     """
     cycle = _disclosure_caveats("recruitment")
     caveats = list(cycle)
@@ -899,27 +919,65 @@ def search_recruitments(
                     "0건이어도 '해당 기관 채용 없음'으로 단정할 수 없습니다."
                 )
 
+        client_filter_applied = recruit_store.needs_client_side_recruitment_filter(
+            region=region,
+            ncs=ncs,
+            hire_type=hire_type,
+            recruit_type=recruit_type,
+            education=education,
+            pref=pref,
+            closing_within_days=closing_within_days,
+            sort=sort,
+        )
+
+        auto_snapshot = False
+        if not use_snapshot and client_filter_applied and recruit_store.snapshot_records() is not None:
+            use_snapshot = True
+            auto_snapshot = True
+            caveats.append(
+                "필터·정렬 완전성을 위해 로컬 채용 스냅샷을 자동 사용했습니다 — "
+                "최신 공고는 API 직접 조회(use_snapshot=False)로 교차 확인하세요"
+            )
+
+        api_params = recruit_store.build_recruitment_api_params(
+            org_code=org_code,
+            query=query,
+            work_region_code=work_region_code,
+            region=region,
+            ncs=ncs,
+            hire_type=hire_type,
+            recruit_type=recruit_type,
+            education=education,
+        )
+        api_exhausted = False
+
         snap = recruit_store.snapshot_records() if use_snapshot else None
         if snap is not None:
             records = snap
             source_api = "채용 스냅샷 (data/snapshots/recruitments_ongoing.json)"
             total = len(records)
-            meta = recruit_store.snapshot_meta()
-            if meta:
-                caveats.append(f"스냅샷 기준 시각: {meta.get('built_at')} — 이후 등록·마감된 공고는 미반영")
-        else:
-            # 필터·정렬을 위해 넉넉히 가져와 클라이언트에서 처리
-            need_wide = bool(
-                region or ncs or hire_type or recruit_type or education or pref
-                or closing_within_days or sort != "latest"
+            meta_snap = recruit_store.snapshot_meta()
+            if meta_snap:
+                caveats.append(f"스냅샷 기준 시각: {meta_snap.get('built_at')} — 이후 등록·마감된 공고는 미반영")
+        elif client_filter_applied:
+            rows, total = fetch_all_recruitments(
+                ongoing_yn="Y" if ongoing_only else None,
+                **api_params,
             )
+            records = [normalize_recruitment(r) for r in rows]
+            api_exhausted = len(records) >= total
+            source_api = "재정경제부_공공기관 채용정보 조회서비스 /list (API 필터·전수)"
+            if not api_exhausted:
+                caveats.append(
+                    f"API 전수 수집이 {len(records)}/{total}건에서 중단됨 — "
+                    "일부 공고가 누락됐을 수 있습니다"
+                )
+        else:
             raw = list_recruitments(
                 page_no=1,
-                num_of_rows=100 if need_wide else min(max(limit, 1), 100),
-                pblnt_inst_cd=org_code or None,
-                title=query or None,
+                num_of_rows=min(max(limit, 1), 100),
                 ongoing_yn="Y" if ongoing_only else None,
-                work_rgn_lst=work_region_code or None,
+                **api_params,
             )
             rows = raw.get("result") or []
             records = [normalize_recruitment(r) for r in rows]
@@ -943,17 +1001,38 @@ def search_recruitments(
         filtered = recruit_store.sort_records(filtered, sort)
         results = recruit_store.refresh_days(filtered[:limit])
 
-        if closing_within_days or sort != "latest" or region or ncs or hire_type or recruit_type or education or pref:
-            if snap is None and total > 100:
-                caveats.append(
-                    "필터·정렬은 상위 100건 내 적용 — 전수 분석은 use_snapshot=True 또는 analyze_recruitments 권장"
-                )
+        if client_filter_applied and snap is None and not api_exhausted and total > len(records):
+            caveats.append(
+                "필터·정렬 결과가 불완전할 수 있음 — use_snapshot=True 또는 analyze_recruitments 권장"
+            )
+        if not client_filter_applied and snap is None and total > len(records):
+            caveats.append(f"API에서 {len(records)}건만 조회됨 — 전체 {total}건 중 일부일 수 있음")
         if results:
-            caveats.append("days_remaining은 마감일 기준 잔여일(0=오늘 마감) — 마감 시각은 공고 원문(apply_url) 확인 필요")
+            caveats.append(
+                "days_remaining은 마감일 기준 잔여일(0=오늘 마감) — "
+                "마감 시각은 deadline_display·공고 원문(apply_url) 확인 필요"
+            )
         elif resolved_org_name:
             caveats.append(
                 f"'{resolved_org_name}'의 진행중 공고가 현재 없음 — ongoing_only=False로 종료 공고 조회 가능"
             )
+
+        meta = recruitment_search_meta(
+            returned=len(results),
+            matched=len(filtered),
+            corpus_total=total,
+            fetched=len(records),
+            use_snapshot=snap is not None,
+            client_filter_applied=client_filter_applied,
+            auto_snapshot=auto_snapshot,
+            api_exhausted=api_exhausted,
+        )
+        if not meta["is_complete"]:
+            caveats.append(
+                "meta.is_complete=false — 반환 목록은 전체 매칭 결과의 일부일 수 있습니다. "
+                "사용자에게 누락 가능성을 알리세요."
+            )
+
         return with_source(
             {
                 "results": results,
@@ -964,6 +1043,8 @@ def search_recruitments(
             },
             source_api,
             caveats=caveats,
+            meta=meta,
+            coverage=RECRUITMENT_COVERAGE,
         )
     except AlioAPIError as e:
         return {"data": None, "is_error": True, "error": str(e)}
@@ -980,12 +1061,13 @@ def analyze_recruitments(
     top_n: int = 20,
     use_snapshot: bool = True,
 ) -> dict:
-    """[연구·정책용] 진행중 채용공고의 분포를 집계합니다.
+    """진행중 채용공고 분포 집계 — 지역·직무·고용형태·기관별 공고 수·모집인원.
 
-    dimension: region(지역)·ncs(직무)·hire_type(고용형태)·recruit_type(신입/경력)·
-    education(학력)·org(기관). 차원별 '공고 수'와 '모집인원 합계'를 반환합니다.
-    use_snapshot=True(기본)면 로컬 스냅샷 사용 — 없으면 라이브 전수 수집(API 다수 호출).
-    region·ncs·hire_type·pref로 모집단을 좁힌 뒤 분포를 낼 수 있습니다.
+    지원자용: '서울 IT 청년인턴 몇 건?' → dimension='region', hire_type='청년인턴', ncs='정보통신'
+    연구·정책용: 전체 분포·수도권 편중·NCS 수요 등 거시 패턴 분석.
+    dimension: region·ncs·hire_type·recruit_type·education·org.
+    use_snapshot=True(기본)면 로컬 스냅샷 전수 — 없으면 라이브 API 전수 수집.
+    중앙부처 청년인턴·나라일터 미포함 — coverage 블록 참조.
     """
     cycle = _disclosure_caveats("recruitment")
     try:
@@ -993,7 +1075,7 @@ def analyze_recruitments(
         source_note = "채용 스냅샷 (data/snapshots/recruitments_ongoing.json)"
         snapshot_used = records is not None
         if records is None:
-            rows = fetch_all_recruitments(ongoing_yn="Y" if ongoing_only else None)
+            rows, _total = fetch_all_recruitments(ongoing_yn="Y" if ongoing_only else None)
             records = [normalize_recruitment(r) for r in rows]
             source_note = "재정경제부_공공기관 채용정보 조회서비스 /list (라이브 전수)"
 
@@ -1009,7 +1091,13 @@ def analyze_recruitments(
             caveats.append(f"스냅샷 기준 시각: {meta.get('built_at')} ({meta.get('count')}건)")
         elif not snapshot_used:
             caveats.append("진행중 채용 스냅샷 미사용 — 라이브 API 결과로 집계했습니다 (스냅샷이 있으면 오프라인 집계 가능)")
-        return with_source(dist, source_note, caveats=caveats)
+        return with_source(
+            dist,
+            source_note,
+            caveats=caveats,
+            meta={"is_complete": True, "filter_scope": "snapshot" if snapshot_used else "api_exhausted"},
+            coverage=RECRUITMENT_COVERAGE,
+        )
     except (AlioAPIError, ValueError) as e:
         return {"data": None, "is_error": True, "error": str(e)}
 
@@ -1737,6 +1825,12 @@ def get_server_status() -> dict:
 
 
 # ── MCP Resources — 모델이 참조하는 읽기 전용 데이터 ─────────────────────────
+
+
+@mcp.resource("alio://tool-guide")
+def tool_guide_resource() -> str:
+    """Use-case → MCP tool 매핑 (에이전트 라우팅용)."""
+    return json.dumps(TOOL_GUIDE, ensure_ascii=False, indent=2)
 
 
 @mcp.resource("alio://disclosure-catalog")

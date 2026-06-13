@@ -77,6 +77,34 @@ def test_server_status() -> None:
     assert r["data"]["disclosure_units_count"] == 355
 
 
+def test_search_recruitments_auto_snapshot() -> None:
+    r = server.search_recruitments(hire_type="청년인턴", sort="deadline", limit=3)
+    _assert_envelope(r, "search_recruitments")
+    assert r.get("meta", {}).get("is_complete") is True
+    assert r.get("meta", {}).get("auto_snapshot_used") is True
+
+
+def test_search_recruitments_snapshot_meta() -> None:
+    r = server.search_recruitments(hire_type="청년인턴", use_snapshot=True, sort="deadline", limit=3)
+    _assert_envelope(r, "search_recruitments")
+    assert r.get("meta", {}).get("is_complete") is True
+    assert r.get("coverage", {}).get("not_included")
+    assert "청년인재DB" in r["coverage"]["not_included"][0]
+
+
+def test_server_instructions() -> None:
+    assert server.mcp.instructions
+    assert "search_recruitments" in server.mcp.instructions
+
+
+def test_normalize_recruitment_url() -> None:
+    from open_alio_mcp.alio_client import normalize_recruitment
+
+    row = normalize_recruitment({"srcUrl": "www.example.go.kr", "pbancEndYmd": "20260618"})
+    assert row["apply_url"] == "https://www.example.go.kr"
+    assert row["deadline_display"] == "2026-06-18"
+
+
 def main() -> int:
     failed = []
     for name, fn in sorted(globals().items()):
