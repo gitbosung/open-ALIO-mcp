@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -e .
+
+      - name: Offline smoke test (no API keys required)
+        run: python tests/test_smoke.py
+
+      - name: Security smoke test (input validation)
+        run: python scripts/security_smoke_test.py
+
+      - name: Build runtime snapshot
+        run: python scripts/build_snapshot.py --out dist/alio_snapshot.db
+
+      - name: Snapshot provider smoke test
+        run: python tests/test_smoke.py
+        env:
+          OPEN_ALIO_SNAPSHOT_PATH: dist/alio_snapshot.db
+
+      - name: Build and check package artifacts
+        run: |
+          pip install build hatchling twine
+          python -m build --no-isolation
+          python -m twine check dist/open_alio_mcp-*.tar.gz dist/open_alio_mcp-*.whl

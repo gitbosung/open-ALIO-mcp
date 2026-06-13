@@ -1,0 +1,11 @@
+mcp[cli]>=1.0.0
+requests>=2.31.0
+xmltodict>=0.13.0
+python-dotenv>=1.0.0
+
+# 데이터 빌드 스크립트용 (scripts/)
+openpyxl>=3.1.0
+beautifulsoup4>=4.12.0
+lxml>=5.0.0
+pypdf>=6.0.0
+pdfplumber>=0.11.0

@@ -1,0 +1,28 @@
+{
+  "built_at": "2026-06-11T22:49:06",
+  "docs": [
+    {
+      "doc_id": "2025년도_공공기관_경영평가편람_수정",
+      "title": "2025년도 공공기관 경영평가편람(수정)",
+      "year": 2025,
+      "kind": "revision",
+      "source_file": "2025년도 공공기관 경영평가편람[수정].pdf",
+      "page_count": 1163,
+      "weight_table_count": 5,
+      "chunk_count": 640,
+      "indicator_detail_count": 1782
+    },
+    {
+      "doc_id": "2026년_공공기관_경영평가편람_최종",
+      "title": "2026년도 공공기관 경영평가편람",
+      "year": 2026,
+      "kind": "full",
+      "source_file": "★2026년 공공기관 경영평가편람_최종.pdf",
+      "page_count": 1195,
+      "weight_table_count": 6,
+      "chunk_count": 698,
+      "indicator_detail_count": 1931
+    }
+  ],
+  "skipped": []
+}

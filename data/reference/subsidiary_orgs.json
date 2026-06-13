@@ -1,0 +1,18 @@
+{
+  "_comment": "ALIO 일반현황 상위기관 non-null 기관. CSV 갱신 시 scripts/validate_subsidiaries.py로 diff.",
+  "subsidiaries": [
+    {"name": "극지연구소", "parent_org_name": "한국해양과학기술원"},
+    {"name": "선박해양플랜트연구소", "parent_org_name": "한국해양과학기술원"},
+    {"name": "KDI국제정책대학원", "parent_org_name": "한국개발연구원"},
+    {"name": "육아정책연구소", "parent_org_name": "경제인문사회연구회"},
+    {"name": "국가수리과학연구소", "parent_org_name": "기초과학연구원"},
+    {"name": "분당서울대학교병원", "parent_org_name": "서울대학교병원"},
+    {"name": "동남권원자력의학원", "parent_org_name": "한국원자력의학원"},
+    {"name": "국가과학기술인력개발원", "parent_org_name": "한국과학기술기획평가원"},
+    {"name": "국민건강보험공단 일산병원", "parent_org_name": "국민건강보험공단"},
+    {"name": "서울요양원", "parent_org_name": "국민건강보험공단"},
+    {"name": "소프트웨어정책연구소", "parent_org_name": "정보통신산업진흥원"},
+    {"name": "정보통신기획평가원", "parent_org_name": "한국연구재단"},
+    {"name": "국방기술진흥연구소", "parent_org_name": "국방기술품질원"}
+  ]
+}
