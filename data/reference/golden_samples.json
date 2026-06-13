@@ -1,0 +1,22 @@
+{
+  "_meta": {
+    "description": "ALIO 웹 화면에서 사람이 확인한 기준값. 2단계·3단계 교차검증용.",
+    "how_to_add": "source_url 페이지를 브라우저에서 연 뒤 section/row_label/year/value를 그대로 기록. verified_at(ISO 날짜) 필수.",
+    "unit_note": "value는 CSV와 동일 단위(천원·백만원 등). value_type은 결산/반기/예산 중 해당 열."
+  },
+  "samples": [
+    {
+      "apba_id": "C0247",
+      "item_no": "31201",
+      "section": "1. 고유사업",
+      "row_label": "자산 > 자산총계",
+      "year": "2025",
+      "value_type": "반기",
+      "value": "249899672",
+      "unit": "백만원",
+      "verified_at": "2026-06-11",
+      "verified_by": "manual",
+      "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0247&reportFormRootNo=31201&disclosureNo="
+    }
+  ]
+}

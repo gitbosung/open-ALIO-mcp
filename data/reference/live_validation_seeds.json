@@ -1,0 +1,16 @@
+{
+  "_meta": {
+    "description": "2단계 라이브 ALIO 검증 시드 — (apba_id, item_no) 쌍. 1단계 시드와 동일하게 유지.",
+    "delay_sec": 1.5,
+    "note": "live≠cache 이면 ALIO 공시 갱신 또는 크롤 시점 차이 — 재크롤 후 1단계 재실행"
+  },
+  "seeds": [
+    {"apba_id": "C0247", "item_no": "31201", "comment": "한전 재무 — 대형 표"},
+    {"apba_id": "C0247", "item_no": "20501", "comment": "한전 임원연봉"},
+    {"apba_id": "C0247", "item_no": "31401", "comment": "한전 수입·지출"},
+    {"apba_id": "C0847", "item_no": "20501", "comment": "한수원 임원연봉"},
+    {"apba_id": "C0847", "item_no": "31401", "comment": "한수원 수입·지출"},
+    {"apba_id": "C0001", "item_no": "21801", "comment": "소형 항목"},
+    {"apba_id": "C1402", "item_no": "40211", "comment": "청렴도 — 부분 공시"}
+  ]
+}
