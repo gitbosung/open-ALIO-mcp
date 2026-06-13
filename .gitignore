@@ -50,14 +50,11 @@ temp/
 _tmp_*
 rawdata/handbook/_probe*.txt
 
-# ── 데이터 수집 파이프라인 (로컬 전용 — 공개 레포 제외) ──
-# 크롤러·파서: 원본 데이터 확보 도구 (배포 불필요)
-/crawl_alio.py
-/parse_alio.py
-/parse_handbook.py
-# 원본 raw 데이터 (hwpx·pdf·xls·html 등 — 대량, 재수집 가능)
+# ── 데이터 파이프라인 — Git push 제외 (uvx/Release에도 미포함) ──
+# 파서·크롤러(parse_alio.py 등)는 Git 추적 OK — wheel/스냅샷에는 안 실림
+# 원본 raw 데이터 (hwpx·pdf·xls·html 등 — 대량, 재수집 가능, push 금지)
 rawdata/
-# 크롤·빌드 중간 산출물 (런타임/스냅샷 미사용, 재생성 가능)
+# 크롤·빌드 중간 산출물 (재생성 가능, push 금지 — pre-commit도 차단)
 data/crawl/
 data/items.json
 data/items_catalog.json

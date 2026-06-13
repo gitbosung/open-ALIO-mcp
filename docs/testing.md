@@ -8,6 +8,7 @@
 .\.venv\Scripts\python.exe -m compileall -q src scripts tests
 .\.venv\Scripts\python.exe tests\test_smoke.py
 .\.venv\Scripts\python.exe scripts\security_smoke_test.py
+.\.venv\Scripts\python.exe scripts\validate_metrics_coverage.py
 .\.venv\Scripts\python.exe scripts\build_snapshot.py --out dist\alio_snapshot.db
 
 $env:OPEN_ALIO_SNAPSHOT_PATH = (Resolve-Path dist\alio_snapshot.db).Path
@@ -27,6 +28,7 @@ uvx --refresh-package open-alio-mcp --from open-alio-mcp==0.1.1 python -c "impor
 |---|---|---|---|
 | CI 스모크 | `python tests\test_smoke.py` (GitHub Actions) | import·tool 등록·로컬 데이터 기반 핵심 도구 | 불필요 (오프라인 전용) |
 | 보안 스모크 | `.venv\Scripts\python scripts\security_smoke_test.py` | 입력 검증(길이·범위·허용값) 회귀 | 불필요 |
+| 지표 coverage | `.venv\Scripts\python scripts\validate_metrics_coverage.py` | 골든 기관 항목 수·필수 키·골든 수치·승격 conflict | 불필요 |
 | 스냅샷 검증 | `scripts\build_snapshot.py` → `OPEN_ALIO_SNAPSHOT_PATH`로 재실행 | 배포 스냅샷 빌드·필수 문서·재로딩 | 불필요 |
 
 > 원천 데이터의 파싱·라이브 ALIO 대조·크롤 교차검증은 별도 데이터 파이프라인 저장소에서 수행합니다.
@@ -113,5 +115,5 @@ CI 스모크는 한국전력공사(별칭 '한전'), 부설기관, 지표 시계
 ## 테스트 계획 (보강 예정)
 
 1. 🔶 도구(뉴스 4종·편람 5종·상세조회 2종)의 fixture 기반 자동 테스트 — API 응답 mock 포함
-2. 지표 회귀 테스트 — 대표 기관 golden sample 대조 (파이프라인 저장소 검증 자산 활용)
+2. 지표 회귀 테스트 — 대표 기관 golden sample 확대 (파이프라인 저장소 검증 자산 활용)
 3. CI 확대 — 현재 오프라인 스모크에서 lint·fixture 테스트까지

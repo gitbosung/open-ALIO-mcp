@@ -29,6 +29,12 @@ INDEX = METRICS_DIR / "_index.json"
 REPORT = METRICS_DIR / "_crawl_promotion_report.json"
 
 NA_LABELS = {"", "해당사항 없음", "비고"}
+GOLDEN_ORGS = {
+    "C0091": "신용보증기금",
+    "C0038": "기술보증기금",
+    "C0130": "중소벤처기업진흥공단",
+    "C0247": "한국전력공사",
+}
 
 
 def to_num(value: str):
@@ -59,8 +65,15 @@ def load_metric(category: str) -> dict:
 
 def budget_key(row: dict) -> str:
     label = row["row_label"].strip()
-    prefix = "정부순지원수입(고유사업)" if label.startswith("정부순지원수입") else "수입지출현황(고유사업)"
-    return f"{prefix} | {label}"
+    kind = "정부순지원수입" if label.startswith("정부순지원수입") else "수입지출현황"
+    section = clean_section(row["section"])
+    sub_account = (row.get("sub_account") or "").strip()
+    account_type = "기금계정" if sub_account or "기금" in section else "고유사업"
+    parts = [f"{kind}({account_type})"]
+    if sub_account:
+        parts.append(sub_account)
+    parts.append(label)
+    return " | ".join(parts)
 
 
 def executive_pay_key(row: dict) -> str:
@@ -105,9 +118,14 @@ def finance_key(row: dict) -> str:
     item_name = "요약 재무상태표" if row["item_no"] == "31201" else "요약 손익계산서"
     value_type = row["value_type"] or "값"
     section = clean_section(row["section"])
+    sub_account = (row.get("sub_account") or "").strip()
+    parts = [f"{item_name}({value_type})"]
     if section:
-        return f"{item_name}({value_type}) | {section} | {label}"
-    return f"{item_name}({value_type}) | {label}"
+        parts.append(section)
+    if sub_account:
+        parts.append(sub_account)
+    parts.append(label)
+    return " | ".join(parts)
 
 
 def collect_groups(
@@ -261,13 +279,24 @@ def category_notes(category: str) -> list[str]:
         ]
     if category == "budget":
         return [
-            "수입·지출 카테고리는 ALIO HTML 크롤의 31401을 우선 병합하되, 반복 표로 값이 충돌하는 그룹은 기존 xlsx 값을 fallback으로 유지합니다.",
+            "수입·지출 카테고리는 ALIO HTML 크롤의 31401을 우선 병합하며, 기금계정은 sub_account를 metric_key에 포함해 구분합니다.",
+            "반복 표로 값이 충돌하는 그룹은 기존 xlsx 값을 fallback으로 유지합니다.",
         ]
     if category == "executive_pay":
         return [
             "임원 연봉 카테고리는 ALIO HTML 크롤의 20501과 기존 xlsx 값이 100% 일치한 뒤 크롤 값을 병합했습니다.",
         ]
     return []
+
+
+def summarize_conflicts(conflicts: list[dict]) -> dict:
+    by_org: dict[str, int] = defaultdict(int)
+    for item in conflicts:
+        by_org[item["org_code"]] += 1
+    return {
+        "golden_conflict_counts": {code: by_org.get(code, 0) for code in GOLDEN_ORGS},
+        "golden_conflicts": [c for c in conflicts if c["org_code"] in GOLDEN_ORGS],
+    }
 
 
 def rebuild_index() -> dict:
@@ -338,6 +367,7 @@ def main() -> None:
             "crawl_values_overwritten": meta["crawl_values_overwritten"],
             "crawl_conflict_groups_skipped": meta["crawl_conflict_groups_skipped"],
             "conflict_samples": conflicts[:20],
+            **summarize_conflicts(conflicts),
         }
         print(
             f"{category}: orgs={meta['org_count']} years={meta['years']} "

@@ -42,6 +42,7 @@ def norm_rows(recs: list[dict]) -> set[tuple]:
     for r in recs:
         out.add((
             r.get("section", ""),
+            r.get("sub_account", ""),
             r.get("row_label", ""),
             str(r.get("year", "")),
             r.get("value_type", ""),
@@ -78,6 +79,7 @@ def check_golden(by_stem: dict[str, list[dict]]) -> None:
         matches = [
             r for r in rows
             if r.get("section", "") == s.get("section", "")
+            and (not s.get("sub_account") or r.get("sub_account", "") == s.get("sub_account", ""))
             and r.get("row_label") == s["row_label"]
             and r.get("year") == str(s["year"])
             and (r.get("value_type") or "") == (s.get("value_type") or "")

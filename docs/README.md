@@ -5,6 +5,8 @@
 | 파일 | 내용 |
 |---|---|
 | [`architecture.md`](architecture.md) | 모듈·데이터 레이어 구조, 설계 원칙 |
+| [`data-accuracy-spec.md`](data-accuracy-spec.md) | **ALIO 정확도 확보 명세** — 정본 스키마, metric_key, 엣지 케이스, CI 게이트 |
+| [`AGENT_DEV_PROMPT.md`](AGENT_DEV_PROMPT.md) | AI 에이전트용 복사 프롬프트 (정확도 작업 시 붙여넣기) |
 | [`data_sources.md`](data_sources.md) | 데이터 출처·기준일·갱신주기·갱신 절차·fallback |
 | [`testing.md`](testing.md) | 테스트 종류, 도구별 검증 현황, 테스트 계획 |
 | [`roadmap.md`](roadmap.md) | Phase 1~4 로드맵 |

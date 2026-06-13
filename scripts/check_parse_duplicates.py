@@ -20,7 +20,15 @@ def main() -> int:
     key_counts: Counter = Counter()
 
     for r in rows:
-        k = (r["apba_id"], r["item_no"], r["section"], r["row_label"], r["year"], r["value_type"])
+        k = (
+            r["apba_id"],
+            r["item_no"],
+            r["section"],
+            r.get("sub_account", ""),
+            r["row_label"],
+            r["year"],
+            r["value_type"],
+        )
         groups[k].add(r["value"])
         key_counts[k] += 1
 

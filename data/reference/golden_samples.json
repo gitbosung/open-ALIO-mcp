@@ -17,6 +17,48 @@
       "verified_at": "2026-06-11",
       "verified_by": "manual",
       "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0247&reportFormRootNo=31201&disclosureNo="
+    },
+    {
+      "apba_id": "C0091",
+      "item_no": "31201",
+      "section": "2. 기금계정",
+      "sub_account": "신용보증기금",
+      "row_label": "자산 > 자산총계",
+      "year": "2024",
+      "value_type": "결산",
+      "value": 15774985,
+      "unit": "백만원",
+      "verified_at": "2026-06-14",
+      "verified_by": "manual",
+      "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0091&reportFormRootNo=31201&disclosureNo="
+    },
+    {
+      "apba_id": "C0091",
+      "item_no": "31201",
+      "section": "2. 기금계정",
+      "sub_account": "신용보증기금",
+      "row_label": "부채 > 부채총계",
+      "year": "2024",
+      "value_type": "결산",
+      "value": 3578356,
+      "unit": "백만원",
+      "verified_at": "2026-06-14",
+      "verified_by": "manual",
+      "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0091&reportFormRootNo=31201&disclosureNo="
+    },
+    {
+      "apba_id": "C0091",
+      "item_no": "31201",
+      "section": "2. 기금계정",
+      "sub_account": "신용보증기금",
+      "row_label": "부채비율",
+      "year": "2024",
+      "value_type": "결산",
+      "value": 29.34,
+      "unit": "%",
+      "verified_at": "2026-06-14",
+      "verified_by": "manual",
+      "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0091&reportFormRootNo=31201&disclosureNo="
     }
   ]
 }

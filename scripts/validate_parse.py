@@ -64,6 +64,7 @@ def test_html_roundtrip(rows: list[dict], samples: list[str]) -> None:
             for r in recs:
                 out.append((
                     r.get("section", ""),
+                    r.get("sub_account", ""),
                     r.get("row_label", ""),
                     str(r.get("year", "")),
                     r.get("value_type", ""),
@@ -198,7 +199,15 @@ def test_structure(rows: list[dict]) -> None:
     # 중복 키
     seen: Counter = Counter()
     for r in rows:
-        k = (r["apba_id"], r["item_no"], r["section"], r["row_label"], r["year"], r["value_type"])
+        k = (
+            r["apba_id"],
+            r["item_no"],
+            r["section"],
+            r.get("sub_account", ""),
+            r["row_label"],
+            r["year"],
+            r["value_type"],
+        )
         seen[k] += 1
     dups = sum(1 for c in seen.values() if c > 1)
     if dups:

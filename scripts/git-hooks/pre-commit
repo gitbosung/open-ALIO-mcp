@@ -1,0 +1,14 @@
+#!/bin/sh
+# Installed by scripts/install_git_hooks.ps1 (or .sh)
+root="$(git rev-parse --show-toplevel)" || exit 1
+cd "$root" || exit 1
+
+if command -v python3 >/dev/null 2>&1; then
+  exec python3 scripts/git-hooks/check_commit.py
+fi
+if command -v python >/dev/null 2>&1; then
+  exec python scripts/git-hooks/check_commit.py
+fi
+
+echo "pre-commit: python not found" >&2
+exit 1
