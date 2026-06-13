@@ -1008,7 +1008,7 @@ def analyze_recruitments(
         if snapshot_used and meta:
             caveats.append(f"스냅샷 기준 시각: {meta.get('built_at')} ({meta.get('count')}건)")
         elif not snapshot_used:
-            caveats.append("스냅샷 미생성 — scripts/build_recruitments.py 실행 시 빠른 오프라인 집계 가능")
+            caveats.append("진행중 채용 스냅샷 미사용 — 라이브 API 결과로 집계했습니다 (스냅샷이 있으면 오프라인 집계 가능)")
         return with_source(dist, source_note, caveats=caveats)
     except (AlioAPIError, ValueError) as e:
         return {"data": None, "is_error": True, "error": str(e)}
@@ -1517,8 +1517,8 @@ def get_admin_rule_text(rule_id: str) -> dict:
 
 def _guideline_source() -> dict:
     return {
-        "system": "로컬 지침 저장소 (사용자 투입 파일 파싱)",
-        "api": "data/guidelines (scripts/build_guidelines.py)",
+        "system": "로컬 지침 저장소 (시달 지침 파일 파싱)",
+        "api": "data/guidelines/*.json",
         "url": None,
         "retrieved_at": datetime.now().isoformat(timespec="seconds"),
     }
@@ -1535,7 +1535,7 @@ _HANDBOOK_CAVEAT = (
 def _handbook_source() -> dict:
     return {
         "system": "경영평가편람 저장소 (PDF 파싱)",
-        "api": "data/handbook (scripts/build_handbook.py)",
+        "api": "data/handbook/*.json",
         "url": None,
         "retrieved_at": datetime.now().isoformat(timespec="seconds"),
     }

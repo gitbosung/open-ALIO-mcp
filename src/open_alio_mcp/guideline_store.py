@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """data/guidelines/*.json 지침 저장소 — 조문 단위 검색·조회 (lazy load).
 
-데이터 생성: 지침 파일(.hwpx/.pdf)을 rawdata/guidelines/에 넣고
-scripts/build_guidelines.py 실행. law.go.kr 행정규칙에 없는 연도별 시달
-지침(예산운용지침 등)을 보완하는 로컬 저장소다.
+law.go.kr 행정규칙에 없는 연도별 시달 지침(예산운용지침 등)을 보완하는 로컬 저장소다.
+데이터는 배포 패키지/Release 스냅샷에 포함되며, 원본 파일(.hwpx/.pdf) 파싱·적재는
+별도 데이터 파이프라인 저장소에서 수행한다.
 """
 from __future__ import annotations
 
@@ -25,8 +25,8 @@ def get_index() -> dict:
         rel = "guidelines/_index.json"
         if not data_provider.exists(rel):
             raise GuidelineError(
-                "적재된 지침이 없습니다 — 지침 파일(.hwpx/.pdf)을 rawdata/guidelines/에 넣고 "
-                "scripts/build_guidelines.py를 실행하세요. (.hwp는 HWPX로 변환 필요)"
+                "적재된 지침이 없습니다 — 배포 스냅샷(alio_snapshot.db)이 손상되었거나 "
+                "OPEN_ALIO_DATA_DIR/OPEN_ALIO_SNAPSHOT_PATH 설정을 확인하세요."
             )
         _index = data_provider.read_json(rel)
     return _index

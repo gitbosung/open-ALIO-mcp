@@ -22,8 +22,8 @@ def get_index() -> dict:
         rel = "handbook/_index.json"
         if not data_provider.exists(rel):
             raise HandbookError(
-                "적재된 경영평가편람이 없습니다 — PDF를 rawdata/handbook/에 넣고 "
-                "scripts/build_handbook.py를 실행하세요."
+                "적재된 경영평가편람이 없습니다 — 배포 스냅샷(alio_snapshot.db)이 손상되었거나 "
+                "OPEN_ALIO_DATA_DIR/OPEN_ALIO_SNAPSHOT_PATH 설정을 확인하세요."
             )
         _index = data_provider.read_json(rel)
     return _index

@@ -2,7 +2,7 @@
 """채용공고 스냅샷 로드 + 필터·정렬·분포 집계.
 
 데이터 출처:
-- data/snapshots/recruitments_ongoing.json (scripts/build_recruitments.py 생성)
+- data/snapshots/recruitments_ongoing.json (배포 패키지/Release 스냅샷에 포함)
 - 없으면 server가 라이브 API 결과를 직접 넘겨 집계에 사용.
 """
 from __future__ import annotations

@@ -2,7 +2,7 @@
 """data/metrics/*.json 지표 저장소 — 카테고리별 lazy load + 조회.
 
 데이터 출처:
-- ALIO 항목별 공시 엑셀 (scripts/build_metrics.py로 생성)
+- ALIO 항목별 공시 엑셀 (병합·정규화된 결과를 배포 패키지/Release 스냅샷으로 제공)
 - 추후: 기관별 통합공시 PDF 파싱 결과 data/parsed/by-org/{org_code}.json (재무 보완)
 """
 from __future__ import annotations
@@ -25,7 +25,8 @@ def get_index() -> dict:
         rel = "metrics/_index.json"
         if not data_provider.exists(rel):
             raise MetricsError(
-                "data/metrics/_index.json 없음 — scripts/build_metrics.py를 먼저 실행하세요."
+                "data/metrics/_index.json 없음 — 배포 스냅샷(alio_snapshot.db)이 손상되었거나 "
+                "OPEN_ALIO_DATA_DIR/OPEN_ALIO_SNAPSHOT_PATH 설정을 확인하세요."
             )
         _index = data_provider.read_json(rel)
     return _index
