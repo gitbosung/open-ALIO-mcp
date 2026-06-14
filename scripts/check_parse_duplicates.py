@@ -26,6 +26,7 @@ def main() -> int:
             r["section"],
             r.get("sub_account", ""),
             r["row_label"],
+            r.get("col_label", ""),
             r["year"],
             r["value_type"],
         )
@@ -48,7 +49,8 @@ def main() -> int:
 
     print("\n샘플 (최대 5):")
     for k, v in list(conflicts.items())[:5]:
-        print(f"  {k[0]} / {k[1]} / {k[3]} / {k[4]} / {k[5]!r} → {v}")
+        # k = (apba, item, section, sub_account, row_label, col_label, year, value_type)
+        print(f"  {k[0]} / {k[1]} / sub={k[3]} / {k[4]} / col={k[5]} / {k[6]!r} → {v}")
 
     exit_code = 0
     if len(conflicts) > CONFLICT_BASELINE * 2:

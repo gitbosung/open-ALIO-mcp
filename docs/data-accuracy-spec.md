@@ -61,6 +61,13 @@ metric_key는 코드 한 곳(`*_key()` 함수)에서만 생성한다. 암묵적 
 
 `parse_alio.py`의 `FIELDS`가 스키마 계약이다. **필드 추가·삭제는 breaking change**이며, 모든 downstream 스크립트를 함께 수정한다.
 
+> **표 archetype 디스패치 (2026-06-15~)**: ALIO HTML은 3종 표를 쓴다. `parse_doc`는 `_classify_table`로 분류해 핸들러로 보낸다.
+> - **col_year**: `구분` + `YYYY년` 컬럼 wide표 (대부분). 셀단위 anchor 스킵으로 비고-첨부행도 값 보존.
+> - **row_year**: `연도`가 행, 지표가 컬럼인 transpose표 (법인세 32211, 업무추진비 20701 등). 연도가 distinct·행당 1개일 때만 채택 — 단일연도 반복 다차원 명부표는 가비지 캡처 방지 위해 skip.
+> - **attr_roster**: 비시계열 2D 속성/명부표 (주주 31701, 사유별 복지 63701 등). **Phase 2 연기** — 하위표 정체성(section) 미포착 시 평면행과 동일한 충돌 발생. `_handle_attr_roster`는 metric_key 설계와 함께 활성화.
+>
+> 동일 문서 내 완전 동일 레코드는 dedup(무정보 중복 제거). col_label은 `check_parse_duplicates`·`validate_parse`의 충돌/중복 키 튜플에 포함된다.
+
 | 필드 | 타입 | 필수 | 설명 |
 |------|------|------|------|
 | `apba_id` | string | ✓ | ALIO 기관코드 (예: `C0091`) |
@@ -69,7 +76,8 @@ metric_key는 코드 한 곳(`*_key()` 함수)에서만 생성한다. 암묵적 
 | `item_name` | string | ✓ | 항목명 (cover-title에서 추출) |
 | `section` | string | ✓ | 섹션 (예: `1. 고유사업`, `2. 기금계정`, `수입 및 지출 현황`) |
 | `sub_account` | string | 조건부 | **기금 하위계정명**. nb 표 `기금계정: 신용보증기금`에서 추출. 단일계정·고유사업은 `""` |
-| `row_label` | string | ✓ | 계층형 구분. ` > `로 연결 (예: `자산 > 유동자산`) |
+| `row_label` | string | ✓ | 행축 좌표. 계층형 구분은 ` > `로 연결 (예: `자산 > 유동자산`). row_year 표는 `""` |
+| `col_label` | string | ✓ | 열축 좌표(원본 컬럼 헤더). col_year=연도 헤더(`2024년 결산`), row_year=지표 헤더(`결정세액`). HTML 표 셀 1개 = 1 레코드(`row_label`×`col_label`) |
 | `year` | string | ✓ | 4자리 연도 |
 | `value_type` | string | ✓ | `결산`·`예산`·`반기`·`분기` 등 (헤더에서 추출, 없으면 `""`) |
 | `value` | number\|string\|"" | ✓ | 숫자화 가능 시 int/float. `-`·빈칸은 `""` (0 아님). 텍스트(연봉제 등)는 원문 |
@@ -371,7 +379,7 @@ ALIO 공시 원문과 100% 일치하는 로컬 데이터를 만든다. 사용자
 4. `dist/alio_snapshot.db` — 배포
 
 ### 스키마 계약 (`parse_alio.py` FIELDS)
-apba_id, org_name, item_no, item_name, section, **sub_account**, row_label, year, value_type, value, unit, as_of, source_url
+apba_id, org_name, item_no, item_name, section, **sub_account**, row_label, **col_label**, year, value_type, value, unit, as_of, source_url
 
 **sub_account**: nb 표 `기금계정: XXX`에서 추출. 다계정 기금(신보 C0091 등)에서 필수.
 동일 (apba_id, item_no, section, row_label, year, value_type)에 서로 다른 value가 있으면
@@ -450,3 +458,4 @@ python scripts/build_snapshot.py
 | 날짜 | 내용 |
 |------|------|
 | 2026-06-14 | 초안 — 신보 sub_account 사건 반영, 정본 스키마·골든·에이전트 프롬프트 확정 |
+| 2026-06-15 | 파서 archetype 디스패치 재정립(Phase 1) — `col_label` 필드 추가(13→14컬럼), col_year(thead 추론·셀단위 anchor)·row_year(transpose) 복구(20701·32211·32301·32001·31501), 문서 내 dedup. attr_roster는 Phase 2 연기. CSV 793,212→813,588행. 양 게이트 PASS, 골든 보존. |

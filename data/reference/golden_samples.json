@@ -59,6 +59,34 @@
       "verified_at": "2026-06-14",
       "verified_by": "manual",
       "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0091&reportFormRootNo=31201&disclosureNo="
+    },
+    {
+      "apba_id": "C0001",
+      "item_no": "32211",
+      "section": "법인세 납부내역",
+      "row_label": "",
+      "col_label": "결정세액",
+      "year": "2025",
+      "value_type": "",
+      "value": 15312,
+      "note": "row_year(transpose) archetype 복구 — 연도=행, 지표=col_label. row_label은 ''",
+      "verified_at": "2026-06-15",
+      "verified_by": "html_crawl",
+      "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0001&reportFormRootNo=32211&disclosureNo="
+    },
+    {
+      "apba_id": "C0001",
+      "item_no": "31501",
+      "section": "주요사업",
+      "row_label": "수탁관리수수료",
+      "col_label": "2021년 결산",
+      "year": "2021",
+      "value_type": "결산",
+      "value": 3370,
+      "note": "col_year 셀단위 anchor 수정 복구 — 비고열 첨부 anchor로 통째 드롭되던 행",
+      "verified_at": "2026-06-15",
+      "verified_by": "html_crawl",
+      "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0001&reportFormRootNo=31501&disclosureNo="
     }
   ]
 }
