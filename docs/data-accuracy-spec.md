@@ -64,9 +64,11 @@ metric_key는 코드 한 곳(`*_key()` 함수)에서만 생성한다. 암묵적 
 > **표 archetype 디스패치 (2026-06-15~)**: ALIO HTML은 3종 표를 쓴다. `parse_doc`는 `_classify_table`로 분류해 핸들러로 보낸다.
 > - **col_year**: `구분` + `YYYY년` 컬럼 wide표 (대부분). 셀단위 anchor 스킵으로 비고-첨부행도 값 보존.
 > - **row_year**: `연도`가 행, 지표가 컬럼인 transpose표 (법인세 32211, 업무추진비 20701 등). 연도가 distinct·행당 1개일 때만 채택 — 단일연도 반복 다차원 명부표는 가비지 캡처 방지 위해 skip.
-> - **attr_roster**: 비시계열 2D 속성/명부표 (주주 31701, 사유별 복지 63701 등). **Phase 2 연기** — 하위표 정체성(section) 미포착 시 평면행과 동일한 충돌 발생. `_handle_attr_roster`는 metric_key 설계와 함께 활성화.
+> - **attr_roster**: 비시계열 2D 속성/명부표 (주주 31701, 사유별 복지 63701 등). row_label=행 키, col_label=속성. **속성 헤더가 모두 distinct한 깨끗한 로스터만** 채택(중복헤더 다차원 그리드는 skip). 리스트/명부 표(col0가 rowspan 카테고리+여러 레코드: 자회사·담보 명부)는 반복 행 키에 순번(#n)을 붙여 분리. 하위표 직종/계정은 nb section으로 구분.
 >
-> 동일 문서 내 완전 동일 레코드는 dedup(무정보 중복 제거). col_label은 `check_parse_duplicates`·`validate_parse`의 충돌/중복 키 튜플에 포함된다.
+> **평면행 부모-컨텍스트**(Phase 2a): col_year 단일 라벨열 표에서 통째 괄호인 자식행((남성)/(여성))은 직전 비괄호 부모행으로 prefix('1인당 평균 보수액 > (남성)' vs '상시 종업원수 > (남성)').
+>
+> 동일 문서 내 완전 동일 레코드는 dedup(무정보 중복 제거). col_label은 `check_parse_duplicates`·`validate_parse`의 충돌/중복 키 튜플에 포함된다. 남은 충돌(~13.7k)은 기존 finance 이중표·차입금·비고 placeholder 등 benign.
 
 | 필드 | 타입 | 필수 | 설명 |
 |------|------|------|------|
@@ -459,3 +461,4 @@ python scripts/build_snapshot.py
 |------|------|
 | 2026-06-14 | 초안 — 신보 sub_account 사건 반영, 정본 스키마·골든·에이전트 프롬프트 확정 |
 | 2026-06-15 | 파서 archetype 디스패치 재정립(Phase 1) — `col_label` 필드 추가(13→14컬럼), col_year(thead 추론·셀단위 anchor)·row_year(transpose) 복구(20701·32211·32301·32001·31501), 문서 내 dedup. attr_roster는 Phase 2 연기. CSV 793,212→813,588행. 양 게이트 PASS, 골든 보존. |
+| 2026-06-15 | Phase 2 — (2a) 평면행 부모-컨텍스트 prefix로 20601 충돌 11,770→3,154(잔여는 비고 placeholder). (2b) attr_roster 활성화(주주 31701·사유 63701·감사부서 32311 등), 깨끗한 로스터만 채택, 리스트표 반복키 순번 분리로 31901 충돌 1,358→1. CSV 813,588→936,981행. 충돌 22,302→13,686(<24,000 PASS), 골든(자산총계 15,774,985·결정세액·지분율 등) 보존. promote key_fn 설계는 별도 후속. |

@@ -10,7 +10,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CSV = ROOT / "data" / "crawl" / "alio_records.csv"
 
-# 이전 검증 기준선 (급증 시 회귀 의심)
+# 검증 기준선 (급증 시 회귀 의심; 게이트는 baseline×2 초과 시 FAIL).
+# 2026-06-15 Phase 2 기준 known-good ≈ 13,700: 31801 차입금 ~6.4k(기존 finance형),
+# finance(31201/31301) ~3.1k(이중표 빈값-숫자, 기존), 20601 '비 고' placeholder ~3.2k(benign),
+# 20801 ~1k(기존). col_label 키 덕에 archetype 확장에도 false 충돌은 억제됨.
 CONFLICT_BASELINE = 12_000
 
 

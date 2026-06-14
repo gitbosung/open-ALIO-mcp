@@ -43,6 +43,7 @@ FIELDS = [
 CONTACT_HEADERS = {"담당자명", "부서명", "전화번호"}      # 공시 담당자 표 (데이터 아님)
 ATTACH_HEADERS = {"첨부파일", "집행상세내역", "집행 상세내역"}  # 첨부/링크 전용 열
 YEAR_CELL_RE = re.compile(r"\d{4}\s*년")                 # body 셀이 연도인지 (row_year 판정)
+PAREN_LABEL_RE = re.compile(r"^\([^)]*\)$")              # 통째로 괄호인 자식행 라벨 (예: (남성))
 
 FUND_ACCOUNT_RE = re.compile(r"(?:기금계정\s*:\s*|\[기금계정\]\s*)([^(\n]+)")
 
@@ -171,7 +172,14 @@ def _classify_table(col_texts: list[str], data_grid: list, *, header_known: bool
             return "row_year"
         return "skip"
     if header_known and len(col_texts) >= 2 and not yc:
-        return "attr_roster"
+        # 깨끗한 로스터만 채택: 속성(비-첨부) 헤더가 모두 distinct해야 함.
+        # 헤더가 중복되는 다차원 그리드(예: 휴가구분|휴가구분|휴가구분)는 같은 col_label
+        # 충돌을 만들므로 skip(연기).
+        attrs = [col_texts[i] for i in range(1, len(col_texts))
+                 if col_texts[i] and col_texts[i] not in ATTACH_HEADERS]
+        if attrs and len(set(attrs)) == len(attrs):
+            return "attr_roster"
+        return "skip"
     return "skip"
 
 
@@ -197,12 +205,21 @@ def _handle_col_year(col_texts: list[str], data_grid: list, ctx: dict) -> list[d
     if not cols:
         return out
     label_width = min(i for i, *_ in cols)  # 연도 열 앞은 전부 라벨('구분') 열
+    last_parent = ""  # 단일 라벨열 표에서 괄호 자식행((남성) 등)이 상속할 직전 부모행
     for row in data_grid:
         if not any(c is not None for c in row):
             continue
         row_label = _row_label_path(row, label_width)
         if not row_label:
             continue
+        # 평면행 부모-컨텍스트: 단일 라벨열 표에서 라벨이 통째로 괄호인 자식행은
+        # 직전 비괄호 부모행으로 prefix (예: '1인당 평균 보수액 > (남성)' vs '상시 종업원수 > (남성)').
+        if label_width == 1:
+            if PAREN_LABEL_RE.match(row_label):
+                if last_parent:
+                    row_label = f"{last_parent} > {row_label}"
+            else:
+                last_parent = row_label
         for col_idx, year, vtype, htext in cols:
             cell = row[col_idx] if col_idx < len(row) else None
             if cell is None or cell.find("a"):
@@ -240,26 +257,36 @@ def _handle_row_year(col_texts: list[str], data_grid: list, ctx: dict) -> list[d
 def _handle_attr_roster(col_texts: list[str], data_grid: list, ctx: dict) -> list[dict]:
     """비시계열 2D 속성/명부표 → long (row_label=행 키, col_label=속성 헤더, year='').
 
-    [Phase 2 연기] 현재 디스패치 비활성. 직종/계정별 하위표 정체성을 section으로
-    포착하지 못해 평면행과 동일한 "같은 키 다른 값" 충돌을 만들기 때문. metric_key
-    설계와 함께 하위표 컨텍스트를 부여한 뒤 활성화한다.
+    하위표 직종/계정은 nb 섹션 상태(section)로 구분된다. 속성 헤더가 모두 distinct한
+    깨끗한 로스터만 _classify_table에서 라우팅되며, 중복헤더 다차원 그리드는 skip된다.
+
+    리스트/명부 표(col0가 rowspan 카테고리, 그 아래 여러 레코드: 자회사·담보 명부 등)는
+    같은 행 키가 반복돼 충돌하므로, 표 내에서 반복되는 키에는 순번(#n)을 붙여 분리한다
+    (무손실·무충돌; col0가 distinct한 주주명부 등은 그대로 유지).
     """
-    out: list[dict] = []
     attr_cols = [(i, col_texts[i]) for i in range(1, len(col_texts))
                  if col_texts[i] and col_texts[i] not in ATTACH_HEADERS]
     if not attr_cols:
-        return out
+        return []
+    # 유효 행과 base 키 수집 (1차)
+    rows_keys: list[tuple[list, str]] = []
     for row in data_grid:
         if not row or row[0] is None:
             continue
         key = re.sub(r"\s*\*+$", "", clean_text(row[0].get_text()))
-        if not key:
-            continue
+        if key:
+            rows_keys.append((row, key))
+    total = Counter(k for _, k in rows_keys)
+    seq: Counter = Counter()
+    out: list[dict] = []
+    for row, base in rows_keys:
+        seq[base] += 1
+        row_key = base if total[base] == 1 else f"{base} #{seq[base]}"
         for col_idx, htext in attr_cols:
             cell = row[col_idx] if col_idx < len(row) else None
             if cell is None or cell.find("a"):
                 continue
-            out.append({**ctx, "row_label": key, "col_label": htext,
+            out.append({**ctx, "row_label": row_key, "col_label": htext,
                         "year": "", "value_type": "",
                         "value": parse_value(cell.get_text())})
     return out
@@ -351,9 +378,9 @@ def parse_doc(html: str, apba_id: str, item_no: str, org_name: str) -> list[dict
             records.extend(_handle_col_year(col_texts, data_grid, ctx))
         elif kind == "row_year":
             records.extend(_handle_row_year(col_texts, data_grid, ctx))
-        # attr_roster(비시계열 속성/명부표)는 Phase 2로 연기 — 하위표 정체성(section)
-        # 미포착으로 평면행과 동일한 "같은 키 다른 값" 충돌을 만들기 때문. _handle_attr_roster
-        # 핸들러는 metric_key 설계와 함께 활성화 예정. 그 외(skip)는 통과.
+        elif kind == "attr_roster":
+            records.extend(_handle_attr_roster(col_texts, data_grid, ctx))
+        # 그 외(skip): 메타·담당자·중복헤더 다차원 그리드 등은 통과.
 
     # 동일 문서 내 완전 동일 레코드 제거 (반복 표·이중표가 만드는 무정보 중복 안전망)
     seen: set = set()
