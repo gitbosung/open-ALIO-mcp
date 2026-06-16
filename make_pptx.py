@@ -1,1166 +1,1116 @@
-"""OpenAlio MCP 발표자료 — 리디자인 (밝고 세련된 톤)"""
+"""OpenAlio MCP — McKinsey/BCG 기업 컨설팅 스타일"""
 from pptx import Presentation
-from pptx.util import Inches, Pt, Emu
+from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN
 
-# ── 슬라이드 크기 (16:9 와이드) ──────────────────────────────────
 W = Inches(13.33)
 H = Inches(7.5)
 
-# ── 컬러 팔레트 (밝고 모던) ──────────────────────────────────────
-# 베이스
-BG        = RGBColor(0xF7, 0xF9, 0xFF)   # 아주 연한 블루-화이트
-WHITE     = RGBColor(0xFF, 0xFF, 0xFF)
-CARD      = RGBColor(0xFF, 0xFF, 0xFF)
+# ── 색상 시스템 (정제된 기업 팔레트) ────────────────────────────
+WHITE  = RGBColor(0xFF, 0xFF, 0xFF)
+BG     = RGBColor(0xF8, 0xFA, 0xFD)   # 슬라이드 배경
 
-# 주요 색
-INDIGO    = RGBColor(0x3D, 0x5A, 0xFE)   # 선명한 인디고
-INDIGO_D  = RGBColor(0x1A, 0x23, 0x7E)   # 짙은 인디고
-INDIGO_L  = RGBColor(0xC5, 0xCA, 0xFF)   # 연한 인디고
+NAVY_D = RGBColor(0x0C, 0x2A, 0x54)   # 헤딩 / 표지
+NAVY   = RGBColor(0x1A, 0x47, 0x89)   # 주 액센트
+NAVY_L = RGBColor(0xCC, 0xDB, 0xF4)   # 틴트
 
-CORAL     = RGBColor(0xFF, 0x6D, 0x00)   # 코럴 오렌지
-CORAL_L   = RGBColor(0xFF, 0xE0, 0xCC)   # 연한 코럴
+TEAL   = RGBColor(0x00, 0x7A, 0x73)   # 2차 액센트
+TEAL_L = RGBColor(0xC8, 0xE8, 0xE6)
 
-TEAL      = RGBColor(0x00, 0xB8, 0xD4)   # 밝은 틸
-TEAL_D    = RGBColor(0x00, 0x83, 0x8F)
-TEAL_L    = RGBColor(0xB2, 0xEB, 0xF2)   # 연한 틸
+GOLD   = RGBColor(0xBF, 0x7C, 0x1C)   # 강조 (Key callout)
+GOLD_L = RGBColor(0xFC, 0xED, 0xCF)
 
-MINT      = RGBColor(0x00, 0xC8, 0x53)   # 민트 그린
-MINT_L    = RGBColor(0xB9, 0xF6, 0xCA)
+RUST   = RGBColor(0xB3, 0x47, 0x28)   # Before / 문제
+RUST_L = RGBColor(0xF8, 0xE1, 0xD8)
 
-PURPLE    = RGBColor(0x7C, 0x4D, 0xFF)   # 소프트 퍼플
-PURPLE_L  = RGBColor(0xEA, 0xE1, 0xFF)
+PLUM   = RGBColor(0x50, 0x37, 0x87)   # 보조
+PLUM_L = RGBColor(0xE4, 0xDE, 0xF8)
 
-AMBER     = RGBColor(0xFF, 0xC4, 0x00)   # 앰버 옐로
-AMBER_D   = RGBColor(0xFF, 0x8F, 0x00)
+SAGE   = RGBColor(0x24, 0x6C, 0x3D)   # After / 해결
+SAGE_L = RGBColor(0xD0, 0xEC, 0xDB)
 
-# 텍스트
-TXT_D     = RGBColor(0x1A, 0x1A, 0x2E)   # 거의 검정
-TXT_M     = RGBColor(0x50, 0x56, 0x70)   # 중간 회색
-TXT_L     = RGBColor(0x9E, 0xA3, 0xB8)   # 연한 회색
+TXT_D  = RGBColor(0x0F, 0x18, 0x28)
+TXT_M  = RGBColor(0x37, 0x45, 0x5D)
+TXT_L  = RGBColor(0x5F, 0x6F, 0x89)
+TXT_XL = RGBColor(0x95, 0xA5, 0xB9)
 
-# 카드 구분선 색들
-COLORS6   = [INDIGO, TEAL, CORAL, PURPLE, MINT, AMBER_D]
+BORDER = RGBColor(0xD2, 0xDC, 0xEC)
+LINE   = RGBColor(0xBD, 0xCB, 0xE1)
+CARD   = RGBColor(0xF0, 0xF4, 0xF9)
 
 prs = Presentation()
 prs.slide_width  = W
 prs.slide_height = H
-blank_layout = prs.slide_layouts[6]
+BLANK = prs.slide_layouts[6]
 
-# ── 헬퍼 함수 ────────────────────────────────────────────────────
-def rect(slide, x, y, w, h, fill=None, line_color=None, line_w=Pt(1)):
-    from pptx.util import Pt
-    s = slide.shapes.add_shape(1, x, y, w, h)
-    s.fill.solid() if fill else s.fill.background()
-    if fill:
-        s.fill.fore_color.rgb = fill
+# ── 레이아웃 상수 ─────────────────────────────────────────────
+LM   = Inches(0.42)
+CW   = W - LM * 2
+C2W  = (CW - Inches(0.4)) / 2
+C2X2 = LM + C2W + Inches(0.4)
+C3W  = (CW - Inches(0.28) * 2) / 3
+C3X2 = LM + C3W + Inches(0.28)
+C3X3 = LM + (C3W + Inches(0.28)) * 2
+
+# ── 헬퍼 ─────────────────────────────────────────────────────
+def R(sl, x, y, w, h, fill=None, lc=None, lw=Pt(0.75)):
+    s = sl.shapes.add_shape(1, x, y, w, h)
+    if fill: s.fill.solid(); s.fill.fore_color.rgb = fill
+    else:    s.fill.background()
     s.line.fill.background()
-    if line_color:
-        s.line.color.rgb = line_color
-        s.line.width = line_w
+    if lc:   s.line.color.rgb = lc; s.line.width = lw
     return s
 
-def tb(slide, text, x, y, w, h, size=14, bold=False,
-        color=TXT_D, align=PP_ALIGN.LEFT, italic=False):
-    box = slide.shapes.add_textbox(x, y, w, h)
-    tf  = box.text_frame
-    tf.word_wrap = True
-    p   = tf.paragraphs[0]
-    p.alignment = align
-    r   = p.add_run()
-    r.text = text
-    r.font.size   = Pt(size)
-    r.font.bold   = bold
-    r.font.italic = italic
-    r.font.color.rgb = color
-    return box
+def T(sl, text, x, y, w, h, sz=13, bold=False,
+      color=TXT_M, align=PP_ALIGN.LEFT, italic=False):
+    b = sl.shapes.add_textbox(x, y, w, h)
+    tf = b.text_frame; tf.word_wrap = True
+    p = tf.paragraphs[0]; p.alignment = align
+    r = p.add_run(); r.text = text
+    r.font.size = Pt(sz); r.font.bold = bold
+    r.font.italic = italic; r.font.color.rgb = color
+    return b
 
-def add_p(tf, text, size=13, bold=False, color=TXT_D,
-          align=PP_ALIGN.LEFT, space=Pt(5)):
-    p = tf.add_paragraph()
-    p.alignment   = align
-    p.space_before = space
-    r = p.add_run()
-    r.text = text
-    r.font.size  = Pt(size)
-    r.font.bold  = bold
-    r.font.color.rgb = color
-    return p
+def AP(tf, text, sz=13, bold=False, color=TXT_M,
+       align=PP_ALIGN.LEFT, sp=Pt(6)):
+    p = tf.add_paragraph(); p.alignment = align; p.space_before = sp
+    r = p.add_run(); r.text = text
+    r.font.size = Pt(sz); r.font.bold = bold; r.font.color.rgb = color
 
-def slide_bg(slide):
-    rect(slide, 0, 0, W, H, fill=BG)
+def new_slide(num, title, sub=None, total=15):
+    """표준 헤더 슬라이드"""
+    sl = prs.slides.add_slide(BLANK)
+    R(sl, 0, 0, W, H, fill=BG)
+    R(sl, 0, 0, W, Inches(0.04), fill=NAVY)
+    R(sl, 0, Inches(0.04), Inches(0.055), Inches(1.1), fill=NAVY)
+    T(sl, title, LM, Inches(0.06), Inches(11.2), Inches(0.62),
+      sz=22, bold=True, color=NAVY_D)
+    T(sl, f"{num}  /  {total}", W - Inches(1.5), Inches(0.06),
+      Inches(1.3), Inches(0.5), sz=10, color=TXT_XL, align=PP_ALIGN.RIGHT)
+    cy = Inches(0.68)
+    if sub:
+        T(sl, sub, LM, cy, Inches(11.2), Inches(0.36),
+          sz=12, color=TXT_L, italic=True)
+        cy += Inches(0.4)
+    R(sl, LM, cy + Inches(0.04), CW, Inches(0.01), fill=LINE)
+    R(sl, 0, H - Inches(0.26), W, Inches(0.26), fill=NAVY_D)
+    T(sl, "OpenAlio MCP  ·  재경부 공공정책국",
+      LM, H - Inches(0.24), Inches(7), Inches(0.2), sz=8, color=NAVY_L)
+    return sl, cy + Inches(0.18)
 
-def header_band(slide, title, subtitle=None):
-    """그라디언트 효과 헤더 (인디고 → 틸)"""
-    rect(slide, 0, 0, W * 0.55, Inches(1.2), fill=INDIGO)
-    rect(slide, W * 0.45, 0, W * 0.35, Inches(1.2), fill=TEAL)
-    rect(slide, W * 0.75, 0, W * 0.25, Inches(1.2), fill=TEAL_D)
-    # 흰 사선 장식
-    rect(slide, W * 0.44, 0, Inches(0.12), Inches(1.2), fill=WHITE)
-    rect(slide, W * 0.74, 0, Inches(0.08), Inches(1.2), fill=RGBColor(0xFF,0xFF,0xFF))
-    tb(slide, title,
-       Inches(0.5), Inches(0.1), Inches(10), Inches(0.65),
-       size=26, bold=True, color=WHITE)
-    if subtitle:
-        tb(slide, subtitle,
-           Inches(0.5), Inches(0.72), Inches(10), Inches(0.42),
-           size=13, color=INDIGO_L, italic=True)
+def acard(sl, x, y, w, h, accent=NAVY, bg=WHITE):
+    """왼쪽 액센트 바 + 테두리 카드"""
+    R(sl, x, y, w, h, fill=bg, lc=BORDER, lw=Pt(0.5))
+    R(sl, x, y, Inches(0.048), h, fill=accent)
 
-def footer(slide, num, total=15):
-    rect(slide, 0, H - Inches(0.35), W, Inches(0.35), fill=INDIGO_D)
-    tb(slide, "OpenAlio MCP",
-       Inches(0.4), H - Inches(0.33), Inches(4), Inches(0.3),
-       size=10, color=INDIGO_L)
-    tb(slide, f"{num}  /  {total}",
-       W - Inches(1.2), H - Inches(0.33), Inches(1.0), Inches(0.3),
-       size=10, color=INDIGO_L, align=PP_ALIGN.RIGHT)
+def ctitle(sl, text, x, y, w, accent=NAVY):
+    """카드 섹션 제목"""
+    T(sl, text, x + Inches(0.14), y, w - Inches(0.2), Inches(0.44),
+      sz=14, bold=True, color=accent)
 
-def card(slide, x, y, w, h, accent=INDIGO, accent_h=Inches(0.06)):
-    """흰 카드 + 상단 컬러 테두리"""
-    rect(slide, x, y, w, h, fill=WHITE,
-         line_color=RGBColor(0xE8, 0xEC, 0xFF), line_w=Pt(0.75))
-    rect(slide, x, y, w, accent_h, fill=accent)
+def blist(sl, items, x, y, w, h, sz=13, color=TXT_M, sp=Pt(7)):
+    bx = sl.shapes.add_textbox(x, y, w, h)
+    tf = bx.text_frame; tf.word_wrap = True
+    first = True
+    for item in items:
+        if first: p = tf.paragraphs[0]; first = False
+        else:     p = tf.add_paragraph(); p.space_before = sp
+        r = p.add_run(); r.text = f"·  {item}"
+        r.font.size = Pt(sz); r.font.color.rgb = color
 
-def pill(slide, text, x, y, w=Inches(2.2), h=Inches(0.42),
-         fill=INDIGO_L, color=INDIGO_D, size=13, bold=True):
-    rect(slide, x, y, w, h, fill=fill)
-    tb(slide, text, x, y + Pt(2), w, h, size=size, bold=bold,
-       color=color, align=PP_ALIGN.CENTER)
+def stepbox(sl, x, y, w, h, n, label, accent=NAVY):
+    R(sl, x, y, w, h, fill=WHITE, lc=BORDER, lw=Pt(0.5))
+    R(sl, x, y, Inches(0.36), h, fill=accent)
+    T(sl, str(n), x, y, Inches(0.36), h, sz=13, bold=True,
+      color=WHITE, align=PP_ALIGN.CENTER)
+    T(sl, label, x + Inches(0.44), y + Inches(0.06),
+      w - Inches(0.52), h - Inches(0.12), sz=13, color=TXT_M)
 
-def arrow_v(slide, x, y, h=Inches(0.28)):
-    rect(slide, x - Inches(0.04), y, Inches(0.08), h, fill=TXT_L)
+def arr_dn(sl, x, y, h=Inches(0.2)):
+    R(sl, x - Inches(0.025), y, Inches(0.05), h, fill=TXT_XL)
 
-def flow_v(slide, labels, colors, x, cy, bw=Inches(4.5), bh=Inches(0.55), gap=Inches(0.25)):
-    for i, (lbl, col) in enumerate(zip(labels, colors)):
-        by = cy + i * (bh + gap)
-        rect(slide, x, by, bw, bh, fill=col)
-        tb(slide, lbl, x, by + Pt(3), bw, bh,
-           size=14, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
-        if i < len(labels) - 1:
-            arrow_v(slide, x + bw / 2, by + bh, gap)
+def hbar(sl, text, accent=NAVY, y=H - Inches(0.75)):
+    R(sl, LM, y, CW, Inches(0.52), fill=accent)
+    T(sl, text, LM + Inches(0.2), y + Inches(0.08),
+      CW - Inches(0.4), Inches(0.36), sz=14, bold=True,
+      color=WHITE, align=PP_ALIGN.CENTER)
 
-# ════════════════════════════════════════════════════════════════
-#  S00 – 표지
-# ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
+def tag(sl, text, x, y, accent=NAVY):
+    R(sl, x, y, Inches(0.07), Inches(0.07), fill=accent)
+    T(sl, text, x + Inches(0.15), y - Inches(0.04),
+      Inches(5), Inches(0.28), sz=11, bold=True, color=accent)
 
-# 배경 분할: 왼쪽 진한 인디고, 오른쪽 밝은 패턴
-rect(slide, 0, 0, W * 0.62, H, fill=INDIGO_D)
-rect(slide, W * 0.62, 0, W * 0.38, H, fill=BG)
-
-# 오른쪽 장식 써클들 (반투명 느낌)
-for cx_, cy_, cr, alpha in [
-    (W * 0.82, Inches(1.2), Inches(2.8), RGBColor(0x3D,0x5A,0xFE)),
-    (W * 0.95, Inches(3.5), Inches(2.0), TEAL_L),
-    (W * 0.68, Inches(5.8), Inches(1.5), INDIGO_L),
-]:
-    rect(slide, cx_ - cr/2, cy_ - cr/2, cr, cr, fill=alpha)
-
-# 상단 인디고 선
-rect(slide, 0, 0, W * 0.62, Inches(0.1), fill=TEAL)
-
-# 로고 영역
-rect(slide, Inches(0.6), Inches(1.4), Inches(0.6), Inches(2.8), fill=TEAL)
-rect(slide, Inches(1.3), Inches(1.4), Inches(0.08), Inches(2.8),
-     fill=RGBColor(0xFF,0xFF,0xFF))
-
-# 메인 제목
-tb(slide, "OpenAlio MCP",
-   Inches(1.6), Inches(1.4), Inches(7.2), Inches(1.4),
-   size=54, bold=True, color=WHITE)
-
-# 부제
-tb(slide, "공공기관 정보공개의 AI 활용성 제고를 위한",
-   Inches(1.6), Inches(3.0), Inches(7.2), Inches(0.5),
-   size=18, color=INDIGO_L)
-tb(slide, "MCP 기반 실험",
-   Inches(1.6), Inches(3.5), Inches(7.2), Inches(0.5),
-   size=18, color=TEAL)
-
-# 구분선
-rect(slide, Inches(1.6), Inches(4.15), Inches(3.5), Inches(0.06), fill=AMBER)
-
-# 발표자
-tb(slide, "김보성 사무관",
-   Inches(1.6), Inches(4.42), Inches(5), Inches(0.52),
-   size=20, bold=True, color=WHITE)
-tb(slide, "재경부 공공정책국    |    2026. 06.",
-   Inches(1.6), Inches(4.95), Inches(6), Inches(0.4),
-   size=14, color=INDIGO_L)
-
-# 오른쪽 키워드 필
-kws = [("🔗 연결", TEAL_L, TEAL_D), ("🤖 AI 활용", INDIGO_L, INDIGO_D),
-       ("📊 공공데이터", MINT_L, RGBColor(0x00,0x69,0x2E))]
-ky = Inches(2.0)
-for kw, kfill, kcol in kws:
-    pill(slide, kw, W * 0.67, ky, w=Inches(3.5), h=Inches(0.5),
-         fill=kfill, color=kcol, size=15)
-    ky += Inches(0.72)
 
 # ════════════════════════════════════════════════════════════════
-#  S01 – ALIO 성공 사례
+#  S00 — 표지
 # ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "01   공공기관 정보공개의 성공, ALIO",
-            "ALIO는 공공기관 투명성 제고를 위한 대표적인 성공 사례")
-footer(slide, 1)
+sl = prs.slides.add_slide(BLANK)
+# 왼쪽 패널
+R(sl, 0, 0, Inches(6.9), H, fill=NAVY_D)
+R(sl, 0, 0, Inches(6.9), Inches(0.06), fill=TEAL)
+# 오른쪽 패널
+R(sl, Inches(6.9), 0, W - Inches(6.9), H, fill=BG)
+# 오른쪽 장식 (절제된 기하학)
+R(sl, Inches(7.2), Inches(0.5), Inches(5.7), Inches(0.01), fill=LINE)
+R(sl, Inches(7.2), Inches(1.2), Inches(5.7), Inches(0.01), fill=LINE)
+R(sl, Inches(7.2), Inches(1.9), Inches(5.7), Inches(0.01), fill=LINE)
+R(sl, Inches(7.5), Inches(0.5), Inches(0.01), Inches(6.5), fill=LINE)
+R(sl, Inches(7.5), Inches(0.5), Inches(0.25), Inches(0.25), fill=NAVY_L)
+R(sl, Inches(8.2), Inches(1.5), Inches(4.5), Inches(3.2), fill=CARD,
+  lc=BORDER, lw=Pt(0.5))
+R(sl, Inches(8.2), Inches(1.5), Inches(0.048), Inches(3.2), fill=TEAL)
+T(sl, "핵심 데이터",
+  Inches(8.45), Inches(1.65), Inches(4.1), Inches(0.42),
+  sz=12, bold=True, color=TEAL)
+stats = [
+    ("355개", "공공기관"),
+    ("11개", "메트릭 카테고리"),
+    ("32개", "AI 도구"),
+    ("6년치", "시계열 데이터"),
+]
+sy = Inches(2.2)
+for val, lbl in stats:
+    T(sl, val, Inches(8.45), sy, Inches(2.1), Inches(0.45),
+      sz=20, bold=True, color=NAVY_D)
+    T(sl, lbl, Inches(10.6), sy + Inches(0.06), Inches(1.8), Inches(0.35),
+      sz=12, color=TXT_L)
+    sy += Inches(0.58)
+# 왼쪽 콘텐츠
+T(sl, "공공기관 경영정보 AI 활용 실험",
+  Inches(0.55), Inches(0.7), Inches(6.0), Inches(0.38),
+  sz=11, color=TEAL_L, italic=True)
+T(sl, "OpenAlio MCP",
+  Inches(0.55), Inches(1.2), Inches(6.0), Inches(1.5),
+  sz=46, bold=True, color=WHITE)
+R(sl, Inches(0.55), Inches(2.82), Inches(3.8), Inches(0.055), fill=TEAL)
+T(sl, "공공기관 정보공개의 AI 활용성 제고를 위한",
+  Inches(0.55), Inches(3.0), Inches(6.0), Inches(0.42),
+  sz=15, color=NAVY_L)
+T(sl, "MCP 기반 실험",
+  Inches(0.55), Inches(3.42), Inches(6.0), Inches(0.42),
+  sz=15, color=NAVY_L)
+R(sl, Inches(0.55), Inches(5.55), Inches(4.2), Inches(0.01), fill=LINE)
+T(sl, "김보성 사무관",
+  Inches(0.55), Inches(5.68), Inches(5.5), Inches(0.5),
+  sz=18, bold=True, color=WHITE)
+T(sl, "재경부 공공정책국  |  2026. 06.",
+  Inches(0.55), Inches(6.2), Inches(5.5), Inches(0.36),
+  sz=13, color=NAVY_L)
 
-# 왼쪽 카드
-card(slide, Inches(0.35), Inches(1.35), Inches(5.8), Inches(5.7), INDIGO)
-tb(slide, "ALIO의 핵심 성과",
-   Inches(0.55), Inches(1.55), Inches(5.4), Inches(0.5),
-   size=17, bold=True, color=INDIGO_D)
+
+# ════════════════════════════════════════════════════════════════
+#  S01 — ALIO 소개
+# ════════════════════════════════════════════════════════════════
+sl, cy = new_slide(1, "01   공공기관 정보공개의 성공, ALIO",
+                   "ALIO는 공공기관 투명성 제고의 대표적 성공 사례")
+
+# 왼쪽: 핵심 성과
+acard(sl, LM, cy, C2W, Inches(5.6))
+ctitle(sl, "ALIO 핵심 성과", LM, cy + Inches(0.1), C2W)
+R(sl, LM + Inches(0.14), cy + Inches(0.56), C2W - Inches(0.28),
+  Inches(0.01), fill=LINE)
 
 feats = [
-    ("📢", "대국민 공개", "355개 공공기관 경영정보\n투명하게 공개"),
-    ("🔍", "알권리 확대", "국민 누구나 무료로\n정보 열람 가능"),
-    ("⚖️", "책임성 강화", "재무·인사·경영평가\n공시 의무화"),
-    ("🌐", "서비스 확장", "ALIO PLUS, JOB-ALIO 등\n지속적 서비스 확장"),
+    ("공공기관 경영정보 대국민 공개", "재무·인사·경영평가 등 50개 공시항목"),
+    ("국민 알권리 확대", "누구나 무료로 열람 가능한 개방형 정보"),
+    ("공공기관 책임성 강화", "공시 의무화로 투명성·책임성 제고"),
+    ("지속적 서비스 확장", "355개 공공기관 정보 통합 제공"),
 ]
-fy = Inches(2.15)
-for icon, ftitle, fdesc in feats:
-    rect(slide, Inches(0.55), fy, Inches(5.4), Inches(1.0), fill=BG,
-         line_color=INDIGO_L, line_w=Pt(0.5))
-    tb(slide, icon, Inches(0.65), fy + Inches(0.1), Inches(0.6), Inches(0.8), size=22)
-    tb(slide, ftitle, Inches(1.32), fy + Inches(0.08),
-       Inches(4.5), Inches(0.35), size=14, bold=True, color=INDIGO_D)
-    tb(slide, fdesc, Inches(1.32), fy + Inches(0.42),
-       Inches(4.5), Inches(0.5), size=12, color=TXT_M)
-    fy += Inches(1.12)
+fy = cy + Inches(0.72)
+for main, desc in feats:
+    R(sl, LM + Inches(0.14), fy, Inches(0.07), Inches(0.07), fill=NAVY)
+    T(sl, main, LM + Inches(0.3), fy - Inches(0.03),
+      C2W - Inches(0.44), Inches(0.34), sz=13, bold=True, color=TXT_D)
+    T(sl, desc, LM + Inches(0.3), fy + Inches(0.3),
+      C2W - Inches(0.44), Inches(0.32), sz=12, color=TXT_L)
+    fy += Inches(1.05)
 
-# 오른쪽 타임라인
-card(slide, Inches(6.5), Inches(1.35), Inches(6.45), Inches(5.7), TEAL)
-tb(slide, "서비스 발전 연혁",
-   Inches(6.7), Inches(1.55), Inches(6.1), Inches(0.5),
-   size=17, bold=True, color=TEAL_D)
+# 오른쪽: 발전 연혁
+acard(sl, C2X2, cy, C2W, Inches(5.6), accent=TEAL)
+ctitle(sl, "서비스 발전 연혁", C2X2, cy + Inches(0.1), C2W, accent=TEAL)
+R(sl, C2X2 + Inches(0.14), cy + Inches(0.56), C2W - Inches(0.28),
+  Inches(0.01), fill=LINE)
 
 timeline = [
-    ("2005", "ALIO 출범", "공공기관 경영정보 최초 온라인 공개", INDIGO),
+    ("2005", "ALIO 출범", "공공기관 경영정보 최초 온라인 공개 시작", NAVY),
     ("2014", "ALIO PLUS", "채용·시설·사업 등 생활밀착 정보 통합", TEAL),
-    ("2019", "JOB-ALIO", "공공기관 채용 전문 플랫폼 분리 출범", CORAL),
-    ("2026", "OpenAlio MCP", "AI 활용 가능 개방형 인터페이스 실험", PURPLE),
+    ("2019", "JOB-ALIO", "공공기관 채용 전문 플랫폼 분리 출범", PLUM),
+    ("2026", "OpenAlio MCP", "AI 활용 가능 개방형 인터페이스 실험", GOLD),
 ]
-ty = Inches(2.15)
+ty = cy + Inches(0.72)
 for year, name, desc, col in timeline:
-    rect(slide, Inches(6.7), ty, Inches(0.9), Inches(0.9), fill=col)
-    tb(slide, year, Inches(6.7), ty + Inches(0.2), Inches(0.9), Inches(0.5),
-       size=14, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
-    rect(slide, Inches(7.75), ty + Inches(0.35),
-         Inches(0.5), Inches(0.06), fill=col)
-    tb(slide, name, Inches(8.35), ty + Inches(0.05),
-       Inches(4.4), Inches(0.38), size=15, bold=True, color=col)
-    tb(slide, desc, Inches(8.35), ty + Inches(0.44),
-       Inches(4.4), Inches(0.35), size=12, color=TXT_M)
+    R(sl, C2X2 + Inches(0.14), ty, Inches(0.72), Inches(0.78), fill=col)
+    T(sl, year, C2X2 + Inches(0.14), ty + Inches(0.18),
+      Inches(0.72), Inches(0.4), sz=12, bold=True,
+      color=WHITE, align=PP_ALIGN.CENTER)
+    T(sl, name, C2X2 + Inches(1.0), ty + Inches(0.02),
+      C2W - Inches(1.2), Inches(0.36), sz=14, bold=True, color=col)
+    T(sl, desc, C2X2 + Inches(1.0), ty + Inches(0.4),
+      C2W - Inches(1.2), Inches(0.32), sz=12, color=TXT_L)
     if year != "2026":
-        rect(slide, Inches(7.12), ty + Inches(0.9),
-             Inches(0.06), Inches(0.22), fill=TXT_L)
-    ty += Inches(1.15)
+        R(sl, C2X2 + Inches(0.49), ty + Inches(0.78),
+          Inches(0.025), Inches(0.22), fill=TXT_XL)
+    ty += Inches(1.05)
+
 
 # ════════════════════════════════════════════════════════════════
-#  S02 – AI 시대의 과제
+#  S02 — AI 시대의 과제
 # ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "02   그러나 AI 시대의 새로운 과제",
-            "정보 공개는 성공했지만 정보 활용은 여전히 어렵다")
-footer(slide, 2)
+sl, cy = new_slide(2, "02   그러나 AI 시대의 새로운 과제",
+                   "정보 공개는 성공했지만 정보 활용은 여전히 어렵다")
 
-# 왼쪽 – 분산된 정보원
-card(slide, Inches(0.35), Inches(1.35), Inches(5.8), Inches(5.7), CORAL)
-tb(slide, "공공기관 정보, 어디에 흩어져 있나?",
-   Inches(0.55), Inches(1.55), Inches(5.4), Inches(0.5),
-   size=16, bold=True, color=CORAL)
+acard(sl, LM, cy, C2W, Inches(5.55))
+ctitle(sl, "분산된 공공기관 정보원", LM, cy + Inches(0.1), C2W)
+R(sl, LM + Inches(0.14), cy + Inches(0.54),
+  C2W - Inches(0.28), Inches(0.01), fill=LINE)
 
-src_items = [
-    ("ALIO", "경영공시 정보", INDIGO, INDIGO_L),
-    ("ALIO PLUS", "채용·시설·사업", TEAL_D, TEAL_L),
-    ("JOB-ALIO", "채용 공고", CORAL, CORAL_L),
-    ("기관 홈페이지", "기관별 자체 정보", PURPLE, PURPLE_L),
-    ("법령 / 지침", "법적 근거·지침", MINT, MINT_L),
-    ("뉴스 / 보도자료", "실시간 이슈", AMBER_D, RGBColor(0xFF,0xF3,0xCD)),
+srcs = [
+    ("ALIO", "경영공시 정보 (재무·인사·경영평가)", NAVY),
+    ("ALIO PLUS", "채용·시설·사업 정보 통합", TEAL),
+    ("JOB-ALIO", "채용 공고 전문 서비스", PLUM),
+    ("기관 홈페이지", "기관별 자체 정보·공고", RUST),
+    ("법령 / 지침", "법적 근거·운영 지침", SAGE),
+    ("뉴스 / 보도자료", "실시간 이슈 및 보도", GOLD),
 ]
-sy = Inches(2.1)
-for name, desc, col, col_l in src_items:
-    rect(slide, Inches(0.55), sy, Inches(5.4), Inches(0.68), fill=col_l,
-         line_color=col, line_w=Pt(0.75))
-    rect(slide, Inches(0.55), sy, Inches(0.12), Inches(0.68), fill=col)
-    tb(slide, name, Inches(0.78), sy + Inches(0.06),
-       Inches(2.0), Inches(0.35), size=13, bold=True, color=col)
-    tb(slide, desc, Inches(2.85), sy + Inches(0.17),
-       Inches(3.0), Inches(0.3), size=12, color=TXT_M)
-    sy += Inches(0.78)
+sy2 = cy + Inches(0.7)
+for name, desc, col in srcs:
+    R(sl, LM + Inches(0.14), sy2, C2W - Inches(0.28),
+      Inches(0.62), fill=WHITE, lc=BORDER, lw=Pt(0.5))
+    R(sl, LM + Inches(0.14), sy2, Inches(0.04),
+      Inches(0.62), fill=col)
+    T(sl, name, LM + Inches(0.3), sy2 + Inches(0.06),
+      Inches(1.8), Inches(0.3), sz=13, bold=True, color=col)
+    T(sl, desc, LM + Inches(2.2), sy2 + Inches(0.15),
+      C2W - Inches(2.4), Inches(0.3), sz=12, color=TXT_L)
+    sy2 += Inches(0.73)
 
-# 오른쪽 – 문제점
-card(slide, Inches(6.5), Inches(1.35), Inches(6.45), Inches(5.7), INDIGO)
-tb(slide, "AI가 활용하기 어려운 이유",
-   Inches(6.7), Inches(1.55), Inches(6.1), Inches(0.5),
-   size=16, bold=True, color=INDIGO_D)
+acard(sl, C2X2, cy, C2W, Inches(5.55), accent=RUST)
+ctitle(sl, "AI 활용이 어려운 이유", C2X2, cy + Inches(0.1), C2W, accent=RUST)
+R(sl, C2X2 + Inches(0.14), cy + Inches(0.54),
+  C2W - Inches(0.28), Inches(0.01), fill=LINE)
 
 problems = [
-    ("🗂", "분  산", "정보가 여러 사이트에 나뉘어 있어\n통합 조회 불가", INDIGO),
-    ("📄", "비구조", "PDF·엑셀·웹페이지 혼재로\nAI 파싱 어려움", CORAL),
-    ("🔗", "비연결", "기관 간 연계 없어\n비교·분석 불가", TEAL_D),
-    ("🤖", "저기계가독", "표준화된 API 없어\nAI 직접 활용 불가", PURPLE),
+    ("분산성", "여러 사이트에 나뉜 정보 — 통합 조회 불가"),
+    ("비구조성", "PDF·엑셀·웹페이지 혼재 — AI 파싱 어려움"),
+    ("비연결성", "기관 간 연계 없어 비교·분석 불가"),
+    ("저기계가독성", "표준화된 API 부재 — AI 직접 활용 불가"),
 ]
-py = Inches(2.1)
-for icon, ptitle, pdesc, col in problems:
-    rect(slide, Inches(6.7), py, Inches(6.1), Inches(1.12), fill=BG,
-         line_color=col, line_w=Pt(0.75))
-    tb(slide, icon, Inches(6.8), py + Inches(0.2), Inches(0.55), Inches(0.7), size=24)
-    tb(slide, ptitle, Inches(7.45), py + Inches(0.1),
-       Inches(1.5), Inches(0.38), size=15, bold=True, color=col)
-    tb(slide, pdesc, Inches(7.45), py + Inches(0.5),
-       Inches(5.1), Inches(0.55), size=12, color=TXT_M)
-    py += Inches(1.25)
+py = cy + Inches(0.72)
+for i, (ptitle, pdesc) in enumerate(problems):
+    R(sl, C2X2 + Inches(0.14), py, C2W - Inches(0.28),
+      Inches(1.1), fill=RUST_L if i % 2 == 0 else WHITE,
+      lc=BORDER, lw=Pt(0.5))
+    T(sl, ptitle, C2X2 + Inches(0.28), py + Inches(0.1),
+      C2W - Inches(0.5), Inches(0.36), sz=14, bold=True, color=RUST)
+    T(sl, pdesc, C2X2 + Inches(0.28), py + Inches(0.48),
+      C2W - Inches(0.5), Inches(0.52), sz=12, color=TXT_M)
+    py += Inches(1.22)
 
-tb(slide, "정보는 공개됐지만, AI는 아직 '읽지 못한다'",
-   Inches(6.5), Inches(6.55), Inches(6.5), Inches(0.42),
-   size=13, bold=True, color=CORAL, italic=True)
+T(sl, "정보는 공개됐지만, AI는 아직 '읽지 못한다'",
+  C2X2 + Inches(0.14), cy + Inches(5.24), C2W - Inches(0.28),
+  Inches(0.32), sz=12, bold=True, color=RUST, italic=True)
 
-# ════════════════════════════════════════════════════════════════
-#  S03 – 국민 Pain Point
-# ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "03   국민 입장에서의 Pain Point",
-            "정보는 공개되어 있으나 '질문하기' 어렵다")
-footer(slide, 3)
-
-# 질문 하이라이트
-rect(slide, Inches(0.35), Inches(1.35), W - Inches(0.7), Inches(0.75), fill=INDIGO)
-tb(slide, '💬   "한국전력의 최근 5년 부채 추이는?"',
-   Inches(0.55), Inches(1.44), W - Inches(1.2), Inches(0.6),
-   size=22, bold=True, color=WHITE)
-
-# Before 카드
-card(slide, Inches(0.35), Inches(2.25), Inches(5.9), Inches(4.82), CORAL)
-tb(slide, "Before  ·  현재 절차",
-   Inches(0.55), Inches(2.44), Inches(5.5), Inches(0.42),
-   size=15, bold=True, color=CORAL)
-
-before_steps = [
-    ("①", "ALIO 접속"),
-    ("②", "기관 검색"),
-    ("③", "재무현황 이동"),
-    ("④", "자료 다운로드"),
-    ("⑤", "직접 분석"),
-]
-by2 = Inches(2.98)
-for num, step in before_steps:
-    rect(slide, Inches(0.55), by2, Inches(5.5), Inches(0.5),
-         fill=CORAL_L, line_color=CORAL, line_w=Pt(0.5))
-    tb(slide, num, Inches(0.62), by2 + Inches(0.07),
-       Inches(0.42), Inches(0.38), size=14, bold=True, color=CORAL, align=PP_ALIGN.CENTER)
-    tb(slide, step, Inches(1.1), by2 + Inches(0.07),
-       Inches(4.8), Inches(0.38), size=14, color=TXT_D)
-    if num != "⑤":
-        arrow_v(slide, Inches(0.55) + Inches(5.5)/2, by2 + Inches(0.5), Inches(0.22))
-    by2 += Inches(0.72)
-
-tb(slide, "⏱  수십 분 ~ 수 시간 소요",
-   Inches(0.55), Inches(6.6), Inches(5.5), Inches(0.38),
-   size=13, bold=True, color=CORAL, italic=True)
-
-# After 카드
-card(slide, Inches(6.65), Inches(2.25), Inches(6.3), Inches(4.82), TEAL)
-tb(slide, "After  ·  OpenAlio MCP 활용",
-   Inches(6.85), Inches(2.44), Inches(5.9), Inches(0.42),
-   size=15, bold=True, color=TEAL_D)
-
-after_steps = [
-    ("💬", "질문 입력", "자연어로 자유롭게"),
-    ("🤖", "AI + MCP", "32개 도구 자동 선택"),
-    ("📊", "즉시 결과", "표·그래프·출처 포함"),
-]
-ay = Inches(2.98)
-for icon, step, desc in after_steps:
-    rect(slide, Inches(6.85), ay, Inches(5.9), Inches(0.9),
-         fill=TEAL_L, line_color=TEAL, line_w=Pt(0.5))
-    tb(slide, icon, Inches(6.95), ay + Inches(0.15), Inches(0.55), Inches(0.6), size=22)
-    tb(slide, step, Inches(7.6), ay + Inches(0.08),
-       Inches(4.9), Inches(0.35), size=14, bold=True, color=TEAL_D)
-    tb(slide, desc, Inches(7.6), ay + Inches(0.48),
-       Inches(4.9), Inches(0.3), size=12, color=TXT_M)
-    if icon != "📊":
-        arrow_v(slide, Inches(6.85) + Inches(5.9)/2, ay + Inches(0.9), Inches(0.22))
-    ay += Inches(1.12)
-
-pill(slide, "⚡  수 초 이내 완료", Inches(6.85), Inches(6.55),
-     w=Inches(3.5), h=Inches(0.38), fill=MINT_L,
-     color=RGBColor(0x00,0x69,0x2E), size=13)
 
 # ════════════════════════════════════════════════════════════════
-#  S04 – 공공기관 실무자 Pain Point
+#  S03 — 국민 Pain Point
 # ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "04   공공기관 실무자 입장에서의 Pain Point",
-            "벤치마킹과 업무학습 비용이 높다")
-footer(slide, 4)
+sl, cy = new_slide(3, "03   국민 입장에서의 Pain Point",
+                   "정보는 공개되어 있으나 '질문하기' 어렵다")
 
-inst_pain = [
-    ("🔍", "유사기관 운영사례 탐색",
-     "동종 기관 운영사례를 여러 사이트에서\n수작업으로 수집해야 함",
-     INDIGO, INDIGO_L),
-    ("📝", "경영평가 대응사례 확인",
-     "지적사항·우수사례 PDF를 연도별로\n일일이 찾아서 검토해야 함",
-     TEAL_D, TEAL_L),
-    ("📚", "신규 담당자 업무학습",
-     "법령·지침·편람이 분산돼\n온보딩 비용 과다",
-     CORAL, CORAL_L),
-]
-cx = Inches(0.35)
-for icon, title, desc, col, col_l in inst_pain:
-    card(slide, cx, Inches(1.35), Inches(4.15), Inches(5.3), col)
-    tb(slide, icon, cx + Inches(0.2), Inches(1.6), Inches(0.8), Inches(0.8), size=30)
-    tb(slide, title, cx + Inches(0.2), Inches(2.45),
-       Inches(3.7), Inches(0.5), size=16, bold=True, color=col)
-    rect(slide, cx + Inches(0.2), Inches(2.98),
-         Inches(3.0), Inches(0.05), fill=col)
-    tb(slide, desc, cx + Inches(0.2), Inches(3.12),
-       Inches(3.7), Inches(1.5), size=14, color=TXT_M)
-
-    # MCP 활용 힌트
-    rect(slide, cx + Inches(0.2), Inches(5.4),
-         Inches(3.7), Inches(0.88), fill=col_l,
-         line_color=col, line_w=Pt(0.5))
-    tb(slide, "→  MCP 활용 시",
-       cx + Inches(0.32), Inches(5.47),
-       Inches(3.5), Inches(0.3), size=11, bold=True, color=col)
-    hints = {
-        "유사기관 운영사례 탐색": "AI에게 물어보면 즉시 정리된\n벤치마킹 결과 제공",
-        "경영평가 대응사례 확인": "편람 키워드 검색 + 연도별\n지적 패턴 즉시 분석",
-        "신규 담당자 업무학습": "법령·지침 통합 검색으로\n온보딩 시간 대폭 단축",
-    }
-    tb(slide, hints[title], cx + Inches(0.32), Inches(5.77),
-       Inches(3.5), Inches(0.5), size=11, color=TXT_D)
-    cx += Inches(4.42)
-
-rect(slide, Inches(0.35), Inches(6.78), W - Inches(0.7), Inches(0.42), fill=INDIGO)
-tb(slide, "OpenAlio MCP가 3가지 Pain Point를 단번에 해결합니다",
-   Inches(0.55), Inches(6.82), W - Inches(1.1), Inches(0.35),
-   size=15, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
-
-# ════════════════════════════════════════════════════════════════
-#  S05 – 재경부 공무원 Pain Point
-# ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "05   재경부·주무부처 공무원 입장에서의 Pain Point",
-            "공개된 데이터를 활용하는 데 막대한 행정비용이 발생")
-footer(slide, 5)
-
-# 왼쪽 – 업무 유형
-card(slide, Inches(0.35), Inches(1.35), Inches(4.1), Inches(5.7), PURPLE)
-tb(slide, "주요 업무 유형",
-   Inches(0.55), Inches(1.55), Inches(3.8), Inches(0.45),
-   size=15, bold=True, color=PURPLE)
-
-task_items = [
-    ("⚙️", "기능개혁"), ("👥", "증원심사"),
-    ("🏆", "경영평가"), ("🔀", "기관통합검토"),
-    ("📰", "보도대응"), ("✅", "팩트체크"),
-]
-ty2 = Inches(2.1)
-for i, (ic, tn) in enumerate(task_items):
-    rx2 = Inches(0.55) if i % 2 == 0 else Inches(2.3)
-    if i % 2 == 0 and i > 0:
-        ty2 += Inches(0.72)
-    rect(slide, rx2, ty2, Inches(1.6), Inches(0.58),
-         fill=PURPLE_L, line_color=PURPLE, line_w=Pt(0.5))
-    tb(slide, f"{ic} {tn}", rx2 + Inches(0.05), ty2 + Inches(0.09),
-       Inches(1.5), Inches(0.42), size=13, bold=True, color=PURPLE,
-       align=PP_ALIGN.CENTER)
-if len(task_items) % 2 == 0:
-    ty2 += Inches(0.72)
-
-# 오른쪽 – 업무 흐름
-card(slide, Inches(4.75), Inches(1.35), Inches(8.2), Inches(5.7), CORAL)
-tb(slide, "실제 업무 흐름 (현재)",
-   Inches(4.95), Inches(1.55), Inches(7.8), Inches(0.45),
-   size=15, bold=True, color=CORAL)
-
-flow_items = [
-    ("기관별 정원·재무·사업 정보 필요", INDIGO_L, TXT_D),
-    ("ALIO 접속 → 항목별 클릭", CORAL_L, CORAL),
-    ("엑셀 파일 수십 개 다운로드  ⚠️", CORAL_L, CORAL),
-    ("수작업 정리·가공", CORAL_L, CORAL),
-    ("분석 수행", INDIGO_L, TXT_D),
-    ("보고서 작성", INDIGO_L, TXT_D),
-]
-fy2 = Inches(2.1)
-for label, bg_c, txt_c in flow_items:
-    rect(slide, Inches(4.95), fy2, Inches(7.8), Inches(0.5),
-         fill=bg_c, line_color=TXT_L, line_w=Pt(0.3))
-    tb(slide, label, Inches(5.05), fy2 + Inches(0.08),
-       Inches(7.6), Inches(0.35), size=13, bold=(txt_c==CORAL), color=txt_c)
-    if label != "보고서 작성":
-        arrow_v(slide, Inches(4.95) + Inches(7.8)/2, fy2 + Inches(0.5), Inches(0.16))
-    fy2 += Inches(0.68)
-
-tb(slide, "⚠  기관 1개당 수십 개 파일  ×  355개 기관 = 막대한 행정비용",
-   Inches(4.95), Inches(6.58), Inches(7.8), Inches(0.38),
-   size=12, bold=True, color=CORAL, italic=True)
-
-# ════════════════════════════════════════════════════════════════
-#  S06 – 연구자 Pain Point
-# ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "06   연구자 입장에서의 Pain Point",
-            "데이터보다 데이터 준비에 더 많은 시간이 소요")
-footer(slide, 6)
-
-tb(slide, "연구 시간의 대부분이 데이터 준비에 소요됩니다",
-   Inches(1.5), Inches(1.42), Inches(10), Inches(0.5),
-   size=19, bold=True, color=TXT_D, align=PP_ALIGN.CENTER)
-
-cycle = [
-    ("📥", "수  집", "ALIO·기관 홈페이지\n수작업 다운로드", INDIGO, INDIGO_L),
-    ("🧹", "정  제", "이상값·결측값\n수동 처리", CORAL, CORAL_L),
-    ("🔗", "통  합", "기관 코드 통일\n형식 표준화", TEAL_D, TEAL_L),
-    ("⚙️", "전처리", "분석 가능한\n형태로 변환", PURPLE, PURPLE_L),
-]
-cx4 = Inches(0.45)
-for icon, ctitle, cdesc, col, col_l in cycle:
-    card(slide, cx4, Inches(2.1), Inches(2.95), Inches(3.2), col, Inches(0.08))
-    tb(slide, icon, cx4, Inches(2.28), Inches(2.95), Inches(0.8),
-       size=32, align=PP_ALIGN.CENTER)
-    tb(slide, ctitle, cx4, Inches(3.15), Inches(2.95), Inches(0.5),
-       size=20, bold=True, color=col, align=PP_ALIGN.CENTER)
-    rect(slide, cx4 + Inches(0.9), Inches(3.7),
-         Inches(1.15), Inches(0.05), fill=col)
-    tb(slide, cdesc, cx4 + Inches(0.1), Inches(3.85),
-       Inches(2.75), Inches(0.9), size=13, color=TXT_M, align=PP_ALIGN.CENTER)
-    # 화살표 (마지막 제외)
-    if ctitle != "전처리":
-        rect(slide, cx4 + Inches(2.95), Inches(3.5),
-             Inches(0.4), Inches(0.08), fill=TXT_L)
-    cx4 += Inches(3.35)
-
-# 반복 루프 표시
-tb(slide, "⟳  위 과정을 매 연구마다, 연구자마다 반복 수행",
-   Inches(1.5), Inches(5.5), Inches(10), Inches(0.45),
-   size=16, bold=True, color=TXT_M, align=PP_ALIGN.CENTER)
-
-rect(slide, Inches(0.35), Inches(6.15), W - Inches(0.7), Inches(0.82), fill=INDIGO)
-tb(slide, "OpenAlio MCP 활용 시  →  355개 기관 × 11개 메트릭 × 6년치 데이터를 즉시 제공",
-   Inches(0.55), Inches(6.22), W - Inches(1.1), Inches(0.38),
-   size=16, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
-tb(slide, "출처·공시일·단위까지 자동 첨부 — 데이터 준비 시간 90% 단축",
-   Inches(0.55), Inches(6.6), W - Inches(1.1), Inches(0.32),
-   size=12, color=INDIGO_L, align=PP_ALIGN.CENTER)
-
-# ════════════════════════════════════════════════════════════════
-#  S07 – OpenAlio MCP 개발
-# ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "07   그래서 OpenAlio MCP를 개발",
-            "공공기관 정보를 AI가 활용할 수 있도록 연결하는 개방형 인터페이스")
-footer(slide, 7)
-
-# 중앙 아키텍처
-# 데이터 소스 레이어
-tb(slide, "[ 데이터 소스 ]",
-   Inches(0.35), Inches(1.42), Inches(4.0), Inches(0.4),
-   size=13, bold=True, color=TXT_M)
-data_srcs2 = [
-    ("ALIO", INDIGO, INDIGO_L),
-    ("ALIO PLUS", TEAL_D, TEAL_L),
-    ("JOB-ALIO", CORAL, CORAL_L),
-    ("법령·지침", PURPLE, PURPLE_L),
-    ("편람", MINT, MINT_L),
-    ("뉴스", AMBER_D, RGBColor(0xFF,0xF3,0xCD)),
-]
-dx3 = Inches(0.35)
-for ds, col, col_l in data_srcs2:
-    rect(slide, dx3, Inches(1.88), Inches(1.85), Inches(0.6),
-         fill=col_l, line_color=col, line_w=Pt(0.75))
-    tb(slide, ds, dx3, Inches(1.9), Inches(1.85), Inches(0.58),
-       size=13, bold=True, color=col, align=PP_ALIGN.CENTER)
-    dx3 += Inches(1.98)
-
-# 화살표 아래
-for xi in [Inches(2.2), Inches(4.2), Inches(6.2),
-           Inches(8.2), Inches(10.2), Inches(12.2)]:
-    rect(slide, xi, Inches(2.48), Inches(0.06), Inches(0.35), fill=TXT_L)
-
-# MCP 박스 (핵심)
-rect(slide, Inches(1.5), Inches(2.83), Inches(10.2), Inches(1.35), fill=INDIGO)
-rect(slide, Inches(1.5), Inches(2.83), Inches(10.2), Inches(0.08), fill=AMBER)
-tb(slide, "OpenAlio MCP",
-   Inches(1.5), Inches(2.93), Inches(10.2), Inches(0.62),
-   size=28, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
-tb(slide, "32개 도구  ·  2개 프롬프트  ·  5개 리소스  ·  355개 기관  ·  11개 메트릭  ·  6년치 데이터",
-   Inches(1.5), Inches(3.55), Inches(10.2), Inches(0.55),
-   size=13, color=INDIGO_L, align=PP_ALIGN.CENTER)
-
-# 화살표 아래
-for xi2 in [Inches(3.0), Inches(5.5), Inches(8.0), Inches(10.5)]:
-    rect(slide, xi2, Inches(4.18), Inches(0.06), Inches(0.35), fill=TXT_L)
-
-# 활용 대상
-tb(slide, "[ 활용 대상 ]",
-   Inches(1.5), Inches(4.52), Inches(4.0), Inches(0.4),
-   size=13, bold=True, color=TXT_M)
-users2 = [
-    ("👨‍👩‍👧", "국민", "정보 조회·질문", INDIGO, INDIGO_L),
-    ("🏢", "공공기관", "벤치마킹·학습", TEAL_D, TEAL_L),
-    ("💼", "공무원", "업무 자동화", CORAL, CORAL_L),
-    ("🔬", "연구자", "데이터 분석", PURPLE, PURPLE_L),
-]
-ux = Inches(1.5)
-for uicon, uname, udesc, ucol, ucol_l in users2:
-    rect(slide, ux, Inches(4.92), Inches(2.4), Inches(1.5),
-         fill=ucol_l, line_color=ucol, line_w=Pt(0.75))
-    tb(slide, uicon, ux, Inches(5.0), Inches(2.4), Inches(0.7),
-       size=22, align=PP_ALIGN.CENTER)
-    tb(slide, uname, ux, Inches(5.72), Inches(2.4), Inches(0.45),
-       size=14, bold=True, color=ucol, align=PP_ALIGN.CENTER)
-    tb(slide, udesc, ux, Inches(6.18), Inches(2.4), Inches(0.3),
-       size=11, color=TXT_M, align=PP_ALIGN.CENTER)
-    ux += Inches(2.58)
-
-# 핵심 문구
-rect(slide, Inches(0.35), Inches(6.78), W - Inches(0.7), Inches(0.42), fill=AMBER)
-tb(slide, "공공기관 정보를 AI가 활용 가능한 형태로 연결하는 개방형 인터페이스",
-   Inches(0.55), Inches(6.82), W - Inches(1.1), Inches(0.35),
-   size=15, bold=True, color=TXT_D, align=PP_ALIGN.CENTER)
-
-# ════════════════════════════════════════════════════════════════
-#  S08 – MCP란?
-# ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "08   MCP란 무엇인가",
-            "MCP = Model Context Protocol  ·  AI 시대의 USB-C")
-footer(slide, 8)
-
-# 왼쪽 – USB 비유
-card(slide, Inches(0.35), Inches(1.35), Inches(5.9), Inches(5.7), CORAL)
-tb(slide, "USB-C 비유로 이해하기",
-   Inches(0.55), Inches(1.55), Inches(5.6), Inches(0.45),
-   size=16, bold=True, color=CORAL)
+# 질문 강조
+R(sl, LM, cy, CW, Inches(0.62), fill=NAVY_D)
+R(sl, LM, cy, Inches(0.055), Inches(0.62), fill=GOLD)
+T(sl, '  "한국전력의 최근 5년 부채 추이는?"',
+  LM + Inches(0.2), cy + Inches(0.1), CW - Inches(0.4), Inches(0.44),
+  sz=18, bold=True, color=WHITE)
+cy += Inches(0.74)
 
 # Before
-tb(slide, "Before  ·  기기마다 다른 충전기",
-   Inches(0.55), Inches(2.08), Inches(5.6), Inches(0.38),
-   size=13, bold=True, color=TXT_M)
-old_devices = ["스마트폰", "태블릿", "노트북", "카메라"]
-ox3 = Inches(0.6)
-for od in old_devices:
-    rect(slide, ox3, Inches(2.55), Inches(1.1), Inches(0.45),
-         fill=CORAL_L, line_color=CORAL, line_w=Pt(0.5))
-    tb(slide, od, ox3, Inches(2.57), Inches(1.1), Inches(0.4),
-       size=11, color=CORAL, align=PP_ALIGN.CENTER)
-    rect(slide, ox3 + Inches(1.1), Inches(2.7),
-         Inches(0.25), Inches(0.08), fill=CORAL)
-    rect(slide, ox3 + Inches(1.35), Inches(2.55), Inches(0.18), Inches(0.45),
-         fill=CORAL)
-    ox3 += Inches(1.3)
+acard(sl, LM, cy, C2W, Inches(4.95), accent=RUST)
+ctitle(sl, "Before  —  현재 절차", LM, cy + Inches(0.1), C2W, accent=RUST)
+R(sl, LM + Inches(0.14), cy + Inches(0.54),
+  C2W - Inches(0.28), Inches(0.01), fill=LINE)
+bsteps = ["ALIO 접속", "기관 검색", "재무현황 이동",
+          "자료 다운로드", "직접 분석"]
+sy3 = cy + Inches(0.67)
+for i, s in enumerate(bsteps, 1):
+    stepbox(sl, LM + Inches(0.14), sy3, C2W - Inches(0.28),
+            Inches(0.52), i, s, RUST)
+    if i < len(bsteps):
+        arr_dn(sl, LM + Inches(0.14) + (C2W - Inches(0.28)) / 2,
+               sy3 + Inches(0.52), Inches(0.18))
+    sy3 += Inches(0.7)
+T(sl, "⏱  수십 분 ~ 수 시간 소요",
+  LM + Inches(0.14), cy + Inches(4.72), C2W - Inches(0.28), Inches(0.28),
+  sz=11, bold=True, color=RUST, italic=True)
 
 # After
-tb(slide, "After  ·  USB-C 하나로 통일",
-   Inches(0.55), Inches(3.28), Inches(5.6), Inches(0.38),
-   size=13, bold=True, color=TEAL_D)
-new_devices = ["스마트폰", "태블릿", "노트북", "카메라"]
-nx = Inches(0.6)
-for nd in new_devices:
-    rect(slide, nx, Inches(3.75), Inches(1.1), Inches(0.45),
-         fill=TEAL_L, line_color=TEAL_D, line_w=Pt(0.5))
-    tb(slide, nd, nx, Inches(3.77), Inches(1.1), Inches(0.4),
-       size=11, color=TEAL_D, align=PP_ALIGN.CENTER)
-    rect(slide, nx + Inches(0.52), Inches(4.2),
-         Inches(0.06), Inches(0.28), fill=TEAL_D)
-    nx += Inches(1.3)
-rect(slide, Inches(0.85), Inches(4.48),
-     Inches(5.2), Inches(0.06), fill=TEAL_D)
-rect(slide, Inches(3.2), Inches(4.54),
-     Inches(0.06), Inches(0.3), fill=TEAL_D)
-rect(slide, Inches(2.85), Inches(4.84),
-     Inches(0.75), Inches(0.42), fill=TEAL_D)
-tb(slide, "USB-C", Inches(2.85), Inches(4.86), Inches(0.75), Inches(0.38),
-   size=12, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+acard(sl, C2X2, cy, C2W, Inches(4.95), accent=SAGE)
+ctitle(sl, "After  —  OpenAlio MCP 활용", C2X2, cy + Inches(0.1), C2W, accent=SAGE)
+R(sl, C2X2 + Inches(0.14), cy + Inches(0.54),
+  C2W - Inches(0.28), Inches(0.01), fill=LINE)
 
-# 오른쪽 – MCP 설명
-card(slide, Inches(6.6), Inches(1.35), Inches(6.35), Inches(5.7), INDIGO)
-tb(slide, "MCP = Model Context Protocol",
-   Inches(6.8), Inches(1.55), Inches(6.0), Inches(0.45),
-   size=16, bold=True, color=INDIGO_D)
-
-tb(slide, "AI 모델이 다양한 외부 데이터·도구와\n표준화된 방식으로 연결하는 프로토콜",
-   Inches(6.8), Inches(2.1), Inches(6.0), Inches(0.75),
-   size=14, color=TXT_D)
-
-mcp_feats = [
-    ("🔌", "표준화", "어떤 AI든 동일한 방식으로 연결"),
-    ("🔒", "안전성", "입력 검증·응답 크기 제한 내장"),
-    ("📦", "모듈성", "도구 단위로 독립 추가·제거 가능"),
-    ("🚀", "확장성", "새 데이터소스 연결 용이"),
+asteps = [
+    ("1", "자연어로 질문 입력"),
+    ("2", "AI가 MCP 도구 자동 선택·호출"),
+    ("3", "ALIO 데이터 실시간 조회"),
+    ("4", "분석 · 시각화 수행"),
+    ("5", "결과 + 출처 · 공시일 반환"),
 ]
-mf_y = Inches(3.0)
-for icon, mtitle, mdesc in mcp_feats:
-    rect(slide, Inches(6.8), mf_y, Inches(5.9), Inches(0.68),
-         fill=BG, line_color=INDIGO_L, line_w=Pt(0.5))
-    tb(slide, icon, Inches(6.9), mf_y + Inches(0.1),
-       Inches(0.55), Inches(0.5), size=18)
-    tb(slide, mtitle, Inches(7.55), mf_y + Inches(0.07),
-       Inches(1.3), Inches(0.35), size=13, bold=True, color=INDIGO_D)
-    tb(slide, mdesc, Inches(8.95), mf_y + Inches(0.17),
-       Inches(3.6), Inches(0.38), size=12, color=TXT_M)
-    mf_y += Inches(0.8)
+sy4 = cy + Inches(0.67)
+for n, s in asteps:
+    stepbox(sl, C2X2 + Inches(0.14), sy4, C2W - Inches(0.28),
+            Inches(0.52), n, s, SAGE)
+    if n != "5":
+        arr_dn(sl, C2X2 + Inches(0.14) + (C2W - Inches(0.28)) / 2,
+               sy4 + Inches(0.52), Inches(0.18))
+    sy4 += Inches(0.7)
+T(sl, "⚡  수 초 이내 완료 · 출처 자동 첨부",
+  C2X2 + Inches(0.14), cy + Inches(4.72), C2W - Inches(0.28), Inches(0.28),
+  sz=11, bold=True, color=SAGE, italic=True)
 
-tb(slide, "Claude / ChatGPT / Cursor / 브리티웍스 · · ·",
-   Inches(6.8), Inches(6.38), Inches(6.0), Inches(0.38),
-   size=13, color=INDIGO, italic=True, bold=True)
 
 # ════════════════════════════════════════════════════════════════
-#  S09 – 동작 원리
+#  S04 — 공공기관 실무자 Pain Point
 # ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "09   OpenAlio MCP는 어떻게 동작하는가",
-            "질문 한 번으로 공공기관 데이터 분석·보고서까지")
-footer(slide, 9)
+sl, cy = new_slide(4, "04   공공기관 실무자 입장에서의 Pain Point",
+                   "벤치마킹과 업무학습 비용이 높다")
 
-# 중앙 플로우
-flow_labels2 = [
-    ("💬  사용자 질문", INDIGO),
-    ("🤖  AI  (Claude / ChatGPT 등)", INDIGO),
-    ("⚙️  OpenAlio MCP  (32개 도구)", AMBER_D),
-    ("🗄  ALIO · ALIO PLUS · 법령 · 뉴스 조회", TEAL_D),
-    ("📈  분석 수행", TEAL),
-    ("📋  표 · 그래프 · 보고서 + 출처 자동 첨부", MINT),
+pain_cards = [
+    ("유사기관 운영사례 탐색",
+     "동종 기관 운영사례를 여러 사이트에서\n수작업으로 수집해야 함",
+     "AI에게 물어보면 즉시 정리된\n벤치마킹 결과 제공",
+     NAVY),
+    ("경영평가 대응사례 확인",
+     "지적사항·우수사례 PDF를 연도별로\n일일이 찾아서 검토",
+     "편람 키워드 검색 + 연도별\n지적 패턴 즉시 분석",
+     TEAL),
+    ("신규 담당자 업무학습",
+     "법령·지침·편람이 분산돼\n온보딩 비용 과다",
+     "법령·지침 통합 검색으로\n온보딩 시간 대폭 단축",
+     PLUM),
 ]
-bw2 = Inches(5.0)
-bh2 = Inches(0.6)
-gp2 = Inches(0.22)
-sx = (W - bw2) / 2
-sy2 = Inches(1.42)
+for i, (title, prob, sol, col) in enumerate(pain_cards):
+    x = LM + i * (C3W + Inches(0.28))
+    acard(sl, x, cy, C3W, Inches(5.6), accent=col)
+    T(sl, title, x + Inches(0.14), cy + Inches(0.1),
+      C3W - Inches(0.2), Inches(0.44), sz=14, bold=True, color=col)
+    R(sl, x + Inches(0.14), cy + Inches(0.56),
+      C3W - Inches(0.28), Inches(0.01), fill=LINE)
 
-for i, (lbl, col) in enumerate(flow_labels2):
-    by3 = sy2 + i * (bh2 + gp2)
-    rect(slide, sx, by3, bw2, bh2, fill=col)
-    tb(slide, lbl, sx + Inches(0.1), by3 + Pt(4), bw2 - Inches(0.2), bh2,
-       size=14, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
-    if i < len(flow_labels2) - 1:
-        arrow_v(slide, sx + bw2/2, by3 + bh2, gp2)
+    T(sl, "현황 (Pain Point)", x + Inches(0.14), cy + Inches(0.7),
+      C3W - Inches(0.2), Inches(0.3), sz=11, bold=True, color=RUST)
+    R(sl, x + Inches(0.14), cy + Inches(1.0),
+      C3W - Inches(0.28), Inches(1.55),
+      fill=RUST_L, lc=BORDER, lw=Pt(0.5))
+    T(sl, prob, x + Inches(0.24), cy + Inches(1.1),
+      C3W - Inches(0.48), Inches(1.35), sz=13, color=TXT_M)
 
-# 왼쪽 예시 질문
-card(slide, Inches(0.35), Inches(1.35), Inches(3.35), Inches(5.7), INDIGO)
-tb(slide, "예시 질문",
-   Inches(0.55), Inches(1.55), Inches(3.1), Inches(0.42),
-   size=14, bold=True, color=INDIGO_D)
+    T(sl, "MCP 활용 시", x + Inches(0.14), cy + Inches(2.72),
+      C3W - Inches(0.2), Inches(0.3), sz=11, bold=True, color=SAGE)
+    R(sl, x + Inches(0.14), cy + Inches(3.02),
+      C3W - Inches(0.28), Inches(1.55),
+      fill=SAGE_L, lc=BORDER, lw=Pt(0.5))
+    T(sl, sol, x + Inches(0.24), cy + Inches(3.12),
+      C3W - Inches(0.48), Inches(1.35), sz=13, color=TXT_M)
 
-qs = [
-    "\"최근 5년 부채 증가율\n상위 10개 기관\"",
-    "\"A기관·B기관 통합\n검토 보고서\"",
-    "\"육아휴직 사용률 가장\n높은 기관은?\"",
-]
-qy2 = Inches(2.08)
-for q in qs:
-    rect(slide, Inches(0.55), qy2, Inches(3.0), Inches(1.22),
-         fill=INDIGO_L, line_color=INDIGO, line_w=Pt(0.5))
-    tb(slide, q, Inches(0.65), qy2 + Inches(0.15),
-       Inches(2.8), Inches(0.95), size=13, color=INDIGO_D, italic=True)
-    qy2 += Inches(1.4)
+hbar(sl, "OpenAlio MCP — 법령·지침·편람 통합 검색으로 3가지 Pain Point를 단번에 해결",
+     accent=NAVY)
 
-# 오른쪽 출력 예시
-card(slide, Inches(9.65), Inches(1.35), Inches(3.35), Inches(5.7), MINT)
-tb(slide, "출력 형태",
-   Inches(9.85), Inches(1.55), Inches(3.1), Inches(0.42),
-   size=14, bold=True, color=RGBColor(0x00,0x69,0x2E))
-
-outputs2 = [
-    ("📊", "시계열 차트"),
-    ("📋", "비교 표"),
-    ("📝", "보고서 초안"),
-    ("🔗", "출처 및 공시일"),
-    ("⚠️", "결측 사유 안내"),
-]
-oy4 = Inches(2.08)
-for icon, otxt in outputs2:
-    rect(slide, Inches(9.85), oy4, Inches(3.0), Inches(0.75),
-         fill=MINT_L, line_color=MINT, line_w=Pt(0.5))
-    tb(slide, icon, Inches(9.95), oy4 + Inches(0.1),
-       Inches(0.5), Inches(0.55), size=18)
-    tb(slide, otxt, Inches(10.55), oy4 + Inches(0.2),
-       Inches(2.2), Inches(0.38), size=13, color=TXT_D, bold=True)
-    oy4 += Inches(0.9)
 
 # ════════════════════════════════════════════════════════════════
-#  S10 – 활용 사례 ① 국민
+#  S05 — 재경부 공무원 Pain Point
 # ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "10   활용 사례 ①  국민 서비스",
-            "누구나 AI에게 물어보면 공공기관 정보를 즉시 확인")
-footer(slide, 10)
+sl, cy = new_slide(5, "05   재경부·주무부처 공무원 입장에서의 Pain Point",
+                   "공개된 데이터를 활용하는 데 막대한 행정비용이 발생")
 
-citizen = [
-    ("💰", "한전 부채 얼마야?",
-     "한국전력 최근 5년 부채 추이\n수치·그래프 즉시 제공",
-     INDIGO, INDIGO_L),
-    ("👶", "육아휴직 사용률이\n가장 높은 기관은?",
-     "355개 기관 육아휴직 데이터\n순위 표 자동 생성",
-     TEAL_D, TEAL_L),
-    ("🏟️", "근처 공공기관\n체육시설 알려줘",
-     "ALIO PLUS 시설 정보\n예약 링크·운영시간 안내",
-     CORAL, CORAL_L),
+# 왼쪽: 업무 유형
+acard(sl, LM, cy, Inches(3.8), Inches(5.55))
+ctitle(sl, "주요 업무 유형", LM, cy + Inches(0.1), Inches(3.8))
+R(sl, LM + Inches(0.14), cy + Inches(0.54),
+  Inches(3.52), Inches(0.01), fill=LINE)
+tasks = ["기능개혁 검토", "증원심사", "경영평가 지원",
+         "기관 통합 검토", "보도 대응", "팩트체크"]
+ty2 = cy + Inches(0.7)
+for t in tasks:
+    R(sl, LM + Inches(0.14), ty2, Inches(3.52), Inches(0.55),
+      fill=CARD, lc=BORDER, lw=Pt(0.5))
+    T(sl, t, LM + Inches(0.28), ty2 + Inches(0.1),
+      Inches(3.2), Inches(0.35), sz=14, color=TXT_D, bold=True)
+    ty2 += Inches(0.65)
+
+# 오른쪽: 업무 흐름
+rx = LM + Inches(4.1)
+rw = CW - Inches(4.1)
+acard(sl, rx, cy, rw, Inches(5.55), accent=RUST)
+ctitle(sl, "실제 업무 흐름 (현재)", rx, cy + Inches(0.1), rw, accent=RUST)
+R(sl, rx + Inches(0.14), cy + Inches(0.54),
+  rw - Inches(0.28), Inches(0.01), fill=LINE)
+
+flows = [
+    ("기관별 정원·재무·사업 정보 확인 필요", WHITE, TXT_D, False),
+    ("ALIO 접속 → 항목별 클릭 → 다운로드", RUST_L, RUST, True),
+    ("엑셀 파일 수십 개 수작업 정리·가공  ⚠", RUST_L, RUST, True),
+    ("분석 수행", WHITE, TXT_M, False),
+    ("보고서 작성", WHITE, TXT_M, False),
 ]
-cx5 = Inches(0.35)
-for icon, q, result, col, col_l in citizen:
-    card(slide, cx5, Inches(1.35), Inches(4.1), Inches(5.72), col)
-    tb(slide, icon, cx5, Inches(1.6), Inches(4.1), Inches(0.9),
-       size=40, align=PP_ALIGN.CENTER)
-    # 질문 버블
-    rect(slide, cx5 + Inches(0.15), Inches(2.62),
-         Inches(3.8), Inches(1.12), fill=col_l,
-         line_color=col, line_w=Pt(0.75))
-    tb(slide, q, cx5 + Inches(0.25), Inches(2.75),
-       Inches(3.6), Inches(0.9), size=16, bold=True, color=col,
-       align=PP_ALIGN.CENTER)
-    # 구분선
-    rect(slide, cx5 + Inches(0.5), Inches(3.85),
-         Inches(3.1), Inches(0.05), fill=col)
-    tb(slide, "→ 결과", cx5 + Inches(0.25), Inches(4.0),
-       Inches(3.6), Inches(0.4), size=13, bold=True, color=col)
-    tb(slide, result, cx5 + Inches(0.25), Inches(4.42),
-       Inches(3.6), Inches(1.0), size=14, color=TXT_M)
-    cx5 += Inches(4.42)
+fy2 = cy + Inches(0.7)
+for label, bg, col, emph in flows:
+    R(sl, rx + Inches(0.14), fy2, rw - Inches(0.28), Inches(0.55),
+      fill=bg, lc=BORDER, lw=Pt(0.5))
+    if emph:
+        R(sl, rx + Inches(0.14), fy2, Inches(0.04), Inches(0.55), fill=RUST)
+    T(sl, label, rx + Inches(0.28), fy2 + Inches(0.1),
+      rw - Inches(0.5), Inches(0.35), sz=13, bold=emph, color=col)
+    if label != "보고서 작성":
+        arr_dn(sl, rx + Inches(0.14) + (rw - Inches(0.28)) / 2,
+               fy2 + Inches(0.55), Inches(0.18))
+    fy2 += Inches(0.73)
 
-rect(slide, Inches(0.35), Inches(7.22), W - Inches(0.7), Inches(0.42), fill=TEAL_D)
-tb(slide, "사용자는 웹사이트 구조를 몰라도 됩니다  —  질문만 하면 됩니다",
-   Inches(0.55), Inches(7.26), W - Inches(1.1), Inches(0.35),
-   size=15, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+T(sl, "⚠  기관 1개당 수십 개 파일  ×  355개 기관 = 막대한 행정비용",
+  rx + Inches(0.14), cy + Inches(5.22), rw - Inches(0.28), Inches(0.3),
+  sz=11, bold=True, color=RUST, italic=True)
+
+hbar(sl, "OpenAlio MCP — 자동화된 데이터 수집·정리로 행정비용 획기적 절감", accent=NAVY)
+
 
 # ════════════════════════════════════════════════════════════════
-#  S11 – 활용 사례 ② 공공기관 실무자
+#  S06 — 연구자 Pain Point
 # ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "11   활용 사례 ②  공공기관 실무자",
-            "벤치마킹·평가 대응·조직운영 정보를 즉시 활용")
-footer(slide, 11)
+sl, cy = new_slide(6, "06   연구자 입장에서의 Pain Point",
+                   "데이터보다 데이터 준비에 더 많은 시간이 소요")
 
-inst_use = [
-    ("📊", "ESG 우수사례 정리",
-     '"유사기관 ESG 우수사례 정리"',
-     "동종 기관 ESG 공시 항목\n우수 사례 자동 요약 제공",
-     INDIGO, INDIGO_L),
-    ("🏆", "경영평가 지적사항",
-     '"최근 경영평가 지적사항 분석"',
-     "2025·2026 평가편람 기준\n지적 패턴·주요 지표 분석",
-     TEAL_D, TEAL_L),
-    ("👥", "조직운영 비교",
-     '"기관별 조직운영 비교"',
-     "정원·실인원·보수 등\n11개 메트릭 동시 비교",
-     CORAL, CORAL_L),
+T(sl, "연구 시간의 대부분이 데이터 수집·정제에 소요됩니다",
+  LM, cy, CW, Inches(0.42), sz=16, bold=True, color=TXT_D,
+  align=PP_ALIGN.CENTER)
+cy += Inches(0.52)
+
+cycle = [
+    ("수  집", "ALIO·기관 홈페이지\n수작업 다운로드", NAVY),
+    ("정  제", "이상값·결측값\n수동 처리", RUST),
+    ("통  합", "기관 코드 통일\n형식 표준화", TEAL),
+    ("전처리", "분석 가능한\n형태로 변환", PLUM),
 ]
-ix2 = Inches(0.35)
-for icon, title, q, result, col, col_l in inst_use:
-    card(slide, ix2, Inches(1.35), Inches(4.1), Inches(5.72), col)
-    tb(slide, icon, ix2, Inches(1.6), Inches(4.1), Inches(0.9),
-       size=38, align=PP_ALIGN.CENTER)
-    tb(slide, title, ix2 + Inches(0.15), Inches(2.52),
-       Inches(3.8), Inches(0.48), size=16, bold=True, color=col,
-       align=PP_ALIGN.CENTER)
+bw = (CW - Inches(0.28) * 3) / 4
+bh = Inches(2.8)
+bx = LM
+for i, (ctit, cdesc, col) in enumerate(cycle):
+    acard(sl, bx, cy, bw, bh, accent=col)
+    T(sl, ctit, bx + Inches(0.14), cy + Inches(0.15),
+      bw - Inches(0.2), Inches(0.5), sz=17, bold=True, color=col)
+    R(sl, bx + Inches(0.14), cy + Inches(0.68),
+      bw - Inches(0.28), Inches(0.01), fill=LINE)
+    T(sl, cdesc, bx + Inches(0.14), cy + Inches(0.82),
+      bw - Inches(0.2), Inches(1.8), sz=13, color=TXT_M)
+    if i < 3:
+        R(sl, bx + bw, cy + bh / 2 - Inches(0.025),
+          Inches(0.28), Inches(0.05), fill=TXT_XL)
+    bx += bw + Inches(0.28)
+
+# 반복 루프 표현
+R(sl, LM, cy + bh + Inches(0.28), CW, Inches(0.01), fill=LINE)
+T(sl, "⟳  위 과정을 매 연구마다, 연구자마다 반복 수행  —  연구 준비기간 수 주",
+  LM, cy + bh + Inches(0.34), CW, Inches(0.32),
+  sz=13, color=TXT_L, align=PP_ALIGN.CENTER, italic=True)
+
+# 해결책
+R(sl, LM, cy + bh + Inches(0.8), CW, Inches(0.82), fill=SAGE_L,
+  lc=BORDER, lw=Pt(0.5))
+R(sl, LM, cy + bh + Inches(0.8), Inches(0.048), Inches(0.82), fill=SAGE)
+T(sl, "OpenAlio MCP 활용 시",
+  LM + Inches(0.18), cy + bh + Inches(0.88), Inches(3), Inches(0.35),
+  sz=12, bold=True, color=SAGE)
+T(sl, "355개 기관 × 11개 메트릭 × 6년치 데이터를 즉시 제공  ·  출처·공시일·단위 자동 첨부  ·  데이터 준비 시간 90% 단축",
+  LM + Inches(3.3), cy + bh + Inches(0.88), CW - Inches(3.5), Inches(0.58),
+  sz=13, color=TXT_M)
+
+
+# ════════════════════════════════════════════════════════════════
+#  S07 — OpenAlio MCP 개발
+# ════════════════════════════════════════════════════════════════
+sl, cy = new_slide(7, "07   그래서 OpenAlio MCP를 개발",
+                   "공공기관 정보를 AI가 활용할 수 있도록 연결하는 개방형 인터페이스")
+
+# 3레이어 아키텍처
+# 레이어 1: 데이터 소스
+T(sl, "[ 데이터 소스 레이어 ]", LM, cy, Inches(5), Inches(0.35),
+  sz=11, bold=True, color=TXT_L)
+cy += Inches(0.38)
+src_items2 = [
+    ("ALIO", NAVY), ("ALIO PLUS", TEAL), ("JOB-ALIO", PLUM),
+    ("법령·지침", SAGE), ("편람", RUST), ("뉴스", GOLD),
+]
+sw = (CW - Inches(0.2) * 5) / 6
+sx2 = LM
+for sname, scol in src_items2:
+    R(sl, sx2, cy, sw, Inches(0.58), fill=WHITE, lc=scol, lw=Pt(1.2))
+    R(sl, sx2, cy, sw, Inches(0.04), fill=scol)
+    T(sl, sname, sx2, cy + Inches(0.1), sw, Inches(0.44),
+      sz=13, bold=True, color=scol, align=PP_ALIGN.CENTER)
+    R(sl, sx2 + sw / 2 - Inches(0.025), cy + Inches(0.58),
+      Inches(0.05), Inches(0.28), fill=TXT_XL)
+    sx2 += sw + Inches(0.2)
+cy += Inches(0.9)
+
+# 레이어 2: MCP (핵심)
+R(sl, LM, cy, CW, Inches(1.1), fill=NAVY_D)
+R(sl, LM, cy, CW, Inches(0.05), fill=GOLD)
+R(sl, LM, cy + Inches(1.05), CW, Inches(0.05), fill=GOLD)
+T(sl, "OpenAlio MCP",
+  LM, cy + Inches(0.1), CW * 0.5, Inches(0.55),
+  sz=26, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+T(sl, "32개 도구  ·  2개 프롬프트  ·  5개 리소스",
+  LM + CW * 0.5, cy + Inches(0.22), CW * 0.5, Inches(0.38),
+  sz=14, color=NAVY_L, align=PP_ALIGN.CENTER)
+R(sl, LM, cy + Inches(0.58), Inches(0.01), Inches(0.52), fill=GOLD)
+T(sl, "표준화된 MCP 프로토콜로 어떤 AI에도 동일한 방식으로 연결",
+  LM + CW * 0.5, cy + Inches(0.56), CW * 0.5, Inches(0.38),
+  sz=12, color=NAVY_L, italic=True, align=PP_ALIGN.CENTER)
+
+# 화살표
+for xi in [LM + CW * 0.1, LM + CW * 0.3, LM + CW * 0.5,
+           LM + CW * 0.7, LM + CW * 0.9]:
+    R(sl, xi - Inches(0.025), cy + Inches(1.15),
+      Inches(0.05), Inches(0.25), fill=TXT_XL)
+cy += Inches(1.4)
+
+# 레이어 3: 활용 대상
+T(sl, "[ 활용 대상 ]", LM, cy, Inches(5), Inches(0.35),
+  sz=11, bold=True, color=TXT_L)
+cy += Inches(0.38)
+users3 = [
+    ("국민", "정보 조회·질문", NAVY),
+    ("공공기관", "벤치마킹·학습", TEAL),
+    ("공무원", "업무 자동화", PLUM),
+    ("연구자", "데이터 분석", SAGE),
+]
+uw = (CW - Inches(0.35) * 3) / 4
+ux2 = LM
+for uname, udesc, ucol in users3:
+    acard(sl, ux2, cy, uw, Inches(0.88), accent=ucol)
+    T(sl, uname, ux2 + Inches(0.14), cy + Inches(0.06),
+      uw - Inches(0.2), Inches(0.38), sz=15, bold=True, color=ucol)
+    T(sl, udesc, ux2 + Inches(0.14), cy + Inches(0.46),
+      uw - Inches(0.2), Inches(0.3), sz=12, color=TXT_L)
+    ux2 += uw + Inches(0.35)
+
+
+# ════════════════════════════════════════════════════════════════
+#  S08 — MCP란?
+# ════════════════════════════════════════════════════════════════
+sl, cy = new_slide(8, "08   MCP란 무엇인가",
+                   "Model Context Protocol — AI 시대의 USB-C")
+
+# 왼쪽: USB 비유
+acard(sl, LM, cy, C2W, Inches(5.55))
+ctitle(sl, "USB-C 비유", LM, cy + Inches(0.1), C2W)
+R(sl, LM + Inches(0.14), cy + Inches(0.54),
+  C2W - Inches(0.28), Inches(0.01), fill=LINE)
+
+T(sl, "Before  —  기기마다 다른 충전기",
+  LM + Inches(0.14), cy + Inches(0.68), C2W - Inches(0.28), Inches(0.32),
+  sz=12, bold=True, color=RUST)
+devs = ["스마트폰", "태블릿", "노트북", "카메라"]
+dx5 = LM + Inches(0.18)
+for d in devs:
+    R(sl, dx5, cy + Inches(1.05), Inches(1.2), Inches(0.45),
+      fill=RUST_L, lc=BORDER, lw=Pt(0.5))
+    T(sl, d, dx5, cy + Inches(1.07), Inches(1.2), Inches(0.4),
+      sz=11, color=RUST, align=PP_ALIGN.CENTER)
+    R(sl, dx5 + Inches(1.2), cy + Inches(1.18),
+      Inches(0.22), Inches(0.08), fill=RUST)
+    R(sl, dx5 + Inches(1.42), cy + Inches(1.05),
+      Inches(0.22), Inches(0.45), fill=RUST)
+    dx5 += Inches(1.44)
+
+R(sl, LM + Inches(0.14), cy + Inches(1.7),
+  C2W - Inches(0.28), Inches(0.01), fill=LINE)
+
+T(sl, "After  —  USB-C 하나로 통일",
+  LM + Inches(0.14), cy + Inches(1.84), C2W - Inches(0.28), Inches(0.32),
+  sz=12, bold=True, color=SAGE)
+dx6 = LM + Inches(0.18)
+ctr = LM + Inches(0.18) + Inches(1.44) * 2 + Inches(0.6)
+for d in devs:
+    R(sl, dx6, cy + Inches(2.22), Inches(1.2), Inches(0.45),
+      fill=SAGE_L, lc=BORDER, lw=Pt(0.5))
+    T(sl, d, dx6, cy + Inches(2.24), Inches(1.2), Inches(0.4),
+      sz=11, color=SAGE, align=PP_ALIGN.CENTER)
+    R(sl, dx6 + Inches(0.57), cy + Inches(2.67),
+      Inches(0.05), Inches(0.3), fill=TXT_XL)
+    dx6 += Inches(1.44)
+R(sl, LM + Inches(0.75), cy + Inches(2.97), C2W - Inches(1.0), Inches(0.05), fill=SAGE)
+R(sl, ctr, cy + Inches(3.02), Inches(0.05), Inches(0.3), fill=SAGE)
+R(sl, ctr - Inches(0.42), cy + Inches(3.32), Inches(0.9), Inches(0.42), fill=SAGE)
+T(sl, "USB-C", ctr - Inches(0.42), cy + Inches(3.34),
+  Inches(0.9), Inches(0.38), sz=12, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+
+# 오른쪽: MCP 설명
+acard(sl, C2X2, cy, C2W, Inches(5.55), accent=TEAL)
+ctitle(sl, "MCP = Model Context Protocol", C2X2, cy + Inches(0.1), C2W, accent=TEAL)
+R(sl, C2X2 + Inches(0.14), cy + Inches(0.54),
+  C2W - Inches(0.28), Inches(0.01), fill=LINE)
+
+T(sl, "AI 모델이 다양한 외부 데이터·도구와\n표준화된 방식으로 연결하는 프로토콜",
+  C2X2 + Inches(0.14), cy + Inches(0.68), C2W - Inches(0.28), Inches(0.9),
+  sz=14, color=TXT_D)
+
+mcp_feats2 = [
+    (TEAL,  "표준화", "어떤 AI든 동일한 방식으로 연결"),
+    (NAVY,  "안전성", "입력 검증 · 응답 크기 제한 내장"),
+    (PLUM,  "모듈성", "도구 단위로 독립 추가·제거"),
+    (SAGE,  "확장성", "새 데이터소스 연결 용이"),
+    (GOLD,  "투명성", "출처·공시일·단위 자동 첨부"),
+]
+mfy = cy + Inches(1.72)
+for col, mtit, mdesc in mcp_feats2:
+    R(sl, C2X2 + Inches(0.14), mfy, C2W - Inches(0.28), Inches(0.6),
+      fill=WHITE, lc=BORDER, lw=Pt(0.5))
+    R(sl, C2X2 + Inches(0.14), mfy, Inches(0.04), Inches(0.6), fill=col)
+    T(sl, mtit, C2X2 + Inches(0.28), mfy + Inches(0.08),
+      Inches(1.4), Inches(0.3), sz=13, bold=True, color=col)
+    T(sl, mdesc, C2X2 + Inches(1.8), mfy + Inches(0.14),
+      C2W - Inches(2.0), Inches(0.32), sz=12, color=TXT_L)
+    mfy += Inches(0.7)
+
+T(sl, "Claude · ChatGPT · Cursor · 브리티웍스 등",
+  C2X2 + Inches(0.14), cy + Inches(5.22), C2W - Inches(0.28), Inches(0.3),
+  sz=11, color=TEAL, italic=True)
+
+
+# ════════════════════════════════════════════════════════════════
+#  S09 — 동작 원리
+# ════════════════════════════════════════════════════════════════
+sl, cy = new_slide(9, "09   OpenAlio MCP는 어떻게 동작하는가",
+                   "질문 한 번으로 공공기관 데이터 분석·보고서까지")
+
+# 중앙 플로우 (좁게)
+fw = Inches(5.2)
+fx = (W - fw) / 2
+fsteps = [
+    ("사용자 질문",             NAVY_D),
+    ("AI  (Claude / ChatGPT 등)", NAVY),
+    ("OpenAlio MCP  (32개 도구)", GOLD),
+    ("ALIO · 법령 · 뉴스 조회",  TEAL),
+    ("분석 수행",               TEAL),
+    ("결과 + 출처 · 공시일 반환", SAGE),
+]
+fy3 = cy + Inches(0.1)
+bh2 = Inches(0.56)
+gp  = Inches(0.2)
+for i, (lbl, col) in enumerate(fsteps):
+    R(sl, fx, fy3, fw, bh2, fill=col)
+    T(sl, lbl, fx + Inches(0.1), fy3 + Inches(0.08),
+      fw - Inches(0.2), bh2 - Inches(0.14), sz=14, bold=True,
+      color=WHITE, align=PP_ALIGN.CENTER)
+    if i < len(fsteps) - 1:
+        arr_dn(sl, fx + fw / 2, fy3 + bh2, gp)
+    fy3 += bh2 + gp
+
+# 왼쪽: 예시 질문
+acard(sl, LM, cy, Inches(3.3), Inches(5.5))
+ctitle(sl, "예시 질문", LM, cy + Inches(0.1), Inches(3.3))
+R(sl, LM + Inches(0.14), cy + Inches(0.54),
+  Inches(2.92), Inches(0.01), fill=LINE)
+qs2 = [
+    '"최근 5년 부채 증가율\n상위 10개 기관"',
+    '"A기관·B기관 통합\n검토 보고서"',
+    '"육아휴직 사용률 가장\n높은 기관은?"',
+]
+qy3 = cy + Inches(0.68)
+for q in qs2:
+    R(sl, LM + Inches(0.14), qy3, Inches(2.92), Inches(1.3),
+      fill=NAVY_L, lc=BORDER, lw=Pt(0.5))
+    T(sl, q, LM + Inches(0.24), qy3 + Inches(0.16),
+      Inches(2.72), Inches(1.0), sz=13, color=NAVY_D, italic=True)
+    qy3 += Inches(1.48)
+
+# 오른쪽: 출력 형태
+acard(sl, W - LM - Inches(3.3), cy, Inches(3.3), Inches(5.5), accent=SAGE)
+ctitle(sl, "출력 형태", W - LM - Inches(3.3), cy + Inches(0.1),
+       Inches(3.3), accent=SAGE)
+R(sl, W - LM - Inches(3.16), cy + Inches(0.54),
+  Inches(2.92), Inches(0.01), fill=LINE)
+outputs3 = [
+    ("시계열 차트", "연도별 추이 자동 시각화"),
+    ("비교 표", "기관 간 지표 나란히 비교"),
+    ("보고서 초안", "분석 결과 정형화된 텍스트"),
+    ("출처 첨부", "시스템명·공시일·단위 포함"),
+    ("결측 안내", "미공시·공시주기 안내 포함"),
+]
+oy5 = cy + Inches(0.68)
+ox5 = W - LM - Inches(3.16)
+for otit, odesc in outputs3:
+    R(sl, ox5, oy5, Inches(2.92), Inches(0.82),
+      fill=SAGE_L, lc=BORDER, lw=Pt(0.5))
+    T(sl, otit, ox5 + Inches(0.1), oy5 + Inches(0.06),
+      Inches(2.7), Inches(0.32), sz=13, bold=True, color=SAGE)
+    T(sl, odesc, ox5 + Inches(0.1), oy5 + Inches(0.42),
+      Inches(2.7), Inches(0.32), sz=11, color=TXT_L)
+    oy5 += Inches(0.95)
+
+
+# ════════════════════════════════════════════════════════════════
+#  S10 — 활용 사례 ① 국민
+# ════════════════════════════════════════════════════════════════
+sl, cy = new_slide(10, "10   활용 사례 ①  국민 서비스",
+                   "누구나 AI에게 물어보면 공공기관 정보를 즉시 확인")
+
+cases_c = [
+    ("한전 부채 얼마야?",
+     "한국전력 최근 5년 부채 추이\n수치·그래프 즉시 제공", NAVY),
+    ("육아휴직 사용률이\n가장 높은 기관은?",
+     "355개 기관 육아휴직 데이터\n순위 표 자동 생성", TEAL),
+    ("근처 공공기관\n체육시설 알려줘",
+     "ALIO PLUS 시설 정보\n예약 링크·운영시간 안내", PLUM),
+]
+for i, (q, res, col) in enumerate(cases_c):
+    x = LM + i * (C3W + Inches(0.28))
+    acard(sl, x, cy, C3W, Inches(5.55), accent=col)
     # 질문
-    rect(slide, ix2 + Inches(0.15), Inches(3.1),
-         Inches(3.8), Inches(0.75), fill=col_l,
-         line_color=col, line_w=Pt(0.5))
-    tb(slide, q, ix2 + Inches(0.25), Inches(3.22),
-       Inches(3.6), Inches(0.55), size=13, color=col, italic=True,
-       align=PP_ALIGN.CENTER)
-    rect(slide, ix2 + Inches(0.5), Inches(3.95),
-         Inches(3.1), Inches(0.05), fill=col)
-    tb(slide, "출력 결과", ix2 + Inches(0.25), Inches(4.08),
-       Inches(3.6), Inches(0.35), size=12, bold=True, color=col)
-    tb(slide, result, ix2 + Inches(0.25), Inches(4.45),
-       Inches(3.6), Inches(1.0), size=14, color=TXT_M)
-    ix2 += Inches(4.42)
+    R(sl, x + Inches(0.14), cy + Inches(0.15),
+      C3W - Inches(0.28), Inches(1.35), fill=CARD, lc=BORDER, lw=Pt(0.5))
+    T(sl, "질문", x + Inches(0.24), cy + Inches(0.22),
+      C3W - Inches(0.48), Inches(0.28), sz=10, bold=True, color=TXT_L)
+    T(sl, f'"{q}"', x + Inches(0.24), cy + Inches(0.52),
+      C3W - Inches(0.48), Inches(0.9), sz=14, bold=True, color=col)
+    # 결과
+    R(sl, x + Inches(0.14), cy + Inches(1.65),
+      C3W - Inches(0.28), Inches(0.01), fill=LINE)
+    T(sl, "→  결과", x + Inches(0.14), cy + Inches(1.8),
+      C3W - Inches(0.28), Inches(0.3), sz=11, bold=True, color=col)
+    R(sl, x + Inches(0.14), cy + Inches(2.16),
+      C3W - Inches(0.28), Inches(2.72), fill=WHITE, lc=BORDER, lw=Pt(0.5))
+    T(sl, res, x + Inches(0.24), cy + Inches(2.3),
+      C3W - Inches(0.48), Inches(2.5), sz=14, color=TXT_M)
 
-rect(slide, Inches(0.35), Inches(7.22), W - Inches(0.7), Inches(0.42), fill=TEAL_D)
-tb(slide, "법령·지침·편람 통합 검색  —  신규 담당자 온보딩 시간 대폭 단축",
-   Inches(0.55), Inches(7.26), W - Inches(1.1), Inches(0.35),
-   size=15, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+hbar(sl, "사용자는 웹사이트 구조를 몰라도 됩니다  —  질문만 하면 됩니다", accent=TEAL)
+
 
 # ════════════════════════════════════════════════════════════════
-#  S12 – 활용 사례 ③ 재경부 (★ 핵심)
+#  S11 — 활용 사례 ② 공공기관 실무자
 # ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "12   활용 사례 ③  재경부 업무  ★  (핵심 슬라이드)",
-            "기관 통합 검토 보고서를 AI가 자동으로 작성")
-footer(slide, 12)
+sl, cy = new_slide(11, "11   활용 사례 ②  공공기관 실무자",
+                   "벤치마킹·평가 대응·조직운영 정보를 즉시 활용")
 
-# 질문 강조 배너
-rect(slide, Inches(0.35), Inches(1.35), W - Inches(0.7), Inches(0.82), fill=INDIGO_D)
-rect(slide, Inches(0.35), Inches(1.35), Inches(0.12), Inches(0.82), fill=AMBER)
-tb(slide, '💬  "A기관과 B기관 통합 검토 보고서 작성해 줘"',
-   Inches(0.62), Inches(1.46), W - Inches(1.2), Inches(0.62),
-   size=22, bold=True, color=WHITE)
-
-# 출력 항목 카드들
-output_cards = [
-    ("📊", "재무현황", "부채·자산·수익\n최근 5년 추이", INDIGO),
-    ("👥", "인력현황", "정원·실인원·신규\n채용 현황", TEAL_D),
-    ("🏢", "주요사업", "설립 목적·핵심\n기능 정리", PURPLE),
-    ("📍", "지역분포", "본사·지사 소재지\n지역별 인력", CORAL),
-    ("🔀", "중복기능", "유사 기능 도출\n통합 시 효율", MINT),
-    ("🎯", "기대효과", "시나리오별\n예상 효과 요약", AMBER_D),
+cases_i = [
+    ("유사기관 ESG 우수사례 정리",
+     '"유사기관 ESG 우수사례 정리"',
+     "동종 기관 ESG 공시 항목\n우수 사례 자동 요약 제공", NAVY),
+    ("경영평가 지적사항 분석",
+     '"최근 경영평가 지적사항 분석"',
+     "2025·2026 평가편람 기준\n지적 패턴·주요 지표 분석", TEAL),
+    ("기관별 조직운영 비교",
+     '"기관별 조직운영 비교"',
+     "정원·실인원·보수 등\n11개 메트릭 동시 비교", PLUM),
 ]
-ox4 = Inches(0.35)
-oy5 = Inches(2.35)
-for i, (icon, title, desc, col) in enumerate(output_cards):
-    if i == 3:
-        ox4 = Inches(0.35)
-        oy5 = Inches(4.2)
-    card(slide, ox4, oy5, Inches(2.05), Inches(1.65), col)
-    tb(slide, icon, ox4, oy5 + Inches(0.16),
-       Inches(2.05), Inches(0.5), size=22, align=PP_ALIGN.CENTER)
-    tb(slide, title, ox4, oy5 + Inches(0.7),
-       Inches(2.05), Inches(0.38), size=14, bold=True, color=col,
-       align=PP_ALIGN.CENTER)
-    tb(slide, desc, ox4 + Inches(0.08), oy5 + Inches(1.08),
-       Inches(1.9), Inches(0.5), size=11, color=TXT_M,
-       align=PP_ALIGN.CENTER)
-    ox4 += Inches(2.22)
+for i, (title, q, res, col) in enumerate(cases_i):
+    x = LM + i * (C3W + Inches(0.28))
+    acard(sl, x, cy, C3W, Inches(5.55), accent=col)
+    ctitle(sl, title, x, cy + Inches(0.1), C3W, accent=col)
+    R(sl, x + Inches(0.14), cy + Inches(0.54),
+      C3W - Inches(0.28), Inches(0.01), fill=LINE)
+    R(sl, x + Inches(0.14), cy + Inches(0.68),
+      C3W - Inches(0.28), Inches(0.9), fill=CARD, lc=BORDER, lw=Pt(0.5))
+    T(sl, "질문", x + Inches(0.24), cy + Inches(0.74),
+      C3W - Inches(0.48), Inches(0.26), sz=10, bold=True, color=TXT_L)
+    T(sl, q, x + Inches(0.24), cy + Inches(1.0),
+      C3W - Inches(0.48), Inches(0.5), sz=13, color=col, italic=True)
+    R(sl, x + Inches(0.14), cy + Inches(1.74),
+      C3W - Inches(0.28), Inches(0.01), fill=LINE)
+    T(sl, "출력 결과", x + Inches(0.14), cy + Inches(1.88),
+      C3W - Inches(0.28), Inches(0.3), sz=11, bold=True, color=col)
+    R(sl, x + Inches(0.14), cy + Inches(2.24),
+      C3W - Inches(0.28), Inches(2.65), fill=WHITE, lc=BORDER, lw=Pt(0.5))
+    T(sl, res, x + Inches(0.24), cy + Inches(2.38),
+      C3W - Inches(0.48), Inches(2.45), sz=14, color=TXT_M)
 
-# 오른쪽 기대효과
-card(slide, Inches(7.0), Inches(2.28), Inches(5.95), Inches(3.65), AMBER_D)
-tb(slide, "기대 효과",
-   Inches(7.2), Inches(2.48), Inches(5.7), Inches(0.45),
-   size=16, bold=True, color=AMBER_D)
+hbar(sl, "법령·지침·편람 통합 검색  —  신규 담당자 온보딩 시간 대폭 단축", accent=TEAL)
 
-effects2 = [
-    ("⏱", "수 시간 → 수 분으로 보고서 작성 시간 단축"),
-    ("📁", "수작업 엑셀 없이 자동 데이터 수집·정리"),
-    ("🔗", "출처 자동 첨부 (공시일·API 기록 포함)"),
-    ("♻️", "증원심사·기능개혁 등 다양한 업무 재활용"),
+
+# ════════════════════════════════════════════════════════════════
+#  S12 — 활용 사례 ③ 재경부 (★ 핵심)
+# ════════════════════════════════════════════════════════════════
+sl, cy = new_slide(12, "12   활용 사례 ③  재경부 업무  ★",
+                   "기관 통합 검토 보고서를 AI가 자동으로 작성")
+
+# 질문 강조
+R(sl, LM, cy, CW, Inches(0.66), fill=NAVY_D)
+R(sl, LM, cy, Inches(0.055), Inches(0.66), fill=GOLD)
+T(sl, '  "A기관과 B기관의 통합 검토 보고서를 작성해 줘"',
+  LM + Inches(0.18), cy + Inches(0.11), CW - Inches(0.38), Inches(0.46),
+  sz=18, bold=True, color=WHITE)
+cy += Inches(0.78)
+
+# 출력 6항목 (3+3 그리드)
+outw = (CW - Inches(0.22) * 2) / 3 * 0.9
+outitems = [
+    ("재무현황", "부채·자산·수익 최근 5년 추이", NAVY),
+    ("인력현황", "정원·실인원·신규 채용 현황", TEAL),
+    ("주요사업", "설립 목적·핵심 기능 정리", PLUM),
+    ("지역분포", "본사·지사 소재지·지역별 인력", RUST),
+    ("중복기능", "유사 기능 도출·통합 시 효율", SAGE),
+    ("기대효과", "시나리오별 예상 효과 요약", GOLD),
 ]
-ey2 = Inches(3.05)
-for eicon, etxt in effects2:
-    rect(slide, Inches(7.2), ey2, Inches(5.6), Inches(0.55),
-         fill=RGBColor(0xFF,0xF8,0xE1), line_color=AMBER, line_w=Pt(0.5))
-    tb(slide, eicon, Inches(7.28), ey2 + Inches(0.08),
-       Inches(0.45), Inches(0.42), size=16)
-    tb(slide, etxt, Inches(7.82), ey2 + Inches(0.1),
-       Inches(4.85), Inches(0.38), size=13, color=TXT_D)
-    ey2 += Inches(0.68)
+ow = (CW * 0.6 - Inches(0.2)) / 3
+for i, (otit, odesc, ocol) in enumerate(outitems):
+    ox6 = LM + (i % 3) * (ow + Inches(0.1))
+    oy6 = cy + (i // 3) * (Inches(1.2) + Inches(0.15))
+    acard(sl, ox6, oy6, ow, Inches(1.2), accent=ocol)
+    T(sl, otit, ox6 + Inches(0.14), oy6 + Inches(0.08),
+      ow - Inches(0.2), Inches(0.4), sz=14, bold=True, color=ocol)
+    T(sl, odesc, ox6 + Inches(0.14), oy6 + Inches(0.52),
+      ow - Inches(0.2), Inches(0.6), sz=11, color=TXT_L)
 
-rect(slide, Inches(0.35), Inches(6.78), W - Inches(0.7), Inches(0.42), fill=AMBER)
-tb(slide, "공개된 데이터  +  AI  =  행정 생산성의 획기적 향상",
-   Inches(0.55), Inches(6.82), W - Inches(1.1), Inches(0.35),
-   size=16, bold=True, color=TXT_D, align=PP_ALIGN.CENTER)
+# 오른쪽: 기대효과
+ex = LM + CW * 0.62
+ew = CW * 0.38
+acard(sl, ex, cy, ew, Inches(2.58), accent=GOLD)
+ctitle(sl, "기대 효과", ex, cy + Inches(0.1), ew, accent=GOLD)
+R(sl, ex + Inches(0.14), cy + Inches(0.54),
+  ew - Inches(0.28), Inches(0.01), fill=LINE)
+effects3 = [
+    "수 시간 → 수 분 보고서 작성",
+    "수작업 엑셀 없이 자동 수집",
+    "출처 자동 첨부 (공시일 포함)",
+    "다양한 업무에 재사용 가능",
+]
+efy2 = cy + Inches(0.68)
+for eff in effects3:
+    R(sl, ex + Inches(0.14), efy2,
+      ew - Inches(0.28), Inches(0.44), fill=GOLD_L, lc=BORDER, lw=Pt(0.5))
+    R(sl, ex + Inches(0.14), efy2,
+      Inches(0.04), Inches(0.44), fill=GOLD)
+    T(sl, eff, ex + Inches(0.26), efy2 + Inches(0.08),
+      ew - Inches(0.44), Inches(0.3), sz=12, color=TXT_D)
+    efy2 += Inches(0.52)
+
+# 브리티웍스/내부시스템 연결 힌트
+acard(sl, ex, cy + Inches(2.76), ew, Inches(0.6), accent=TEAL)
+T(sl, "브리티웍스·지능형 업무시스템에\nMCP 연결 시 즉시 활용 가능",
+  ex + Inches(0.14), cy + Inches(2.82), ew - Inches(0.2), Inches(0.5),
+  sz=12, color=TXT_M)
+
+hbar(sl, "공개된 데이터  +  AI  =  행정 생산성의 획기적 향상", accent=GOLD)
+
 
 # ════════════════════════════════════════════════════════════════
-#  S13 – 브리티웍스 연계
+#  S13 — 브리티웍스 연계
 # ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "13   활용 사례 ④  브리티웍스 및 지능형 업무시스템",
-            "OpenAlio MCP는 특정 AI 서비스가 아닌 기반 인프라")
-footer(slide, 13)
+sl, cy = new_slide(13, "13   활용 사례 ④  브리티웍스 및 지능형 업무시스템",
+                   "OpenAlio MCP는 특정 AI 서비스가 아닌 공공기관 데이터 기반 인프라")
 
-tb(slide, "어떤 AI 시스템에도 연결 가능한 개방형 인터페이스",
-   Inches(1.5), Inches(1.42), Inches(10), Inches(0.5),
-   size=20, bold=True, color=TXT_D, align=PP_ALIGN.CENTER)
+T(sl, "표준화된 MCP 프로토콜로 어떤 AI 시스템에도 연결 가능한 개방형 인터페이스",
+  LM, cy, CW, Inches(0.38), sz=15, bold=True, color=TXT_D, align=PP_ALIGN.CENTER)
+cy += Inches(0.5)
 
 # AI 서비스 레이어
-ai_services = [
-    ("💼", "브리티웍스", INDIGO, INDIGO_L),
-    ("⚙️", "지능형 업무시스템", PURPLE, PURPLE_L),
-    ("🤖", "Claude / ChatGPT", TEAL_D, TEAL_L),
-    ("🔮", "향후 AI 플랫폼", CORAL, CORAL_L),
+ai_svcs2 = [
+    ("브리티웍스", "공공기관 내부 업무", NAVY),
+    ("지능형 업무시스템", "행정 AI 플랫폼", TEAL),
+    ("Claude / ChatGPT", "범용 AI 어시스턴트", PLUM),
+    ("향후 AI 플랫폼", "미래 공공 AI 서비스", SAGE),
 ]
-ax3 = Inches(0.4)
-for aicon, aname, acol, acol_l in ai_services:
-    rect(slide, ax3, Inches(2.05), Inches(2.85), Inches(1.0),
-         fill=acol_l, line_color=acol, line_w=Pt(0.75))
-    tb(slide, aicon, ax3, Inches(2.1), Inches(2.85), Inches(0.55),
-       size=24, align=PP_ALIGN.CENTER)
-    tb(slide, aname, ax3, Inches(2.68), Inches(2.85), Inches(0.3),
-       size=13, bold=True, color=acol, align=PP_ALIGN.CENTER)
-    # 연결선 아래
-    rect(slide, ax3 + Inches(1.35), Inches(3.05),
-         Inches(0.06), Inches(0.38), fill=TXT_L)
-    ax3 += Inches(3.1)
+aw2 = (CW - Inches(0.3) * 3) / 4
+ax4 = LM
+for aname, adesc, acol in ai_svcs2:
+    acard(sl, ax4, cy, aw2, Inches(0.92), accent=acol)
+    T(sl, aname, ax4 + Inches(0.14), cy + Inches(0.08),
+      aw2 - Inches(0.2), Inches(0.38), sz=13, bold=True, color=acol)
+    T(sl, adesc, ax4 + Inches(0.14), cy + Inches(0.5),
+      aw2 - Inches(0.2), Inches(0.3), sz=11, color=TXT_L)
+    R(sl, ax4 + aw2 / 2 - Inches(0.025), cy + Inches(0.92),
+      Inches(0.05), Inches(0.32), fill=TXT_XL)
+    ax4 += aw2 + Inches(0.3)
+cy += Inches(1.28)
 
 # MCP 핵심 박스
-rect(slide, Inches(2.2), Inches(3.43), Inches(8.9), Inches(1.12), fill=INDIGO)
-rect(slide, Inches(2.2), Inches(3.43), Inches(8.9), Inches(0.1), fill=AMBER)
-rect(slide, Inches(2.2), Inches(4.45), Inches(8.9), Inches(0.1), fill=AMBER)
-tb(slide, "OpenAlio MCP  —  표준 인터페이스 (MCP 프로토콜)",
-   Inches(2.2), Inches(3.6), Inches(8.9), Inches(0.55),
-   size=22, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
-tb(slide, "표준화된 방식으로 어떤 AI든 연결 · 재사용 가능",
-   Inches(2.2), Inches(4.12), Inches(8.9), Inches(0.32),
-   size=13, color=INDIGO_L, align=PP_ALIGN.CENTER)
+R(sl, LM, cy, CW, Inches(0.95), fill=NAVY_D)
+R(sl, LM, cy, CW, Inches(0.04), fill=GOLD)
+R(sl, LM, cy + Inches(0.91), CW, Inches(0.04), fill=GOLD)
+T(sl, "OpenAlio MCP  —  표준 인터페이스",
+  LM, cy + Inches(0.1), CW * 0.6, Inches(0.52),
+  sz=22, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+T(sl, "표준화된 MCP 프로토콜 · 어떤 AI든 동일하게 연결",
+  LM + CW * 0.6, cy + Inches(0.24), CW * 0.4, Inches(0.35),
+  sz=13, color=NAVY_L, italic=True, align=PP_ALIGN.CENTER)
 
-# 연결선 아래
-rect(slide, W/2 - Inches(0.04), Inches(4.55),
-     Inches(0.08), Inches(0.38), fill=TXT_L)
+# 화살표
+for xi2 in [LM + CW * 0.15, LM + CW * 0.38,
+            LM + CW * 0.62, LM + CW * 0.85]:
+    R(sl, xi2, cy + Inches(0.95), Inches(0.05), Inches(0.3), fill=TXT_XL)
+cy += Inches(1.29)
 
 # 데이터 소스 레이어
-data_layer = [
-    ("ALIO", INDIGO, INDIGO_L),
-    ("ALIO PLUS", TEAL_D, TEAL_L),
-    ("JOB-ALIO", CORAL, CORAL_L),
-    ("법령 / 지침", PURPLE, PURPLE_L),
-]
-dx4 = Inches(1.2)
-for dname, dcol, dcol_l in data_layer:
-    rect(slide, dx4, Inches(4.93), Inches(2.55), Inches(0.65),
-         fill=dcol_l, line_color=dcol, line_w=Pt(0.75))
-    tb(slide, dname, dx4, Inches(4.95), Inches(2.55), Inches(0.6),
-       size=14, bold=True, color=dcol, align=PP_ALIGN.CENTER)
-    dx4 += Inches(2.8)
+dw2 = (CW - Inches(0.28) * 3) / 4
+dx7 = LM
+for dname, dcol in [("ALIO", NAVY), ("ALIO PLUS", TEAL),
+                    ("JOB-ALIO", PLUM), ("법령·지침·편람", SAGE)]:
+    R(sl, dx7, cy, dw2, Inches(0.62), fill=WHITE, lc=dcol, lw=Pt(1.2))
+    R(sl, dx7, cy, dw2, Inches(0.038), fill=dcol)
+    T(sl, dname, dx7, cy + Inches(0.1), dw2, Inches(0.44),
+      sz=13, bold=True, color=dcol, align=PP_ALIGN.CENTER)
+    dx7 += dw2 + Inches(0.28)
+cy += Inches(0.82)
 
 # 설명 포인트
-rect(slide, Inches(0.35), Inches(5.82), W - Inches(0.7), Inches(0.95), fill=WHITE,
-     line_color=INDIGO_L, line_w=Pt(0.5))
-pts2 = [
+R(sl, LM, cy, CW, Inches(1.25), fill=WHITE, lc=BORDER, lw=Pt(0.5))
+R(sl, LM, cy, Inches(0.048), Inches(1.25), fill=TEAL)
+pts3 = [
     "표준화된 MCP 프로토콜로 브리티웍스·지능형 업무시스템에 바로 연결 가능",
-    "새로운 AI 플랫폼 도입 시에도 OpenAlio MCP는 그대로 재사용  —  인프라 투자 보호",
-    "향후 데이터 추가(평가결과·국회·조달)도 MCP 서버에만 반영하면 모든 AI에 즉시 적용",
+    "새 AI 플랫폼 도입 시에도 OpenAlio MCP는 그대로 재사용  —  인프라 투자 보호",
+    "데이터 추가(평가결과·국회·조달)도 MCP 서버에만 반영하면 모든 AI에 즉시 적용",
 ]
-py3 = Inches(5.9)
-for pt in pts2:
-    tb(slide, f"•  {pt}", Inches(0.55), py3, W - Inches(1.1), Inches(0.28),
-       size=13, color=TXT_D)
-    py3 += Inches(0.28)
+py4 = cy + Inches(0.1)
+for pt in pts3:
+    T(sl, f"·  {pt}", LM + Inches(0.18), py4,
+      CW - Inches(0.3), Inches(0.34), sz=13, color=TXT_M)
+    py4 += Inches(0.36)
+
 
 # ════════════════════════════════════════════════════════════════
-#  S14 – 향후 발전 방향
+#  S14 — 향후 발전 방향
 # ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
-slide_bg(slide)
-header_band(slide, "14   향후 발전 방향",
-            "단계적 확장으로 공공기관 정보공개 체계를 AI 시대에 맞게 고도화")
-footer(slide, 14)
+sl, cy = new_slide(14, "14   향후 발전 방향",
+                   "단계적 확장을 통해 공공기관 정보공개 체계를 AI 시대에 맞게 고도화")
 
-roadmap2 = [
-    ("대국민 서비스", "🌐", INDIGO, INDIGO_L, [
+roadmap3 = [
+    ("대국민 서비스", NAVY, [
         "ALIO 챗봇 구현",
         "기관 비교 서비스",
         "정책 팩트체크",
     ]),
-    ("내부 업무 지원", "💼", CORAL, CORAL_L, [
+    ("내부 업무 지원", TEAL, [
         "증원심사 지원",
         "기능개혁 지원",
         "경영평가 지원",
-        "언론대응·기관현황 자동 작성",
+        "언론대응 · 기관현황 작성",
     ]),
-    ("연구 활용", "🔬", TEAL_D, TEAL_L, [
+    ("연구 활용", PLUM, [
         "공공기관 데이터 분석 플랫폼",
         "평가결과 데이터 추가",
-        "국회·조달 데이터 연계",
+        "국회 · 조달 데이터 연계",
     ]),
-    ("인프라 고도화", "🛠", PURPLE, PURPLE_L, [
+    ("인프라 고도화", GOLD, [
         "HTTP/SSE 서버 전환",
-        "인증·속도 제한 적용",
+        "인증 · 속도 제한 적용",
         "자동 업데이트 파이프라인",
         "보안 심의 대응",
     ]),
 ]
-rx2 = Inches(0.35)
-for rname, ricon, rcol, rcol_l, ritems in roadmap2:
-    card(slide, rx2, Inches(1.35), Inches(3.05), Inches(5.7), rcol)
-    tb(slide, ricon, rx2, Inches(1.55), Inches(3.05), Inches(0.7),
-       size=28, align=PP_ALIGN.CENTER)
-    tb(slide, rname, rx2, Inches(2.32), Inches(3.05), Inches(0.48),
-       size=15, bold=True, color=rcol, align=PP_ALIGN.CENTER)
-    rect(slide, rx2 + Inches(0.5), Inches(2.85),
-         Inches(2.05), Inches(0.05), fill=rcol)
-    iy2 = Inches(3.0)
+rw2 = C3W  # 4 cols same as 3col but 4
+rw2 = (CW - Inches(0.28) * 3) / 4
+rx3 = LM
+for rname, rcol, ritems in roadmap3:
+    acard(sl, rx3, cy, rw2, Inches(5.55), accent=rcol)
+    T(sl, rname, rx3 + Inches(0.14), cy + Inches(0.1),
+      rw2 - Inches(0.2), Inches(0.44), sz=14, bold=True, color=rcol)
+    R(sl, rx3 + Inches(0.14), cy + Inches(0.56),
+      rw2 - Inches(0.28), Inches(0.01), fill=LINE)
+    iy3 = cy + Inches(0.7)
     for item in ritems:
-        rect(slide, rx2 + Inches(0.2), iy2, Inches(0.1), Inches(0.1), fill=rcol)
-        tb(slide, item, rx2 + Inches(0.4), iy2 - Inches(0.04),
-           Inches(2.5), Inches(0.55), size=13, color=TXT_D)
-        iy2 += Inches(0.62)
-    rx2 += Inches(3.25)
+        R(sl, rx3 + Inches(0.18), iy3 + Inches(0.12),
+          Inches(0.07), Inches(0.07), fill=rcol)
+        T(sl, item, rx3 + Inches(0.34), iy3,
+          rw2 - Inches(0.48), Inches(0.52), sz=13, color=TXT_M)
+        iy3 += Inches(0.62)
+    rx3 += rw2 + Inches(0.28)
 
 # 로드맵 타임라인
-rect(slide, Inches(0.35), Inches(7.1), W - Inches(0.7), Inches(0.6), fill=INDIGO)
-phases = ["Phase 1  ✅", "Phase 2  🔄  현재", "Phase 3  📋", "Phase 4  🔮"]
-ph_x = Inches(0.6)
-for ph in phases:
-    tb(slide, ph, ph_x, Inches(7.15), Inches(2.8), Inches(0.48),
-       size=13, color=WHITE if "현재" not in ph else AMBER, bold=("현재" in ph),
-       align=PP_ALIGN.CENTER)
-    ph_x += Inches(3.1)
+R(sl, LM, cy + Inches(5.7), CW, Inches(0.5), fill=NAVY_D)
+phases2 = ["Phase 1  ✓  완료", "Phase 2  ●  현재", "Phase 3  ○  계획", "Phase 4  ○  장기"]
+px2 = LM + Inches(0.5)
+pw2 = (CW - Inches(1.0)) / 4
+for i, ph in enumerate(phases2):
+    T(sl, ph, px2, cy + Inches(5.76), pw2, Inches(0.4),
+      sz=12, bold=(i == 1), color=GOLD if i == 1 else NAVY_L,
+      align=PP_ALIGN.CENTER)
+    px2 += pw2
+
 
 # ════════════════════════════════════════════════════════════════
-#  S15 – 마무리
+#  S15 — 마무리
 # ════════════════════════════════════════════════════════════════
-slide = prs.slides.add_slide(blank_layout)
+sl = prs.slides.add_slide(BLANK)
+R(sl, 0, 0, Inches(7.1), H, fill=NAVY_D)
+R(sl, Inches(7.1), 0, W - Inches(7.1), H, fill=BG)
+# 오른쪽 장식
+R(sl, Inches(7.4), Inches(0.5), W - Inches(7.8), Inches(0.01), fill=LINE)
+R(sl, Inches(7.4), Inches(1.5), W - Inches(7.8), Inches(0.01), fill=LINE)
+R(sl, Inches(7.4), Inches(2.5), W - Inches(7.8), Inches(0.01), fill=LINE)
+R(sl, Inches(7.6), Inches(0.5), Inches(0.01), Inches(6.5), fill=LINE)
+R(sl, Inches(7.6), Inches(0.5), Inches(0.22), Inches(0.22), fill=NAVY_L)
 
-# 배경
-rect(slide, 0, 0, W * 0.58, H, fill=INDIGO_D)
-rect(slide, W * 0.58, 0, W * 0.42, H, fill=BG)
+# 왼쪽 콘텐츠
+R(sl, 0, 0, Inches(7.1), Inches(0.055), fill=TEAL)
+T(sl, "마무리", Inches(0.55), Inches(0.55), Inches(6.0), Inches(0.42),
+  sz=14, color=TEAL_L, italic=True)
+T(sl, "정보공개의\n다음 단계는\n정보 활용",
+  Inches(0.55), Inches(1.05), Inches(6.1), Inches(1.95),
+  sz=38, bold=True, color=WHITE)
+R(sl, Inches(0.55), Inches(3.1), Inches(4.0), Inches(0.05), fill=TEAL)
 
-# 장식 원
-for cx6, cy6, cr2, col6 in [
-    (W * 0.82, Inches(1.5), Inches(3.5), INDIGO_L),
-    (W * 0.72, Inches(5.5), Inches(2.0), TEAL_L),
-]:
-    rect(slide, cx6 - cr2/2, cy6 - cr2/2, cr2, cr2, fill=col6)
-
-# 강조 선
-rect(slide, 0, 0, W * 0.58, Inches(0.08), fill=TEAL)
-rect(slide, Inches(0.6), Inches(0.12), Inches(0.08), H - Inches(0.25), fill=TEAL)
-
-tb(slide, "마무리",
-   Inches(0.88), Inches(0.75), Inches(7), Inches(0.65),
-   size=22, color=TEAL, bold=True)
-
-tb(slide, "정보공개의\n다음 단계는\n정보 활용",
-   Inches(0.88), Inches(1.45), Inches(7.5), Inches(2.0),
-   size=40, bold=True, color=WHITE)
-
-rect(slide, Inches(0.88), Inches(3.55),
-     Inches(4.5), Inches(0.07), fill=AMBER)
-
-msgs = [
+msgs2 = [
     "OpenAlio MCP는 공공기관 정보공개 체계를",
     "AI 시대에 맞게 확장하기 위한 실험입니다.",
-    "",
+    " ",
     "국민과 행정이 공공기관 정보를 더 쉽고",
     "효과적으로 활용할 수 있도록 지원합니다.",
 ]
-my2 = Inches(3.78)
-for msg in msgs:
-    tb(slide, msg, Inches(0.88), my2, Inches(7.5), Inches(0.38),
-       size=16, color=INDIGO_L if msg else INDIGO_L)
-    my2 += Inches(0.38)
+my3 = Inches(3.28)
+for msg in msgs2:
+    T(sl, msg, Inches(0.55), my3, Inches(6.1), Inches(0.4),
+      sz=15, color=NAVY_L)
+    my3 += Inches(0.4)
 
-# 핵심 키워드
-kws2 = [
-    ("🔗", "개방성", "오픈소스\n누구나 기여", TEAL, TEAL_L),
-    ("⚡", "연결성", "AI-데이터\n표준 연결", INDIGO, INDIGO_L),
-    ("💡", "활용성", "질문 한 번\n즉시 분석", AMBER_D, RGBColor(0xFF,0xF3,0xCD)),
+# 핵심 키워드 3개
+kws3 = [
+    ("개방성", "오픈소스 · 누구나 기여", TEAL),
+    ("연결성", "AI-데이터 표준 연결", NAVY),
+    ("활용성", "질문 한 번 · 즉시 분석", GOLD),
 ]
-kx2 = Inches(0.88)
-for kicon, kword, kdesc, kcol, kcol_l in kws2:
-    rect(slide, kx2, Inches(5.72), Inches(1.85), Inches(1.38),
-         fill=kcol, line_color=kcol, line_w=Pt(0))
-    tb(slide, kicon, kx2, Inches(5.8), Inches(1.85), Inches(0.55),
-       size=22, align=PP_ALIGN.CENTER, color=WHITE)
-    tb(slide, kword, kx2, Inches(6.3), Inches(1.85), Inches(0.42),
-       size=15, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
-    tb(slide, kdesc, kx2, Inches(6.68), Inches(1.85), Inches(0.4),
-       size=11, color=WHITE, align=PP_ALIGN.CENTER)
-    kx2 += Inches(2.0)
+kx3 = Inches(0.55)
+ky3 = Inches(5.55)
+for kword, kdesc, kcol in kws3:
+    R(sl, kx3, ky3, Inches(1.85), Inches(1.35), fill=WHITE,
+      lc=kcol, lw=Pt(1.5))
+    R(sl, kx3, ky3, Inches(1.85), Inches(0.04), fill=kcol)
+    T(sl, kword, kx3 + Inches(0.1), ky3 + Inches(0.12),
+      Inches(1.65), Inches(0.5), sz=16, bold=True, color=WHITE)
+    T(sl, kdesc, kx3 + Inches(0.1), ky3 + Inches(0.65),
+      Inches(1.65), Inches(0.55), sz=11, color=NAVY_L)
+    kx3 += Inches(2.0)
 
-tb(slide, "감사합니다",
-   Inches(0.88), Inches(7.05), Inches(5), Inches(0.52),
-   size=30, bold=True, color=AMBER)
+T(sl, "감사합니다",
+  Inches(0.55), Inches(7.0), Inches(4), Inches(0.45),
+  sz=26, bold=True, color=GOLD)
 
-# ── 저장 ──────────────────────────────────────────────────────────
+# 오른쪽 패널 내용
+acard(sl, Inches(7.9), Inches(1.5), Inches(5.0), Inches(4.0), accent=TEAL, bg=WHITE)
+ctitle(sl, "핵심 요약", Inches(7.9), Inches(1.6), Inches(5.0), accent=TEAL)
+R(sl, Inches(8.04), Inches(2.04), Inches(4.72), Inches(0.01), fill=LINE)
+summaries = [
+    (NAVY,  "공공기관 데이터", "355개 기관 · 11메트릭 · 6년치"),
+    (TEAL,  "AI 도구",       "32개 도구 · 2 프롬프트 · 5 리소스"),
+    (PLUM,  "연결 방식",     "MCP 표준 프로토콜 (개방형)"),
+    (GOLD,  "활용 대상",     "국민 · 공무원 · 연구자"),
+    (SAGE,  "현재 상태",     "Phase 2 — 로컬 MCP 서버"),
+    (RUST,  "다음 단계",     "Phase 4 — HTTP 서버 · 인증 · 자동화"),
+]
+sy5 = Inches(2.18)
+for scol, stit, sdesc in summaries:
+    R(sl, Inches(8.04), sy5, Inches(4.72), Inches(0.52),
+      fill=WHITE, lc=BORDER, lw=Pt(0.5))
+    R(sl, Inches(8.04), sy5, Inches(0.04), Inches(0.52), fill=scol)
+    T(sl, stit, Inches(8.22), sy5 + Inches(0.06),
+      Inches(1.4), Inches(0.3), sz=12, bold=True, color=scol)
+    T(sl, sdesc, Inches(9.7), sy5 + Inches(0.12),
+      Inches(2.9), Inches(0.3), sz=12, color=TXT_L)
+    sy5 += Inches(0.58)
+
+
+# ── 저장 ──────────────────────────────────────────────────────
 out = "/home/user/open-ALIO-mcp/OpenAlio_MCP_발표자료.pptx"
 prs.save(out)
 print(f"저장 완료: {out}")
