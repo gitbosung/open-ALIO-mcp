@@ -28,7 +28,9 @@ METRICS_DIR = ROOT / "data" / "metrics"
 INDEX = METRICS_DIR / "_index.json"
 REPORT = METRICS_DIR / "_crawl_promotion_report.json"
 
-NA_LABELS = {"", "해당사항 없음", "비고"}
+# 빈 row_label은 NA가 아니다 — row_year 아키타입(법인세·업무추진비)은 지표를 col_label에 둔다.
+# col_year key_fn은 빈 row_label에서 None을 돌려 자체적으로 거른다.
+PLACEHOLDER_LABELS = {"해당사항 없음", "비고"}
 GOLDEN_ORGS = {
     "C0091": "신용보증기금",
     "C0038": "기술보증기금",
@@ -63,8 +65,10 @@ def load_metric(category: str) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def budget_key(row: dict) -> str:
+def budget_key(row: dict) -> str | None:
     label = row["row_label"].strip()
+    if not label:
+        return None
     kind = "정부순지원수입" if label.startswith("정부순지원수입") else "수입지출현황"
     section = clean_section(row["section"])
     sub_account = (row.get("sub_account") or "").strip()
@@ -76,8 +80,11 @@ def budget_key(row: dict) -> str:
     return " | ".join(parts)
 
 
-def executive_pay_key(row: dict) -> str:
-    return f"{clean_section(row['section'])} | {row['row_label'].strip()}"
+def executive_pay_key(row: dict) -> str | None:
+    label = row["row_label"].strip()
+    if not label:
+        return None
+    return f"{clean_section(row['section'])} | {label}"
 
 
 FINANCE_HALF_COMPAT = {
@@ -108,8 +115,10 @@ FINANCE_HALF_COMPAT = {
 }
 
 
-def finance_key(row: dict) -> str:
+def finance_key(row: dict) -> str | None:
     label = row["row_label"].strip()
+    if not label:
+        return None
     if row["value_type"] == "반기":
         compat = FINANCE_HALF_COMPAT.get(label)
         if compat:
@@ -128,21 +137,60 @@ def finance_key(row: dict) -> str:
     return " | ".join(parts)
 
 
+def head_expense_key(row: dict) -> str | None:
+    """기관장 업무추진비(20701, row_year). 본 지표 열만 승격, 수정 전·후 보정열은 제외."""
+    if row["col_label"].strip() == "업무추진비 집행금액":
+        return "업무추진비 집행금액"
+    return None
+
+
+# crawl col_label → 기존 xlsx tax 키 (공백 표기 차이만 정규화)
+TAX_LABELS = {
+    "과세표준": "과세표준",
+    "법인세산출세액": "법인세 산출세액",
+    "세액공제": "세액공제",
+    "가산세": "가산세",
+    "결정세액": "결정세액",
+}
+
+
+def tax_key(row: dict) -> str | None:
+    """법인세(32211, row_year). col_label이 곧 지표명. 수정 전·후 보정열은 제외."""
+    return TAX_LABELS.get(row["col_label"].strip())
+
+
+def recruitment_key(row: dict) -> str | None:
+    """신규채용·청년인턴(20401, col_year). section→그룹 prefix, row_label은 공백/계층 정규화."""
+    section = clean_section(row["section"])
+    if "신규채용" in section:
+        prefix = "신규채용현황"
+    elif "청년인턴" in section:
+        prefix = "청년인턴채용현황"
+    else:
+        return None
+    label = row["row_label"].replace(" > ", "-").replace(" ", "")
+    if not label:
+        return None
+    return f"{prefix} | {label}"
+
+
 def collect_groups(
     rows: Iterable[dict],
     item_nos: set[str],
-    key_fn: Callable[[dict], str],
+    key_fn: Callable[[dict], str | None],
 ) -> tuple[dict[tuple[str, str, str, str], tuple[str, int | float]], list[dict]]:
     raw: dict[tuple[str, str, str, str], list[tuple[int | float, dict]]] = defaultdict(list)
     for row in rows:
         if row["item_no"] not in item_nos:
             continue
-        if not row["year"] or not row["value"] or row["row_label"] in NA_LABELS:
+        if not row["year"] or not row["value"] or row["row_label"] in PLACEHOLDER_LABELS:
             continue
         value = to_num(row["value"])
         if value is None:
             continue
         key = key_fn(row)
+        if key is None:  # key_fn은 보조/보정 열(수정 전·후 등)을 None으로 걸러낸다
+            continue
         raw[(row["apba_id"], row["org_name"], key, row["year"])].append((value, row))
 
     promoted: dict[tuple[str, str, str, str], tuple[str, int | float]] = {}
@@ -174,7 +222,7 @@ def merge_category(
     label: str,
     unit: str,
     item_nos: set[str],
-    key_fn: Callable[[dict], str],
+    key_fn: Callable[[dict], str | None],
     rows: list[dict],
 ) -> dict:
     base = load_metric(category)
@@ -286,6 +334,18 @@ def category_notes(category: str) -> list[str]:
         return [
             "임원 연봉 카테고리는 ALIO HTML 크롤의 20501과 기존 xlsx 값이 100% 일치한 뒤 크롤 값을 병합했습니다.",
         ]
+    if category == "head_expense":
+        return [
+            "기관장 업무추진비 카테고리는 ALIO HTML 크롤의 20701(연도-행 표)을 승격했으며, 기존 xlsx 값과 교차검증 시 충돌이 0건이었습니다.",
+        ]
+    if category == "tax":
+        return [
+            "법인세 카테고리는 ALIO HTML 크롤의 32211(연도-행 표)을 승격했으며, 지표 5종(과세표준·법인세 산출세액·세액공제·가산세·결정세액)이 기존 xlsx 값과 충돌 없이 일치했습니다.",
+        ]
+    if category == "recruitment":
+        return [
+            "신규채용 카테고리는 ALIO HTML 크롤의 20401(신규채용·청년인턴 현황)을 승격했으며, 기존 xlsx 값과 교차검증 시 충돌은 소수점 반올림 차이뿐이었습니다.",
+        ]
     return []
 
 
@@ -342,6 +402,9 @@ def main() -> None:
             {"31201", "31301"},
             finance_key,
         ),
+        ("head_expense", "기관장 업무추진비", "천원", {"20701"}, head_expense_key),
+        ("tax", "법인세", "천원", {"32211"}, tax_key),
+        ("recruitment", "신규채용·청년인턴", "명", {"20401"}, recruitment_key),
     ]
 
     report = {
