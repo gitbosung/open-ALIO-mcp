@@ -36,8 +36,14 @@ ROOT = Path(__file__).resolve().parent
 
 FIELDS = [
     "apba_id", "org_name", "item_no", "item_name", "section", "sub_account",
-    "row_label", "year", "value_type", "value", "unit", "as_of", "source_url",
+    "row_label", "col_label", "year", "value_type", "value", "unit", "as_of", "source_url",
 ]
+
+# 표 archetype 분류·핸들러용 상수
+CONTACT_HEADERS = {"담당자명", "부서명", "전화번호"}      # 공시 담당자 표 (데이터 아님)
+ATTACH_HEADERS = {"첨부파일", "집행상세내역", "집행 상세내역"}  # 첨부/링크 전용 열
+YEAR_CELL_RE = re.compile(r"\d{4}\s*년")                 # body 셀이 연도인지 (row_year 판정)
+PAREN_LABEL_RE = re.compile(r"^\([^)]*\)$")              # 통째로 괄호인 자식행 라벨 (예: (남성))
 
 FUND_ACCOUNT_RE = re.compile(r"(?:기금계정\s*:\s*|\[기금계정\]\s*)([^(\n]+)")
 
@@ -108,6 +114,184 @@ def _has_table_ancestor(el: Tag) -> bool:
     return el.find_parent("table") is not None
 
 
+def _grid_col_texts(head_grid: list[list[Tag | None]]) -> list[str]:
+    """헤더 그리드 → 열별 병합 텍스트 (다단 헤더는 행 텍스트를 합침)."""
+    if not head_grid:
+        return []
+    n_cols = len(head_grid[0])
+    col_texts: list[str] = []
+    for c in range(n_cols):
+        parts: list[str] = []
+        for row in head_grid:
+            cell = row[c] if c < len(row) else None
+            t = clean_text(cell.get_text()) if cell is not None else ""
+            if t and t not in parts:
+                parts.append(t)
+        col_texts.append(" ".join(parts))
+    return col_texts
+
+
+def _expand_head_body(el: Tag) -> tuple[list, list]:
+    """border=1 표를 (헤더 그리드, body 그리드)로 전개. thead 없으면 헤더는 []."""
+    thead = el.find("thead")
+    head_grid = expand_rows(thead.find_all("tr", recursive=False)) if thead else []
+    body_container = el.find("tbody") or el
+    body_grid = expand_rows(body_container.find_all("tr", recursive=False))
+    return head_grid, body_grid
+
+
+def _year_cols(col_texts: list[str]) -> list[int]:
+    return [i for i, h in enumerate(col_texts[1:], start=1) if YEAR_HEADER_RE.search(h)]
+
+
+def _classify_table(col_texts: list[str], data_grid: list, *, header_known: bool) -> str:
+    """border=1 표를 col_year | row_year | attr_roster | skip 로 분류 (first-match).
+
+    header_known=False(=thead 없음)이면 col_year/row_year 시그니처가 명확할 때만 채택
+    (attr_roster·메타·서술 표 오분류 방지).
+    """
+    if not col_texts:
+        return "skip"
+    h0 = col_texts[0]
+    if h0.startswith("기준일"):
+        return "skip"  # 기준일/제출일 메타 표
+    yc = _year_cols(col_texts)
+    others = {col_texts[i] for i in range(1, len(col_texts)) if col_texts[i]}
+    if "구분" in h0 and not yc and others and others <= CONTACT_HEADERS:
+        return "skip"  # 공시 담당자 표
+    if "구분" in h0 and yc:
+        return "col_year"  # '사업구분'도 매칭
+    # 첫 열이 연도인 행들 수집 (row_year 판정)
+    year_vals = [clean_text(row[0].get_text()) for row in data_grid
+                 if row and row[0] is not None and YEAR_CELL_RE.search(clean_text(row[0].get_text()))]
+    distinct = set(year_vals)
+    if h0 in ("연도", "년도") or len(year_vals) >= 2:
+        # 진짜 transpose는 연도가 distinct·행당 1개. 단일 연도가 여러 행 반복되면
+        # (예: 복리후생비 경조비 상세) 다차원 명부표 → 가비지 캡처 방지 위해 skip.
+        if len(distinct) >= 2 and len(distinct) >= 0.9 * len(year_vals):
+            return "row_year"
+        return "skip"
+    if header_known and len(col_texts) >= 2 and not yc:
+        # 깨끗한 로스터만 채택: 속성(비-첨부) 헤더가 모두 distinct해야 함.
+        # 헤더가 중복되는 다차원 그리드(예: 휴가구분|휴가구분|휴가구분)는 같은 col_label
+        # 충돌을 만들므로 skip(연기).
+        attrs = [col_texts[i] for i in range(1, len(col_texts))
+                 if col_texts[i] and col_texts[i] not in ATTACH_HEADERS]
+        if attrs and len(set(attrs)) == len(attrs):
+            return "attr_roster"
+        return "skip"
+    return "skip"
+
+
+def _row_label_path(row: list, width: int) -> str:
+    """선두 width개 라벨 열을 ' > '로 연결 (중복·각주 표시 제거)."""
+    parts: list[str] = []
+    for c in range(min(width, len(row))):
+        cell = row[c]
+        t = re.sub(r"\s*\*+$", "", clean_text(cell.get_text())) if cell is not None else ""
+        if t and (not parts or t != parts[-1]):
+            parts.append(t)
+    return " > ".join(parts)
+
+
+def _handle_col_year(col_texts: list[str], data_grid: list, ctx: dict) -> list[dict]:
+    """구분 + YYYY년 컬럼 wide표 → long. 첨부 anchor는 셀 단위로만 스킵(행 보존)."""
+    out: list[dict] = []
+    cols = []  # (col_idx, year, value_type, header_text)
+    for i, h in enumerate(col_texts[1:], start=1):
+        m = YEAR_HEADER_RE.search(h)
+        if m:
+            cols.append((i, m.group(1), m.group(2) or "", h))
+    if not cols:
+        return out
+    label_width = min(i for i, *_ in cols)  # 연도 열 앞은 전부 라벨('구분') 열
+    last_parent = ""  # 단일 라벨열 표에서 괄호 자식행((남성) 등)이 상속할 직전 부모행
+    for row in data_grid:
+        if not any(c is not None for c in row):
+            continue
+        row_label = _row_label_path(row, label_width)
+        if not row_label:
+            continue
+        # 평면행 부모-컨텍스트: 단일 라벨열 표에서 라벨이 통째로 괄호인 자식행은
+        # 직전 비괄호 부모행으로 prefix (예: '1인당 평균 보수액 > (남성)' vs '상시 종업원수 > (남성)').
+        if label_width == 1:
+            if PAREN_LABEL_RE.match(row_label):
+                if last_parent:
+                    row_label = f"{last_parent} > {row_label}"
+            else:
+                last_parent = row_label
+        for col_idx, year, vtype, htext in cols:
+            cell = row[col_idx] if col_idx < len(row) else None
+            if cell is None or cell.find("a"):
+                continue  # 빈 좌표 또는 첨부 링크 셀만 스킵
+            out.append({**ctx, "row_label": row_label, "col_label": htext,
+                        "year": year, "value_type": vtype,
+                        "value": parse_value(cell.get_text())})
+    return out
+
+
+def _handle_row_year(col_texts: list[str], data_grid: list, ctx: dict) -> list[dict]:
+    """연도가 행, 지표가 컬럼인 transposed표 → long (year=행 연도, col_label=지표 헤더)."""
+    out: list[dict] = []
+    metric_cols = [(i, col_texts[i]) for i in range(1, len(col_texts))
+                   if col_texts[i] and col_texts[i] not in ATTACH_HEADERS]
+    if not metric_cols:
+        return out
+    for row in data_grid:
+        if not row or row[0] is None:
+            continue
+        ym = YEAR_HEADER_RE.search(clean_text(row[0].get_text()))
+        if not ym:
+            continue
+        year = ym.group(1)
+        for col_idx, htext in metric_cols:
+            cell = row[col_idx] if col_idx < len(row) else None
+            if cell is None or cell.find("a"):
+                continue
+            out.append({**ctx, "row_label": "", "col_label": htext,
+                        "year": year, "value_type": "",
+                        "value": parse_value(cell.get_text())})
+    return out
+
+
+def _handle_attr_roster(col_texts: list[str], data_grid: list, ctx: dict) -> list[dict]:
+    """비시계열 2D 속성/명부표 → long (row_label=행 키, col_label=속성 헤더, year='').
+
+    하위표 직종/계정은 nb 섹션 상태(section)로 구분된다. 속성 헤더가 모두 distinct한
+    깨끗한 로스터만 _classify_table에서 라우팅되며, 중복헤더 다차원 그리드는 skip된다.
+
+    리스트/명부 표(col0가 rowspan 카테고리, 그 아래 여러 레코드: 자회사·담보 명부 등)는
+    같은 행 키가 반복돼 충돌하므로, 표 내에서 반복되는 키에는 순번(#n)을 붙여 분리한다
+    (무손실·무충돌; col0가 distinct한 주주명부 등은 그대로 유지).
+    """
+    attr_cols = [(i, col_texts[i]) for i in range(1, len(col_texts))
+                 if col_texts[i] and col_texts[i] not in ATTACH_HEADERS]
+    if not attr_cols:
+        return []
+    # 유효 행과 base 키 수집 (1차)
+    rows_keys: list[tuple[list, str]] = []
+    for row in data_grid:
+        if not row or row[0] is None:
+            continue
+        key = re.sub(r"\s*\*+$", "", clean_text(row[0].get_text()))
+        if key:
+            rows_keys.append((row, key))
+    total = Counter(k for _, k in rows_keys)
+    seq: Counter = Counter()
+    out: list[dict] = []
+    for row, base in rows_keys:
+        seq[base] += 1
+        row_key = base if total[base] == 1 else f"{base} #{seq[base]}"
+        for col_idx, htext in attr_cols:
+            cell = row[col_idx] if col_idx < len(row) else None
+            if cell is None or cell.find("a"):
+                continue
+            out.append({**ctx, "row_label": row_key, "col_label": htext,
+                        "year": "", "value_type": "",
+                        "value": parse_value(cell.get_text())})
+    return out
+
+
 def parse_doc(html: str, apba_id: str, item_no: str, org_name: str) -> list[dict]:
     soup = BeautifulSoup(html, "lxml")
     records: list[dict] = []
@@ -169,69 +353,46 @@ def parse_doc(html: str, apba_id: str, item_no: str, org_name: str) -> list[dict
                 continue
             if text.replace(" ", "") == "해당사항없음":
                 records.append({**base, "section": section, "sub_account": sub_account,
-                                "row_label": "해당사항 없음",
+                                "row_label": "해당사항 없음", "col_label": "",
                                 "year": "", "value_type": "", "value": "",
                                 "unit": "", "as_of": as_of})
             continue
 
-        # ── 데이터 표 (table[border=1]) ──
+        # ── 데이터 표 (table[border=1]) — archetype 분류 후 핸들러 디스패치 ──
         if el.get("border") != "1":
             continue
-        thead = el.find("thead")
-        if not thead:
+        head_grid, body_grid = _expand_head_body(el)
+        if not body_grid:
             continue
-        head_grid = expand_rows(thead.find_all("tr", recursive=False))
-        if not head_grid:
-            continue
-        # 헤더 그리드의 열별 텍스트 (다단 헤더는 행 텍스트를 합침)
-        n_cols = len(head_grid[0])
-        col_texts = []
-        for c in range(n_cols):
-            parts = []
-            for row in head_grid:
-                cell = row[c]
-                t = clean_text(cell.get_text()) if cell is not None else ""
-                if t and t not in parts:
-                    parts.append(t)
-            col_texts.append(" ".join(parts))
-        if not col_texts or "구분" not in col_texts[0]:
-            continue
-        year_cols: list[tuple[int, str, str]] = []  # (col_idx, year, value_type)
-        for i, h in enumerate(col_texts[1:], start=1):
-            m = YEAR_HEADER_RE.search(h)
-            if m:
-                year_cols.append((i, m.group(1), m.group(2) or ""))
-        if not year_cols:
-            continue  # 연도 헤더 없는 표(담당자 등)는 데이터 표 아님
-        label_width = min(i for i, _, _ in year_cols)  # 연도 열 앞은 전부 라벨('구분') 열
+        if head_grid:
+            col_texts = _grid_col_texts(head_grid)
+            data_grid = body_grid
+        else:
+            # thead 없음 — body 첫 행을 헤더 후보로 보고 시그니처가 맞을 때만 채택
+            col_texts = _grid_col_texts([body_grid[0]])
+            data_grid = body_grid[1:]
+        kind = _classify_table(col_texts, data_grid, header_known=bool(head_grid))
+        ctx = {**base, "section": section, "sub_account": sub_account,
+               "unit": unit, "as_of": as_of}
+        if kind == "col_year":
+            records.extend(_handle_col_year(col_texts, data_grid, ctx))
+        elif kind == "row_year":
+            records.extend(_handle_row_year(col_texts, data_grid, ctx))
+        elif kind == "attr_roster":
+            records.extend(_handle_attr_roster(col_texts, data_grid, ctx))
+        # 그 외(skip): 메타·담당자·중복헤더 다차원 그리드 등은 통과.
 
-        tbody = el.find("tbody") or el
-        for row in expand_rows(tbody.find_all("tr", recursive=False)):
-            cells_in_row = [c for c in row if c is not None]
-            if not cells_in_row:
-                continue
-            if any(c.find("a") for c in cells_in_row):
-                continue  # 첨부파일 링크 행 등 제외
-            # 계층형 '구분'은 라벨 열들을 " > "로 연결 (중복·각주 표시 제거)
-            label_parts: list[str] = []
-            for c in range(min(label_width, len(row))):
-                cell = row[c]
-                t = re.sub(r"\s*\*+$", "", clean_text(cell.get_text())) if cell is not None else ""
-                if t and (not label_parts or t != label_parts[-1]):
-                    label_parts.append(t)
-            row_label = " > ".join(label_parts)
-            if not row_label:
-                continue
-            for col_idx, year, vtype in year_cols:
-                if col_idx >= len(row) or row[col_idx] is None:
-                    continue
-                records.append({**base, "section": section, "sub_account": sub_account,
-                                "row_label": row_label,
-                                "year": year, "value_type": vtype,
-                                "value": parse_value(row[col_idx].get_text()),
-                                "unit": unit, "as_of": as_of})
-
-    return records
+    # 동일 문서 내 완전 동일 레코드 제거 (반복 표·이중표가 만드는 무정보 중복 안전망)
+    seen: set = set()
+    deduped: list[dict] = []
+    for r in records:
+        k = (r["section"], r["sub_account"], r["row_label"], r["col_label"],
+             r["year"], r["value_type"], str(r["value"]))
+        if k in seen:
+            continue
+        seen.add(k)
+        deduped.append(r)
+    return deduped
 
 
 def _rel(path: Path) -> str:

@@ -66,6 +66,7 @@ def test_html_roundtrip(rows: list[dict], samples: list[str]) -> None:
                     r.get("section", ""),
                     r.get("sub_account", ""),
                     r.get("row_label", ""),
+                    r.get("col_label", ""),
                     str(r.get("year", "")),
                     r.get("value_type", ""),
                     str(r.get("value", "")),
@@ -205,6 +206,7 @@ def test_structure(rows: list[dict]) -> None:
             r["section"],
             r.get("sub_account", ""),
             r["row_label"],
+            r.get("col_label", ""),
             r["year"],
             r["value_type"],
         )
@@ -221,6 +223,40 @@ def test_structure(rows: list[dict]) -> None:
         fail(f"필수 필드 결측 {len(bad)}건")
     else:
         ok("apba_id·item_no 필수 필드 100%")
+
+
+def test_recovery(rows: list[dict]) -> None:
+    """archetype dispatcher 회귀 가드 — Phase 1 복구 항목이 다시 0건/누락되면 FAIL.
+
+    Phase 1 = col_year(thead 추론·셀단위 anchor) + row_year(transpose). attr_roster는
+    Phase 2 연기이므로 여기서 검증하지 않는다.
+    """
+    print("\n[5] archetype 복구 가드 (col_year · row_year · attr_roster)")
+    by_item = Counter(r["item_no"] for r in rows)
+    # 데이터 손실형 0건이었다가 복구된 항목 — 다시 0이면 회귀
+    RECOVERED_MIN = {"32001": 1, "20701": 1, "32211": 1, "32301": 1, "31501": 1, "31701": 1}
+    for item, lo in RECOVERED_MIN.items():
+        n = by_item.get(item, 0)
+        if n < lo:
+            fail(f"복구 회귀: item {item} records={n} < {lo} (파서 archetype 누락 재발)")
+        else:
+            ok(f"item {item}: {n:,}건 (복구 유지)")
+
+    # row_year transpose 샘플: 32211 C0001 결정세액/2025 = 15312
+    ry = [r for r in rows if r["apba_id"] == "C0001" and r["item_no"] == "32211"
+          and r["col_label"] == "결정세액" and r["year"] == "2025"]
+    if ry and str(ry[0]["value"]) == "15312":
+        ok(f"row_year 32211 C0001 결정세액/2025 = {ry[0]['value']} (row_label={ry[0]['row_label']!r})")
+    else:
+        fail(f"row_year 32211 C0001 결정세액/2025 기대 15312, 실제 {[r['value'] for r in ry] or '없음'}")
+
+    # attr_roster 샘플: 31701 지분율(%) 숫자 행 존재
+    ar = [r for r in rows if r["item_no"] == "31701" and "지분율" in r["col_label"]
+          and r["value"] not in ("", None)]
+    if ar:
+        ok(f"attr_roster 31701 지분율 {len(ar):,}건 (예: {ar[0]['row_label']}={ar[0]['value']})")
+    else:
+        fail("attr_roster 31701 지분율(%) 숫자 행 없음")
 
 
 def test_finance_31201(rows: list[dict]) -> None:
@@ -327,6 +363,7 @@ def main() -> int:
     test_budget_31401(rows)
 
     test_finance_31201(rows)
+    test_recovery(rows)
     spot_check_kepco(rows)
 
     print("\n" + "=" * 60)

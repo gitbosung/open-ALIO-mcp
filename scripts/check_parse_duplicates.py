@@ -10,7 +10,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CSV = ROOT / "data" / "crawl" / "alio_records.csv"
 
-# 이전 검증 기준선 (급증 시 회귀 의심)
+# 검증 기준선 (급증 시 회귀 의심; 게이트는 baseline×2 초과 시 FAIL).
+# 2026-06-15 Phase 2 기준 known-good ≈ 13,700: 31801 차입금 ~6.4k(기존 finance형),
+# finance(31201/31301) ~3.1k(이중표 빈값-숫자, 기존), 20601 '비 고' placeholder ~3.2k(benign),
+# 20801 ~1k(기존). col_label 키 덕에 archetype 확장에도 false 충돌은 억제됨.
 CONFLICT_BASELINE = 12_000
 
 
@@ -26,6 +29,7 @@ def main() -> int:
             r["section"],
             r.get("sub_account", ""),
             r["row_label"],
+            r.get("col_label", ""),
             r["year"],
             r["value_type"],
         )
@@ -48,7 +52,8 @@ def main() -> int:
 
     print("\n샘플 (최대 5):")
     for k, v in list(conflicts.items())[:5]:
-        print(f"  {k[0]} / {k[1]} / {k[3]} / {k[4]} / {k[5]!r} → {v}")
+        # k = (apba, item, section, sub_account, row_label, col_label, year, value_type)
+        print(f"  {k[0]} / {k[1]} / sub={k[3]} / {k[4]} / col={k[5]} / {k[6]!r} → {v}")
 
     exit_code = 0
     if len(conflicts) > CONFLICT_BASELINE * 2:

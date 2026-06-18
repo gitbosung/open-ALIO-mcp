@@ -59,6 +59,62 @@
       "verified_at": "2026-06-14",
       "verified_by": "manual",
       "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0091&reportFormRootNo=31201&disclosureNo="
+    },
+    {
+      "apba_id": "C0001",
+      "item_no": "32211",
+      "section": "법인세 납부내역",
+      "row_label": "",
+      "col_label": "결정세액",
+      "year": "2025",
+      "value_type": "",
+      "value": 15312,
+      "note": "row_year(transpose) archetype 복구 — 연도=행, 지표=col_label. row_label은 ''",
+      "verified_at": "2026-06-15",
+      "verified_by": "html_crawl",
+      "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0001&reportFormRootNo=32211&disclosureNo="
+    },
+    {
+      "apba_id": "C0001",
+      "item_no": "31501",
+      "section": "주요사업",
+      "row_label": "수탁관리수수료",
+      "col_label": "2021년 결산",
+      "year": "2021",
+      "value_type": "결산",
+      "value": 3370,
+      "note": "col_year 셀단위 anchor 수정 복구 — 비고열 첨부 anchor로 통째 드롭되던 행",
+      "verified_at": "2026-06-15",
+      "verified_by": "html_crawl",
+      "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0001&reportFormRootNo=31501&disclosureNo="
+    },
+    {
+      "apba_id": "C0001",
+      "item_no": "20601",
+      "section": "정규직(일반정규직)",
+      "row_label": "1인당 평균 보수액 > (남성)",
+      "col_label": "2024년 결산",
+      "year": "2024",
+      "value_type": "결산",
+      "value": 81111,
+      "note": "Phase 2a 평면행 부모-컨텍스트 — (남성)을 '1인당 평균 보수액' 아래로 prefix(상시종업원수와 분리)",
+      "verified_at": "2026-06-15",
+      "verified_by": "html_crawl",
+      "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0001&reportFormRootNo=20601&disclosureNo="
+    },
+    {
+      "apba_id": "C0005",
+      "item_no": "31701",
+      "section": "자본금 및 주주 현황",
+      "row_label": "한국광해광업공단",
+      "col_label": "지분율(%)",
+      "year": "",
+      "value_type": "",
+      "value": 36.27,
+      "note": "Phase 2b attr_roster — 주주 명부(row_label=주주명, col_label=속성)",
+      "verified_at": "2026-06-15",
+      "verified_by": "html_crawl",
+      "source_url": "https://www.alio.go.kr/item/itemReportTerm.do?apbaId=C0005&reportFormRootNo=31701&disclosureNo="
     }
   ]
 }
