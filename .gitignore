@@ -37,6 +37,7 @@ Thumbs.db
 desktop.ini
 .idea/
 .vscode/
+.claude/
 *.swp
 *.swo
 ~$*.pptx
@@ -59,3 +60,6 @@ data/crawl/
 data/items.json
 data/items_catalog.json
 data/metrics/_crawl_promotion_report.json
+
+# Local parser/data archives: keep manifests in Git, keep bulky parsed data local.
+archive/*/data/

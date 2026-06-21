@@ -1,0 +1,39 @@
+{
+  "snapshot": "v1_html_long_parser_20260621",
+  "created_at": "2026-06-21",
+  "purpose": "Preserve the current ALIO HTML long-format parser and parsed output baseline before v2 canonical parser redesign.",
+  "parser": {
+    "path": "archive/v1_html_long_parser_20260621/parse_alio.py",
+    "sha256": "4CAE707DD66EE265E1A9AE8317403B7C6C7C86F01D8C1242AF1D38E90B4395A7",
+    "bytes": 20157
+  },
+  "parsed_outputs": [
+    {
+      "path": "archive/v1_html_long_parser_20260621/data/alio_records.csv",
+      "git_tracked": false,
+      "sha256": "2B07CF3D433F15CFE600C337BEABB32E91CC4A543844ED192619A11865F123AF",
+      "bytes": 257556028,
+      "record_count": 936981
+    },
+    {
+      "path": "archive/v1_html_long_parser_20260621/data/alio_records.json",
+      "git_tracked": false,
+      "sha256": "B28BE8AD524C5541464279A7D9C9137937E1F82F3CB87F2670141B1F10C24E63",
+      "bytes": 420776731,
+      "record_count": 936981
+    }
+  ],
+  "source_html_dir": "rawdata/html",
+  "validation_rawdata_dir": "rawdata/validation",
+  "validation_reports": [
+    "data/validation_reports/rawdata_vs_crawl_findings.md",
+    "data/validation_reports/rawdata_vs_crawl_full_audit.md",
+    "data/validation_reports/rawdata_vs_crawl_full_audit.json",
+    "data/validation_reports/crawl_csv_json_consistency.json"
+  ],
+  "notes": [
+    "data/ is ignored by Git to avoid pushing large generated artifacts.",
+    "The v1 parser is preserved as a tracked source snapshot.",
+    "The v2 parser should start from rawdata/html and emit canonical records before derived MCP metrics."
+  ]
+}

@@ -1,0 +1,5436 @@
+{
+  "generated_at": "2026-06-21T13:48:59",
+  "scope": {
+    "validation_dir": "rawdata\\validation",
+    "validation_period": "2025 Q1 rawdata",
+    "current_crawl_period": "2026 Q1 parsed HTML",
+    "strict_compare_years": [
+      "2021",
+      "2022",
+      "2023",
+      "2024"
+    ]
+  },
+  "inventory": {
+    "xlsx_count": 83,
+    "sheet_count": 93,
+    "main_sheet_count": 84,
+    "rows_with_org_header": 454722,
+    "broken": []
+  },
+  "crawl": {
+    "as_of_counts": [
+      [
+        "2026년 1/4분기",
+        936205
+      ]
+    ],
+    "total_csv_rows": 936981,
+    "item_count_with_docs": 25,
+    "item_count_with_csv": 24,
+    "items": [
+      {
+        "item_no": "20201",
+        "doc_count": 355,
+        "csv_rows": 113978,
+        "csv_org_count": 355
+      },
+      {
+        "item_no": "20401",
+        "doc_count": 355,
+        "csv_rows": 31958,
+        "csv_org_count": 355
+      },
+      {
+        "item_no": "20501",
+        "doc_count": 344,
+        "csv_rows": 57844,
+        "csv_org_count": 344
+      },
+      {
+        "item_no": "20601",
+        "doc_count": 355,
+        "csv_rows": 108352,
+        "csv_org_count": 355
+      },
+      {
+        "item_no": "20701",
+        "doc_count": 351,
+        "csv_rows": 1771,
+        "csv_org_count": 351
+      },
+      {
+        "item_no": "20801",
+        "doc_count": 354,
+        "csv_rows": 215040,
+        "csv_org_count": 354
+      },
+      {
+        "item_no": "21021",
+        "doc_count": 2,
+        "csv_rows": 6,
+        "csv_org_count": 2
+      },
+      {
+        "item_no": "21401",
+        "doc_count": 355,
+        "csv_rows": 136210,
+        "csv_org_count": 355
+      },
+      {
+        "item_no": "21801",
+        "doc_count": 355,
+        "csv_rows": 3550,
+        "csv_org_count": 355
+      },
+      {
+        "item_no": "31201",
+        "doc_count": 355,
+        "csv_rows": 27113,
+        "csv_org_count": 355
+      },
+      {
+        "item_no": "31301",
+        "doc_count": 354,
+        "csv_rows": 36272,
+        "csv_org_count": 354
+      },
+      {
+        "item_no": "31401",
+        "doc_count": 354,
+        "csv_rows": 67216,
+        "csv_org_count": 354
+      },
+      {
+        "item_no": "31501",
+        "doc_count": 354,
+        "csv_rows": 12972,
+        "csv_org_count": 354
+      },
+      {
+        "item_no": "31701",
+        "doc_count": 324,
+        "csv_rows": 560,
+        "csv_org_count": 76
+      },
+      {
+        "item_no": "31801",
+        "doc_count": 225,
+        "csv_rows": 15314,
+        "csv_org_count": 225
+      },
+      {
+        "item_no": "31901",
+        "doc_count": 151,
+        "csv_rows": 29485,
+        "csv_org_count": 151
+      },
+      {
+        "item_no": "32001",
+        "doc_count": 115,
+        "csv_rows": 793,
+        "csv_org_count": 115
+      },
+      {
+        "item_no": "32101",
+        "doc_count": 119,
+        "csv_rows": 4187,
+        "csv_org_count": 119
+      },
+      {
+        "item_no": "32211",
+        "doc_count": 352,
+        "csv_rows": 8628,
+        "csv_org_count": 352
+      },
+      {
+        "item_no": "32301",
+        "doc_count": 354,
+        "csv_rows": 80,
+        "csv_org_count": 8
+      },
+      {
+        "item_no": "32311",
+        "doc_count": 350,
+        "csv_rows": 2110,
+        "csv_org_count": 350
+      },
+      {
+        "item_no": "40211",
+        "doc_count": 180,
+        "csv_rows": 900,
+        "csv_org_count": 180
+      },
+      {
+        "item_no": "63701",
+        "doc_count": 354,
+        "csv_rows": 54267,
+        "csv_org_count": 354
+      },
+      {
+        "item_no": "70301",
+        "doc_count": 353,
+        "csv_rows": 0,
+        "csv_org_count": 0
+      },
+      {
+        "item_no": "70461",
+        "doc_count": 335,
+        "csv_rows": 8375,
+        "csv_org_count": 335
+      }
+    ],
+    "doc_items_with_zero_csv": [
+      {
+        "item_no": "70301",
+        "doc_count": 353,
+        "csv_rows": 0,
+        "csv_org_count": 0
+      }
+    ]
+  },
+  "validation_coverage": {
+    "files_total": 83,
+    "mapped_files": 83,
+    "mapped_to_crawled_item": 71,
+    "mapped_to_parsed_csv": 70,
+    "files": [
+      {
+        "file": "10. 임원연봉현황(250417).xlsx",
+        "mapped_item_no": "20501",
+        "has_html_docs": true,
+        "html_doc_count": 344,
+        "csv_rows": 57844
+      },
+      {
+        "file": "11-1. 직원평균보수(250417).xlsx",
+        "mapped_item_no": "20601",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 108352
+      },
+      {
+        "file": "11-2. 신입사원초임(250417).xlsx",
+        "mapped_item_no": "20601",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 108352
+      },
+      {
+        "file": "12. 기관장업무추진비(250417).xlsx",
+        "mapped_item_no": "20701",
+        "has_html_docs": true,
+        "html_doc_count": 351,
+        "csv_rows": 1771
+      },
+      {
+        "file": "13-1. 예산상복리후생비(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-2. 사내복지기금_조성현황(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-1. 보육비(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-10. 경로효친비(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-11. 문화여가비(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-12. 재해보상및재해부조(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-13. 기타(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-2. 학자금(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-3. 의료비및건강검진비(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-4. 주택자금(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-5. 생활안정자금(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-6. 경조비및유족위로금(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-7. 선택적복지제도(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-8. 기념품비(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3-9. 행사지원비(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-3. 항목별_복리후생비_전체(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "13-5. 1인당복리후생비(250417).xlsx",
+        "mapped_item_no": "20801",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 215040
+      },
+      {
+        "file": "14-1-1. 휴직급여 지급기준(250417).xlsx",
+        "mapped_item_no": "63701",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 54267
+      },
+      {
+        "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+        "mapped_item_no": "63701",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 54267
+      },
+      {
+        "file": "14-2-1. 퇴직금 적립 및 지급 기준(250417).xlsx",
+        "mapped_item_no": "63701",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 54267
+      },
+      {
+        "file": "14-2-2. 퇴직금 가산 지급 기준(250417).xlsx",
+        "mapped_item_no": "63701",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 54267
+      },
+      {
+        "file": "14-2-3. 퇴직금 가산 지급 현황(250417).xlsx",
+        "mapped_item_no": "63701",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 54267
+      },
+      {
+        "file": "14-3-1. 휴가 운영 기준(250417).xlsx",
+        "mapped_item_no": "63701",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 54267
+      },
+      {
+        "file": "14-3-2. 공무원 복무 규정 외 휴가(250417).xlsx",
+        "mapped_item_no": "63701",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 54267
+      },
+      {
+        "file": "14-3-3. 장기근속 휴가휴직 운영기준(250417).xlsx",
+        "mapped_item_no": "63701",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 54267
+      },
+      {
+        "file": "14-3-4. 근무시간 중 체육문화의날 등 운영기준(250417).xlsx",
+        "mapped_item_no": "63701",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 54267
+      },
+      {
+        "file": "15. 노동조합가입정보(250417).xlsx",
+        "mapped_item_no": "21021",
+        "has_html_docs": true,
+        "html_doc_count": 2,
+        "csv_rows": 6
+      },
+      {
+        "file": "16-1-1. 소송현황(250417).xlsx",
+        "mapped_item_no": "21301",
+        "has_html_docs": false,
+        "html_doc_count": 0,
+        "csv_rows": 0
+      },
+      {
+        "file": "16-1-2. 소송대리인현황(250417).xlsx",
+        "mapped_item_no": "21301",
+        "has_html_docs": false,
+        "html_doc_count": 0,
+        "csv_rows": 0
+      },
+      {
+        "file": "16-2-1. 고문변호사현황(250417).xlsx",
+        "mapped_item_no": "21311",
+        "has_html_docs": false,
+        "html_doc_count": 0,
+        "csv_rows": 0
+      },
+      {
+        "file": "16-2-2. 법률자문현황(250417).xlsx",
+        "mapped_item_no": "21311",
+        "has_html_docs": false,
+        "html_doc_count": 0,
+        "csv_rows": 0
+      },
+      {
+        "file": "19-1. 에너지 사용량(250417).xlsx",
+        "mapped_item_no": "21621",
+        "has_html_docs": false,
+        "html_doc_count": 0,
+        "csv_rows": 0
+      },
+      {
+        "file": "19-2. 폐기물 발생량(250417).xlsx",
+        "mapped_item_no": "21631",
+        "has_html_docs": false,
+        "html_doc_count": 0,
+        "csv_rows": 0
+      },
+      {
+        "file": "19-3. 용수 사용량(250417).xlsx",
+        "mapped_item_no": "21641",
+        "has_html_docs": false,
+        "html_doc_count": 0,
+        "csv_rows": 0
+      },
+      {
+        "file": "21-1. 산업재해 사고사망자수, 안전사고 사망자수, 안전경영책임보고서(250417).xlsx",
+        "mapped_item_no": "70461",
+        "has_html_docs": true,
+        "html_doc_count": 335,
+        "csv_rows": 8375
+      },
+      {
+        "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+        "mapped_item_no": "21401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 136210
+      },
+      {
+        "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+        "mapped_item_no": "21401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 136210
+      },
+      {
+        "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+        "mapped_item_no": "21401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 136210
+      },
+      {
+        "file": "24-4. 유연근무현황(250417).xlsx",
+        "mapped_item_no": "21401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 136210
+      },
+      {
+        "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+        "mapped_item_no": "21401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 136210
+      },
+      {
+        "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+        "mapped_item_no": "21401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 136210
+      },
+      {
+        "file": "24-7-1. 직장어린이집 수_250417.xlsx",
+        "mapped_item_no": "21401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 136210
+      },
+      {
+        "file": "24-7-2. 직장어린이집 운영비(250417).xlsx",
+        "mapped_item_no": "21401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 136210
+      },
+      {
+        "file": "24-8. 가족친화 인증 여부(250417).xlsx",
+        "mapped_item_no": "21401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 136210
+      },
+      {
+        "file": "24-9. 육아 휴직자의 직장유지 현황(250417).xlsx",
+        "mapped_item_no": "21401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 136210
+      },
+      {
+        "file": "29. 자체 감사부서 현황(250417).xlsx",
+        "mapped_item_no": "32311",
+        "has_html_docs": true,
+        "html_doc_count": 350,
+        "csv_rows": 2110
+      },
+      {
+        "file": "3-1. 임직원 수 정원 현원 합계(250417).xlsx",
+        "mapped_item_no": "20201",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 113978
+      },
+      {
+        "file": "3-1. 임직원수(250417).xlsx",
+        "mapped_item_no": "20201",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 113978
+      },
+      {
+        "file": "3-2. 직급별인원수(250417).xlsx",
+        "mapped_item_no": "20201",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 113978
+      },
+      {
+        "file": "30. 청렴도 평가결과(250417).xlsx",
+        "mapped_item_no": "40211",
+        "has_html_docs": true,
+        "html_doc_count": 180,
+        "csv_rows": 900
+      },
+      {
+        "file": "31. 요약재무상태표(250417).xlsx",
+        "mapped_item_no": "31201",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 27113
+      },
+      {
+        "file": "31. 요약재무상태표(한국주택공사 서식_AUP포함)(250417).xlsx",
+        "mapped_item_no": "31201",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 27113
+      },
+      {
+        "file": "32. 요약손익계산서(250417).xlsx",
+        "mapped_item_no": "31301",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 36272
+      },
+      {
+        "file": "32. 요약손익계산서(한국주택공사 서식_AUP포함)(250417).xlsx",
+        "mapped_item_no": "31301",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 36272
+      },
+      {
+        "file": "33. 수입지출현황[고유사업](250417).xlsx",
+        "mapped_item_no": "31401",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 67216
+      },
+      {
+        "file": "33. 수입지출현황[기금계정](250417).xlsx",
+        "mapped_item_no": "31401",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 67216
+      },
+      {
+        "file": "34. 자본금 및 주주현황_기본재산(250417).xlsx",
+        "mapped_item_no": "31701",
+        "has_html_docs": true,
+        "html_doc_count": 324,
+        "csv_rows": 560
+      },
+      {
+        "file": "34. 자본금 및 주주현황_자본금(250417).xlsx",
+        "mapped_item_no": "31701",
+        "has_html_docs": true,
+        "html_doc_count": 324,
+        "csv_rows": 560
+      },
+      {
+        "file": "35. 장단기차입금현황(250417).xlsx",
+        "mapped_item_no": "31801",
+        "has_html_docs": true,
+        "html_doc_count": 225,
+        "csv_rows": 15314
+      },
+      {
+        "file": "36-1. 외부회계감사보고서(250417).xlsx",
+        "mapped_item_no": "32301",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 80
+      },
+      {
+        "file": "37-1. 법인세(250417).xlsx",
+        "mapped_item_no": "32211",
+        "has_html_docs": true,
+        "html_doc_count": 352,
+        "csv_rows": 8628
+      },
+      {
+        "file": "38. 주요사업(250417).xlsx",
+        "mapped_item_no": "31501",
+        "has_html_docs": true,
+        "html_doc_count": 354,
+        "csv_rows": 12972
+      },
+      {
+        "file": "39. 투자집행내역(250417).xlsx",
+        "mapped_item_no": "31601",
+        "has_html_docs": false,
+        "html_doc_count": 0,
+        "csv_rows": 0
+      },
+      {
+        "file": "39. 투자집행내역(과거 5년 총계)(250417).xlsx",
+        "mapped_item_no": "31601",
+        "has_html_docs": false,
+        "html_doc_count": 0,
+        "csv_rows": 0
+      },
+      {
+        "file": "40-1-1. 투자 및 출자현황_총괄표(250417).xlsx",
+        "mapped_item_no": "31901",
+        "has_html_docs": true,
+        "html_doc_count": 151,
+        "csv_rows": 29485
+      },
+      {
+        "file": "40-1-2. 투자 및 출자현황_연도별 타법인 투출자 현황(250417).xlsx",
+        "mapped_item_no": "31901",
+        "has_html_docs": true,
+        "html_doc_count": 151,
+        "csv_rows": 29485
+      },
+      {
+        "file": "40-1-3. 투자 및 출자현황_해당연도 타법인 투출자 현황(250417).xlsx",
+        "mapped_item_no": "31901",
+        "has_html_docs": true,
+        "html_doc_count": 151,
+        "csv_rows": 29485
+      },
+      {
+        "file": "40-3. 연간주요거래내역(250417).xlsx",
+        "mapped_item_no": "31901",
+        "has_html_docs": true,
+        "html_doc_count": 151,
+        "csv_rows": 29485
+      },
+      {
+        "file": "40-5. 출연 현황(250417).xlsx",
+        "mapped_item_no": "32001",
+        "has_html_docs": true,
+        "html_doc_count": 115,
+        "csv_rows": 793
+      },
+      {
+        "file": "41-1. 경영부담비용추계 - 담보제공현황(250417).xlsx",
+        "mapped_item_no": "32101",
+        "has_html_docs": true,
+        "html_doc_count": 119,
+        "csv_rows": 4187
+      },
+      {
+        "file": "41-2. 경영부담비용추계 - 타(법)인에 대한 채무보증현황(250417).xlsx",
+        "mapped_item_no": "32101",
+        "has_html_docs": true,
+        "html_doc_count": 119,
+        "csv_rows": 4187
+      },
+      {
+        "file": "47-2. 수의계약(250417).xlsx",
+        "mapped_item_no": "70301",
+        "has_html_docs": true,
+        "html_doc_count": 353,
+        "csv_rows": 0
+      },
+      {
+        "file": "5-1. 신규채용현황(250417).xlsx",
+        "mapped_item_no": "20401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 31958
+      },
+      {
+        "file": "5-1. 총신규채용(250417).xlsx",
+        "mapped_item_no": "20401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 31958
+      },
+      {
+        "file": "5-2. 청년인턴채용현황(250417).xlsx",
+        "mapped_item_no": "20401",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 31958
+      },
+      {
+        "file": "7-1. 퇴직임직원재취업현황(250417).xlsx",
+        "mapped_item_no": "31921",
+        "has_html_docs": false,
+        "html_doc_count": 0,
+        "csv_rows": 0
+      },
+      {
+        "file": "7-2. 남녀 이직자 비율(250417).xlsx",
+        "mapped_item_no": "21801",
+        "has_html_docs": true,
+        "html_doc_count": 355,
+        "csv_rows": 3550
+      },
+      {
+        "file": "8-1. 징계제도 운영현황(250417).xlsx",
+        "mapped_item_no": "21201",
+        "has_html_docs": false,
+        "html_doc_count": 0,
+        "csv_rows": 0
+      },
+      {
+        "file": "8-2. 징계처분결과(250417).xlsx",
+        "mapped_item_no": "21211",
+        "has_html_docs": false,
+        "html_doc_count": 0,
+        "csv_rows": 0
+      }
+    ]
+  },
+  "crawl_csv_checks": [
+    {
+      "file": "3-1. 임직원수(250417).xlsx",
+      "item_no": "20201",
+      "category": "staff",
+      "records": 88752,
+      "org_count": 340,
+      "key_count": 43,
+      "matched": 38035,
+      "mismatched": 3582,
+      "missing_csv_key": 1110,
+      "zero_blank_tolerated": 11423,
+      "zero_missing_csv_key": 4330,
+      "unmatched_org": 688,
+      "out_of_period": 29584,
+      "strict_total": 42727,
+      "match_rate": 0.890187,
+      "samples": [
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "임원-기관장-상임현원",
+          "year": "2022",
+          "value": 0,
+          "org_code": "C0847",
+          "csv_values": [
+            1
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "정규직-일반정규직-정원-임금피크제 별도정원",
+          "year": "2022",
+          "value": 2,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "정규직-일반정규직-정원-임금피크제 별도정원",
+          "year": "2023",
+          "value": 2,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "정규직-일반정규직-정원-임금피크제 별도정원",
+          "year": "2024",
+          "value": 1,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "정규직-일반정규직-현원-계",
+          "year": "2023",
+          "value": 27.13,
+          "org_code": "C0847",
+          "csv_values": [
+            29.26
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "정규직-일반정규직-현원-전일제",
+          "year": "2023",
+          "value": 25,
+          "org_code": "C0847",
+          "csv_values": [
+            27.13
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "여성 현원-합계",
+          "year": "2024",
+          "value": 14,
+          "org_code": "C0847",
+          "csv_values": [
+            15
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "여성 현원-임원",
+          "year": "2024",
+          "value": 1,
+          "org_code": "C0847",
+          "csv_values": [
+            2
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "비정규직-기간제-정규직전환-전환실적(E)",
+          "year": "2021",
+          "value": 7,
+          "org_code": "C0454",
+          "csv_values": [
+            0
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "정규직-일반정규직-정원-임금피크제 별도정원",
+          "year": "2021",
+          "value": 5,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        }
+      ]
+    },
+    {
+      "file": "11-1. 직원평균보수(250417).xlsx",
+      "item_no": "20601",
+      "category": "salary",
+      "records": 81108,
+      "org_count": 340,
+      "key_count": 54,
+      "matched": 46207,
+      "mismatched": 1136,
+      "missing_csv_key": 864,
+      "zero_blank_tolerated": 3045,
+      "zero_missing_csv_key": 2244,
+      "unmatched_org": 576,
+      "out_of_period": 27036,
+      "strict_total": 48207,
+      "match_rate": 0.958512,
+      "samples": [
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | 1인당 평균보수액 - 여성",
+          "year": "2024",
+          "value": 47831,
+          "org_code": "C0454",
+          "csv_values": [
+            47777
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | 평균임금 비율(남성)",
+          "year": "2024",
+          "value": 54.19,
+          "org_code": "C0454",
+          "csv_values": [
+            54.22
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | 평균임금 비율(여성)",
+          "year": "2024",
+          "value": 45.81,
+          "org_code": "C0454",
+          "csv_values": [
+            45.78
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | (경영평가 성과급)",
+          "year": "2021",
+          "value": 456,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | (경영평가 성과급)",
+          "year": "2022",
+          "value": 832,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | (경영평가 성과급)",
+          "year": "2023",
+          "value": 1194,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | (경영평가 성과급)",
+          "year": "2024",
+          "value": 1183,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "직원평균보수 | 정규직(무기계약직) | (경영평가 성과급)",
+          "year": "2021",
+          "value": 234,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "직원평균보수 | 정규직(무기계약직) | (경영평가 성과급)",
+          "year": "2022",
+          "value": 434,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "직원평균보수 | 정규직(무기계약직) | (경영평가 성과급)",
+          "year": "2023",
+          "value": 610,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        }
+      ]
+    },
+    {
+      "file": "11-2. 신입사원초임(250417).xlsx",
+      "item_no": "20601",
+      "category": "salary",
+      "records": 16512,
+      "org_count": 340,
+      "key_count": 8,
+      "matched": 7642,
+      "mismatched": 153,
+      "missing_csv_key": 0,
+      "zero_blank_tolerated": 1725,
+      "zero_missing_csv_key": 1360,
+      "unmatched_org": 128,
+      "out_of_period": 5504,
+      "strict_total": 7795,
+      "match_rate": 0.980372,
+      "samples": [
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 성과상여금",
+          "year": "2021",
+          "value": 2519,
+          "org_code": "C0001",
+          "csv_values": [
+            0
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 성과상여금",
+          "year": "2022",
+          "value": 2602,
+          "org_code": "C0001",
+          "csv_values": [
+            0
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 성과상여금",
+          "year": "2023",
+          "value": 2935,
+          "org_code": "C0001",
+          "csv_values": [
+            0
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 성과상여금",
+          "year": "2024",
+          "value": 2983,
+          "org_code": "C0001",
+          "csv_values": [
+            0
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 합계",
+          "year": "2021",
+          "value": 36438,
+          "org_code": "C0001",
+          "csv_values": [
+            33919
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 합계",
+          "year": "2022",
+          "value": 37577,
+          "org_code": "C0001",
+          "csv_values": [
+            34975
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 합계",
+          "year": "2023",
+          "value": 38314,
+          "org_code": "C0001",
+          "csv_values": [
+            35379
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 합계",
+          "year": "2024",
+          "value": 38585,
+          "org_code": "C0001",
+          "csv_values": [
+            35602
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "과학기술정책연구원",
+          "metric_key": "신입사원초임 | 고정수당",
+          "year": "2024",
+          "value": 5420,
+          "org_code": "C0017",
+          "csv_values": [
+            5320
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "과학기술정책연구원",
+          "metric_key": "신입사원초임 | 합계",
+          "year": "2024",
+          "value": 40287,
+          "org_code": "C0017",
+          "csv_values": [
+            40187
+          ],
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "10. 임원연봉현황(250417).xlsx",
+      "item_no": "20501",
+      "category": "executive_pay",
+      "records": 46290,
+      "org_count": 328,
+      "key_count": 35,
+      "matched": 15658,
+      "mismatched": 306,
+      "missing_csv_key": 2337,
+      "zero_blank_tolerated": 9544,
+      "zero_missing_csv_key": 2631,
+      "unmatched_org": 384,
+      "out_of_period": 15430,
+      "strict_total": 18301,
+      "match_rate": 0.855582,
+      "samples": [
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "상임임원 평균보수(연봉) | 남성",
+          "year": "2021",
+          "value": 97846,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "상임임원 평균보수(연봉) | 남성",
+          "year": "2022",
+          "value": 104215,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "상임임원 평균보수(연봉) | 남성",
+          "year": "2023",
+          "value": 105704,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "상임임원 평균보수(연봉) | 남성",
+          "year": "2024",
+          "value": 114338,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "상임기관장 | (경영평가 성과급)",
+          "year": "2021",
+          "value": 16936,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "상임기관장 | (경영평가 성과급)",
+          "year": "2022",
+          "value": 30469,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "상임기관장 | (경영평가 성과급)",
+          "year": "2023",
+          "value": 43919,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "상임기관장 | (경영평가 성과급)",
+          "year": "2024",
+          "value": 35627,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "상임임원 평균보수(연봉) | 남성",
+          "year": "2021",
+          "value": 162028,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "상임임원 평균보수(연봉) | 남성",
+          "year": "2022",
+          "value": 176867,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        }
+      ]
+    },
+    {
+      "file": "12. 기관장업무추진비(250417).xlsx",
+      "item_no": "20701",
+      "category": "head_expense",
+      "records": 1700,
+      "org_count": 336,
+      "key_count": 1,
+      "matched": 1304,
+      "mismatched": 33,
+      "missing_csv_key": 0,
+      "zero_blank_tolerated": 7,
+      "zero_missing_csv_key": 0,
+      "unmatched_org": 16,
+      "out_of_period": 340,
+      "strict_total": 1337,
+      "match_rate": 0.975318,
+      "samples": [
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2021",
+          "value": 4646,
+          "org_code": "C0931",
+          "csv_values": [
+            4647
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "(재)한국통계정보원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2021",
+          "value": 9161,
+          "org_code": "C1060",
+          "csv_values": [
+            9162
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "(재)한국통계정보원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2022",
+          "value": 12007,
+          "org_code": "C1060",
+          "csv_values": [
+            12008
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "독립기념관",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2021",
+          "value": 13840,
+          "org_code": "C0065",
+          "csv_values": [
+            13435
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "무역안보관리원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2021",
+          "value": 11400,
+          "org_code": "C0367",
+          "csv_values": [
+            12000
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "무역안보관리원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2022",
+          "value": 9442,
+          "org_code": "C0367",
+          "csv_values": [
+            11400
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "무역안보관리원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2023",
+          "value": 10000,
+          "org_code": "C0367",
+          "csv_values": [
+            9442
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "재단법인 한국공공조직은행",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2023",
+          "value": 3031,
+          "org_code": "C1102",
+          "csv_values": [
+            3289
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "한국고용정보원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2024",
+          "value": 5635,
+          "org_code": "C0321",
+          "csv_values": [
+            5617
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "한국공예디자인문화진흥원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2024",
+          "value": 11975,
+          "org_code": "C0452",
+          "csv_values": [
+            12222
+          ],
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "5-1. 신규채용현황(250417).xlsx",
+      "item_no": "20401",
+      "category": "recruitment",
+      "records": 18576,
+      "org_count": 340,
+      "key_count": 9,
+      "matched": 10347,
+      "mismatched": 143,
+      "missing_csv_key": 0,
+      "zero_blank_tolerated": 1750,
+      "zero_missing_csv_key": 0,
+      "unmatched_org": 144,
+      "out_of_period": 6192,
+      "strict_total": 10490,
+      "match_rate": 0.986368,
+      "samples": [
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 일반정규직총신규채용",
+          "year": "2021",
+          "value": 3,
+          "org_code": "C0847",
+          "csv_values": [
+            2
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 청년",
+          "year": "2022",
+          "value": 1,
+          "org_code": "C0847",
+          "csv_values": [
+            2
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 청년",
+          "year": "2023",
+          "value": 2,
+          "org_code": "C0847",
+          "csv_values": [
+            3
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 고졸인력",
+          "year": "2022",
+          "value": 1,
+          "org_code": "C0847",
+          "csv_values": [
+            0
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "신규채용현황 | 상임임원총신규채용",
+          "year": "2021",
+          "value": 1,
+          "org_code": "C0931",
+          "csv_values": [
+            0
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "신규채용현황 | 청년",
+          "year": "2021",
+          "value": 10,
+          "org_code": "C0931",
+          "csv_values": [
+            0
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "신규채용현황 | 청년",
+          "year": "2022",
+          "value": 3,
+          "org_code": "C0931",
+          "csv_values": [
+            10
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "신규채용현황 | 청년",
+          "year": "2023",
+          "value": 4,
+          "org_code": "C0931",
+          "csv_values": [
+            3
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "신규채용현황 | 청년",
+          "year": "2024",
+          "value": 3,
+          "org_code": "C0931",
+          "csv_values": [
+            4
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "신규채용현황 | 여성",
+          "year": "2021",
+          "value": 5,
+          "org_code": "C0931",
+          "csv_values": [
+            0
+          ],
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "5-1. 총신규채용(250417).xlsx",
+      "item_no": "20401",
+      "category": "recruitment",
+      "records": 2064,
+      "org_count": 340,
+      "key_count": 1,
+      "matched": 0,
+      "mismatched": 0,
+      "missing_csv_key": 1337,
+      "zero_blank_tolerated": 0,
+      "zero_missing_csv_key": 23,
+      "unmatched_org": 16,
+      "out_of_period": 688,
+      "strict_total": 1337,
+      "match_rate": 0.0,
+      "samples": [
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2021",
+          "value": 3,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2022",
+          "value": 1,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2023",
+          "value": 2,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2024",
+          "value": 12,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2021",
+          "value": 6,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2022",
+          "value": 10,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2023",
+          "value": 15,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2024",
+          "value": 5,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2021",
+          "value": 27,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2022",
+          "value": 75,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        }
+      ]
+    },
+    {
+      "file": "5-2. 청년인턴채용현황(250417).xlsx",
+      "item_no": "20401",
+      "category": "recruitment",
+      "records": 12384,
+      "org_count": 340,
+      "key_count": 6,
+      "matched": 5818,
+      "mismatched": 64,
+      "missing_csv_key": 0,
+      "zero_blank_tolerated": 2278,
+      "zero_missing_csv_key": 0,
+      "unmatched_org": 96,
+      "out_of_period": 4128,
+      "strict_total": 5882,
+      "match_rate": 0.989119,
+      "samples": [
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(주)강원랜드",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-체험형",
+          "year": "2024",
+          "value": 652,
+          "org_code": "C0005",
+          "csv_values": [
+            653
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(주)강원랜드",
+          "metric_key": "청년인턴채용현황 | 여성-체험형",
+          "year": "2024",
+          "value": 359,
+          "org_code": "C0005",
+          "csv_values": [
+            360
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(주)강원랜드",
+          "metric_key": "청년인턴채용현황 | 장애인-체험형",
+          "year": "2024",
+          "value": 0,
+          "org_code": "C0005",
+          "csv_values": [
+            2
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "국립해양생물자원관",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-체험형",
+          "year": "2023",
+          "value": 5,
+          "org_code": "C1021",
+          "csv_values": [
+            8
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "대한장애인체육회",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-체험형",
+          "year": "2021",
+          "value": 1,
+          "org_code": "C0315",
+          "csv_values": [
+            0
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "대한장애인체육회",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-체험형",
+          "year": "2022",
+          "value": 2,
+          "org_code": "C0315",
+          "csv_values": [
+            1
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "대한장애인체육회",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-체험형",
+          "year": "2023",
+          "value": 1,
+          "org_code": "C0315",
+          "csv_values": [
+            2
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "대한장애인체육회",
+          "metric_key": "청년인턴채용현황 | 여성-체험형",
+          "year": "2021",
+          "value": 1,
+          "org_code": "C0315",
+          "csv_values": [
+            0
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "대한장애인체육회",
+          "metric_key": "청년인턴채용현황 | 여성-체험형",
+          "year": "2023",
+          "value": 0,
+          "org_code": "C0315",
+          "csv_values": [
+            1
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "대한장애인체육회",
+          "metric_key": "청년인턴채용현황 | 여성-체험형",
+          "year": "2024",
+          "value": 1,
+          "org_code": "C0315",
+          "csv_values": [
+            0
+          ],
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "13-1. 예산상복리후생비(250417).xlsx",
+      "item_no": "20801",
+      "category": "welfare",
+      "records": 184875,
+      "org_count": 338,
+      "key_count": 112,
+      "matched": 43462,
+      "mismatched": 1085,
+      "missing_csv_key": 8491,
+      "zero_blank_tolerated": 90993,
+      "zero_missing_csv_key": 2245,
+      "unmatched_org": 1624,
+      "out_of_period": 36975,
+      "strict_total": 53038,
+      "match_rate": 0.81945,
+      "samples": [
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "예산상 복리후생비 | 임원 | 소계(A)",
+          "year": "2021",
+          "value": 670,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "예산상 복리후생비 | 임원 | 소계(A)",
+          "year": "2022",
+          "value": 397,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "예산상 복리후생비 | 임원 | 소계(A)",
+          "year": "2023",
+          "value": 610,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "예산상 복리후생비 | 임원 | 소계(A)",
+          "year": "2024",
+          "value": 620,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "예산상 복리후생비 | 임원 | 소계(B)",
+          "year": "2021",
+          "value": 90,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "예산상 복리후생비 | 임원 | 소계(B)",
+          "year": "2022",
+          "value": 115,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "예산상 복리후생비 | 임원 | 소계(B)",
+          "year": "2023",
+          "value": 50,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "예산상 복리후생비 | 임원 | 소계(B)",
+          "year": "2024",
+          "value": 50,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "예산상 복리후생비 | 정규직(일반정규직) | 소계(A)",
+          "year": "2021",
+          "value": 21089,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "예산상 복리후생비 | 정규직(일반정규직) | 소계(A)",
+          "year": "2022",
+          "value": 21178,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        }
+      ]
+    },
+    {
+      "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+      "item_no": "21401",
+      "category": "work_life",
+      "records": 8600,
+      "org_count": 340,
+      "key_count": 5,
+      "matched": 5992,
+      "mismatched": 214,
+      "missing_csv_key": 358,
+      "zero_blank_tolerated": 214,
+      "zero_missing_csv_key": 22,
+      "unmatched_org": 80,
+      "out_of_period": 1720,
+      "strict_total": 6564,
+      "match_rate": 0.912858,
+      "samples": [
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-육아휴직사용자수 | 남성 사용자 수",
+          "year": "2021",
+          "value": 23,
+          "org_code": "C0002",
+          "csv_values": [
+            24
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-육아휴직사용자수 | 남성 사용자 수",
+          "year": "2023",
+          "value": 38,
+          "org_code": "C0002",
+          "csv_values": [
+            39
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-육아휴직사용자수 | 남성 사용자 수",
+          "year": "2024",
+          "value": 49,
+          "org_code": "C0002",
+          "csv_values": [
+            53
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-육아휴직사용자수 | 여성 사용자 수",
+          "year": "2021",
+          "value": 46,
+          "org_code": "C0002",
+          "csv_values": [
+            50
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-육아휴직사용자수 | 여성 사용자 수",
+          "year": "2022",
+          "value": 43,
+          "org_code": "C0002",
+          "csv_values": [
+            50
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-육아휴직사용자수 | 여성 사용자 수",
+          "year": "2023",
+          "value": 43,
+          "org_code": "C0002",
+          "csv_values": [
+            52
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-육아휴직사용자수 | 여성 사용자 수",
+          "year": "2024",
+          "value": 43,
+          "org_code": "C0002",
+          "csv_values": [
+            49
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-육아휴직사용자수 | 전체 사용자 수",
+          "year": "2021",
+          "value": 69,
+          "org_code": "C0002",
+          "csv_values": [
+            74
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-육아휴직사용자수 | 전체 사용자 수",
+          "year": "2022",
+          "value": 84,
+          "org_code": "C0002",
+          "csv_values": [
+            91
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-육아휴직사용자수 | 전체 사용자 수",
+          "year": "2023",
+          "value": 81,
+          "org_code": "C0002",
+          "csv_values": [
+            91
+          ],
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+      "item_no": "21401",
+      "category": "work_life",
+      "records": 6880,
+      "org_count": 340,
+      "key_count": 4,
+      "matched": 3065,
+      "mismatched": 71,
+      "missing_csv_key": 0,
+      "zero_blank_tolerated": 2304,
+      "zero_missing_csv_key": 0,
+      "unmatched_org": 64,
+      "out_of_period": 1376,
+      "strict_total": 3136,
+      "match_rate": 0.97736,
+      "samples": [
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용률",
+          "year": "2024",
+          "value": 93.33,
+          "org_code": "C0331",
+          "csv_values": [
+            93.3
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(주)강원랜드",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 사용자 수",
+          "year": "2022",
+          "value": 58,
+          "org_code": "C0005",
+          "csv_values": [
+            59
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용자수",
+          "year": "2024",
+          "value": 29,
+          "org_code": "C0002",
+          "csv_values": [
+            27
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용률",
+          "year": "2024",
+          "value": 100,
+          "org_code": "C0002",
+          "csv_values": [
+            93.1
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "공간정보품질관리원",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 사용자 수",
+          "year": "2024",
+          "value": 0,
+          "org_code": "C1327",
+          "csv_values": [
+            1
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "공간정보품질관리원",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용자수",
+          "year": "2024",
+          "value": 0,
+          "org_code": "C1327",
+          "csv_values": [
+            1
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "공간정보품질관리원",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용률",
+          "year": "2024",
+          "value": 0,
+          "org_code": "C1327",
+          "csv_values": [
+            100
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "국방전직교육원",
+          "metric_key": "일가정-출산휴가사용자수 | 출산휴가 사용자 수",
+          "year": "2021",
+          "value": 0,
+          "org_code": "C1027",
+          "csv_values": [
+            1
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "국토안전관리원",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용률",
+          "year": "2024",
+          "value": 91.43,
+          "org_code": "C0225",
+          "csv_values": [
+            91.4
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "그랜드코리아레저(주)",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용자수",
+          "year": "2024",
+          "value": 15,
+          "org_code": "C0357",
+          "csv_values": [
+            16
+          ],
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+      "item_no": "21401",
+      "category": "work_life",
+      "records": 6860,
+      "org_count": 339,
+      "key_count": 4,
+      "matched": 3147,
+      "mismatched": 83,
+      "missing_csv_key": 1243,
+      "zero_blank_tolerated": 838,
+      "zero_missing_csv_key": 113,
+      "unmatched_org": 64,
+      "out_of_period": 1372,
+      "strict_total": 4473,
+      "match_rate": 0.703555,
+      "samples": [
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 합계",
+          "year": "2023",
+          "value": 3,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 합계",
+          "year": "2024",
+          "value": 3,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 합계",
+          "year": "2021",
+          "value": 2,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 합계",
+          "year": "2022",
+          "value": 2,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 합계",
+          "year": "2023",
+          "value": 3,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 합계",
+          "year": "2024",
+          "value": 5,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 합계",
+          "year": "2021",
+          "value": 46,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 합계",
+          "year": "2022",
+          "value": 50,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 합계",
+          "year": "2023",
+          "value": 63,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 합계",
+          "year": "2024",
+          "value": 58,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        }
+      ]
+    },
+    {
+      "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+      "item_no": "21401",
+      "category": "work_life",
+      "records": 5130,
+      "org_count": 338,
+      "key_count": 3,
+      "matched": 0,
+      "mismatched": 0,
+      "missing_csv_key": 3594,
+      "zero_blank_tolerated": 0,
+      "zero_missing_csv_key": 462,
+      "unmatched_org": 48,
+      "out_of_period": 1026,
+      "strict_total": 3594,
+      "match_rate": 0.0,
+      "samples": [
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 남성",
+          "year": "2021",
+          "value": 8,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 남성",
+          "year": "2022",
+          "value": 12,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 남성",
+          "year": "2023",
+          "value": 9,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 남성",
+          "year": "2024",
+          "value": 8,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 여성",
+          "year": "2021",
+          "value": 3,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 여성",
+          "year": "2022",
+          "value": 6,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 여성",
+          "year": "2023",
+          "value": 3,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 여성",
+          "year": "2024",
+          "value": 4,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 전체",
+          "year": "2021",
+          "value": 11,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 전체",
+          "year": "2022",
+          "value": 18,
+          "org_code": "C0847",
+          "reason": "missing_csv_key"
+        }
+      ]
+    },
+    {
+      "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+      "item_no": "21401",
+      "category": "work_life",
+      "records": 4770,
+      "org_count": 315,
+      "key_count": 3,
+      "matched": 0,
+      "mismatched": 0,
+      "missing_csv_key": 1743,
+      "zero_blank_tolerated": 0,
+      "zero_missing_csv_key": 2037,
+      "unmatched_org": 36,
+      "out_of_period": 954,
+      "strict_total": 1743,
+      "match_rate": 0.0,
+      "samples": [
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 남성",
+          "year": "2022",
+          "value": 1,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 남성",
+          "year": "2023",
+          "value": 1,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 여성",
+          "year": "2022",
+          "value": 1,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 전체",
+          "year": "2022",
+          "value": 2,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 전체",
+          "year": "2023",
+          "value": 1,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 여성",
+          "year": "2021",
+          "value": 6,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 여성",
+          "year": "2022",
+          "value": 6,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 여성",
+          "year": "2023",
+          "value": 4,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 여성",
+          "year": "2024",
+          "value": 4,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 전체",
+          "year": "2021",
+          "value": 6,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        }
+      ]
+    },
+    {
+      "file": "33. 수입지출현황[고유사업](250417).xlsx",
+      "item_no": "31401",
+      "category": "budget",
+      "records": 60660,
+      "org_count": 333,
+      "key_count": 30,
+      "matched": 20906,
+      "mismatched": 509,
+      "missing_csv_key": 0,
+      "zero_blank_tolerated": 18545,
+      "zero_missing_csv_key": 0,
+      "unmatched_org": 480,
+      "out_of_period": 20220,
+      "strict_total": 21415,
+      "match_rate": 0.976232,
+      "samples": [
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 인건비",
+          "year": "2021",
+          "value": 34402,
+          "org_code": "C0352",
+          "csv_values": [
+            35360
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 인건비",
+          "year": "2022",
+          "value": 35721,
+          "org_code": "C0352",
+          "csv_values": [
+            36726
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 인건비",
+          "year": "2023",
+          "value": 38008,
+          "org_code": "C0352",
+          "csv_values": [
+            39053
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 인건비",
+          "year": "2024",
+          "value": 38280,
+          "org_code": "C0352",
+          "csv_values": [
+            39331
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 사업비",
+          "year": "2021",
+          "value": 12955,
+          "org_code": "C0352",
+          "csv_values": [
+            11997
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 사업비",
+          "year": "2022",
+          "value": 14731,
+          "org_code": "C0352",
+          "csv_values": [
+            13726
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 사업비",
+          "year": "2023",
+          "value": 15202,
+          "org_code": "C0352",
+          "csv_values": [
+            14157
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 사업비",
+          "year": "2024",
+          "value": 15411,
+          "org_code": "C0352",
+          "csv_values": [
+            14360
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "수입지출현황(고유사업) | 수입 > 정부지원수입 > 간접지원 > 부대수입",
+          "year": "2022",
+          "value": 42,
+          "org_code": "C0931",
+          "csv_values": [
+            ""
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "수입지출현황(고유사업) | 수입 > 정부지원수입 > 소계",
+          "year": "2022",
+          "value": 5622,
+          "org_code": "C0931",
+          "csv_values": [
+            5580
+          ],
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "33. 수입지출현황[기금계정](250417).xlsx",
+      "item_no": "31401",
+      "category": "budget",
+      "records": 3600,
+      "org_count": 17,
+      "key_count": 570,
+      "matched": 1160,
+      "mismatched": 0,
+      "missing_csv_key": 0,
+      "zero_blank_tolerated": 1240,
+      "zero_missing_csv_key": 0,
+      "unmatched_org": 0,
+      "out_of_period": 1200,
+      "strict_total": 1160,
+      "match_rate": 1.0,
+      "samples": []
+    },
+    {
+      "file": "37-1. 법인세(250417).xlsx",
+      "item_no": "32211",
+      "category": "tax",
+      "records": 6500,
+      "org_count": 321,
+      "key_count": 5,
+      "matched": 3972,
+      "mismatched": 471,
+      "missing_csv_key": 0,
+      "zero_blank_tolerated": 1957,
+      "zero_missing_csv_key": 20,
+      "unmatched_org": 80,
+      "out_of_period": 0,
+      "strict_total": 4443,
+      "match_rate": 0.893991,
+      "samples": [
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "과세표준",
+          "year": "2024",
+          "value": 4123425,
+          "org_code": "C0368",
+          "csv_values": [
+            4150151
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "법인세 산출세액",
+          "year": "2024",
+          "value": 763451,
+          "org_code": "C0368",
+          "csv_values": [
+            768529
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "가산세",
+          "year": "2024",
+          "value": 0,
+          "org_code": "C0368",
+          "csv_values": [
+            758
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "결정세액",
+          "year": "2024",
+          "value": 763451,
+          "org_code": "C0368",
+          "csv_values": [
+            769287
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "과세표준",
+          "year": "2023",
+          "value": 3322609,
+          "org_code": "C0368",
+          "csv_values": [
+            3348176
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "법인세 산출세액",
+          "year": "2023",
+          "value": 611296,
+          "org_code": "C0368",
+          "csv_values": [
+            616154
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "가산세",
+          "year": "2023",
+          "value": 0,
+          "org_code": "C0368",
+          "csv_values": [
+            1129
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "결정세액",
+          "year": "2023",
+          "value": 611296,
+          "org_code": "C0368",
+          "csv_values": [
+            617283
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "과세표준",
+          "year": "2022",
+          "value": 1871224,
+          "org_code": "C0368",
+          "csv_values": [
+            1894947
+          ],
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "법인세 산출세액",
+          "year": "2022",
+          "value": 354245,
+          "org_code": "C0368",
+          "csv_values": [
+            358989
+          ],
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+      "item_no": "63701",
+      "category": "welfare_etc",
+      "records": 33354,
+      "org_count": 295,
+      "key_count": 408,
+      "matched": 0,
+      "mismatched": 0,
+      "missing_csv_key": 1698,
+      "zero_blank_tolerated": 0,
+      "zero_missing_csv_key": 24793,
+      "unmatched_org": 196,
+      "out_of_period": 6667,
+      "strict_total": 1698,
+      "match_rate": 0.0,
+      "samples": [
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 업무외 질병",
+          "year": "2024",
+          "value": 41924,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 육아 휴직",
+          "year": "2023",
+          "value": 1267,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 육아 휴직",
+          "year": "2022",
+          "value": 2517,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 업무외 질병",
+          "year": "2021",
+          "value": 16924,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 육아 휴직",
+          "year": "2021",
+          "value": 6396,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(무기계약직) | 육아 휴직",
+          "year": "2023",
+          "value": 3540,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(무기계약직) | 육아 휴직",
+          "year": "2022",
+          "value": 3180,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(무기계약직) | 업무외 질병",
+          "year": "2021",
+          "value": 7185,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(무기계약직) | 육아 휴직",
+          "year": "2021",
+          "value": 10618,
+          "org_code": "C0454",
+          "reason": "missing_csv_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "휴직급여지급현황 | 정규직(무기계약직) | 업무상 공상",
+          "year": "2022",
+          "value": 3109,
+          "org_code": "C0352",
+          "reason": "missing_csv_key"
+        }
+      ]
+    }
+  ],
+  "metric_checks": [
+    {
+      "file": "3-1. 임직원수(250417).xlsx",
+      "category": "staff",
+      "records": 88752,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "org_count": 340,
+      "key_count": 43,
+      "matched": 54867,
+      "mismatched": 3613,
+      "missing_key": 0,
+      "missing_year": 0,
+      "unmatched_org": 688,
+      "out_of_period": 29584,
+      "strict_total": 58480,
+      "match_rate": 0.938218,
+      "samples": [
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "임원-기관장-상임현원",
+          "year": "2022",
+          "value": 0,
+          "org_code": "C0847",
+          "actual": 1,
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "정규직-일반정규직-현원-계",
+          "year": "2023",
+          "value": 27.13,
+          "org_code": "C0847",
+          "actual": 29.26,
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "정규직-일반정규직-현원-전일제",
+          "year": "2023",
+          "value": 25,
+          "org_code": "C0847",
+          "actual": 27.13,
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "여성 현원-합계",
+          "year": "2024",
+          "value": 14,
+          "org_code": "C0847",
+          "actual": 15,
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "여성 현원-임원",
+          "year": "2024",
+          "value": 1,
+          "org_code": "C0847",
+          "actual": 2,
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "비정규직-기간제-정규직전환-전환실적(E)",
+          "year": "2021",
+          "value": 7,
+          "org_code": "C0454",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "정규직-일반정규직-현원-계",
+          "year": "2022",
+          "value": 452.63,
+          "org_code": "C0352",
+          "actual": 444.63,
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "정규직-일반정규직-현원-계",
+          "year": "2023",
+          "value": 460.75,
+          "org_code": "C0352",
+          "actual": 452.75,
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "정규직-일반정규직-현원-계",
+          "year": "2024",
+          "value": 450.6,
+          "org_code": "C0352",
+          "actual": 448.6,
+          "reason": "mismatched"
+        },
+        {
+          "file": "3-1. 임직원수(250417).xlsx",
+          "category": "staff",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "정규직-일반정규직-현원-전일제",
+          "year": "2022",
+          "value": 447,
+          "org_code": "C0352",
+          "actual": 439,
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "11-1. 직원평균보수(250417).xlsx",
+      "category": "salary",
+      "records": 81108,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "org_count": 340,
+      "key_count": 54,
+      "matched": 52180,
+      "mismatched": 1172,
+      "missing_key": 144,
+      "missing_year": 0,
+      "unmatched_org": 576,
+      "out_of_period": 27036,
+      "strict_total": 53496,
+      "match_rate": 0.9754,
+      "samples": [
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | 1인당 평균보수액 - 여성",
+          "year": "2024",
+          "value": 47831,
+          "org_code": "C0454",
+          "actual": 47777,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | 평균임금 비율(남성)",
+          "year": "2024",
+          "value": 54.19,
+          "org_code": "C0454",
+          "actual": 54.22,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | 평균임금 비율(여성)",
+          "year": "2024",
+          "value": 45.81,
+          "org_code": "C0454",
+          "actual": 45.78,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | 실적수당",
+          "year": "2024",
+          "value": 15088,
+          "org_code": "C0331",
+          "actual": 15172,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | 1인당 평균보수액",
+          "year": "2024",
+          "value": 58397,
+          "org_code": "C0331",
+          "actual": 58481,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | 1인당 평균보수액 - 남성",
+          "year": "2024",
+          "value": 58829,
+          "org_code": "C0331",
+          "actual": 58919,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | 1인당 평균보수액 - 여성",
+          "year": "2024",
+          "value": 49051,
+          "org_code": "C0331",
+          "actual": 49054,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | 평균임금 비율(남성)",
+          "year": "2024",
+          "value": 54.53,
+          "org_code": "C0331",
+          "actual": 54.57,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "직원평균보수 | 정규직(일반정규직) | 평균임금 비율(여성)",
+          "year": "2024",
+          "value": 45.47,
+          "org_code": "C0331",
+          "actual": 45.43,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-1. 직원평균보수(250417).xlsx",
+          "category": "salary",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "직원평균보수 | 정규직(무기계약직) | 실적수당",
+          "year": "2024",
+          "value": 15993,
+          "org_code": "C0331",
+          "actual": 16158,
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "11-2. 신입사원초임(250417).xlsx",
+      "category": "salary",
+      "records": 16512,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "org_count": 340,
+      "key_count": 8,
+      "matched": 10727,
+      "mismatched": 153,
+      "missing_key": 0,
+      "missing_year": 0,
+      "unmatched_org": 128,
+      "out_of_period": 5504,
+      "strict_total": 10880,
+      "match_rate": 0.985938,
+      "samples": [
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 성과상여금",
+          "year": "2021",
+          "value": 2519,
+          "org_code": "C0001",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 성과상여금",
+          "year": "2022",
+          "value": 2602,
+          "org_code": "C0001",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 성과상여금",
+          "year": "2023",
+          "value": 2935,
+          "org_code": "C0001",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 성과상여금",
+          "year": "2024",
+          "value": 2983,
+          "org_code": "C0001",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 합계",
+          "year": "2021",
+          "value": 36438,
+          "org_code": "C0001",
+          "actual": 33919,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 합계",
+          "year": "2022",
+          "value": 37577,
+          "org_code": "C0001",
+          "actual": 34975,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 합계",
+          "year": "2023",
+          "value": 38314,
+          "org_code": "C0001",
+          "actual": 35379,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "88관광개발(주)",
+          "metric_key": "신입사원초임 | 합계",
+          "year": "2024",
+          "value": 38585,
+          "org_code": "C0001",
+          "actual": 35602,
+          "reason": "mismatched"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "신입사원초임 | 기본급",
+          "year": "2021",
+          "value": 15707,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "11-2. 신입사원초임(250417).xlsx",
+          "category": "salary",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "신입사원초임 | 기본급",
+          "year": "2022",
+          "value": 16286,
+          "reason": "unmatched_org"
+        }
+      ]
+    },
+    {
+      "file": "10. 임원연봉현황(250417).xlsx",
+      "category": "executive_pay",
+      "records": 46290,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "org_count": 328,
+      "key_count": 35,
+      "matched": 29965,
+      "mismatched": 375,
+      "missing_key": 136,
+      "missing_year": 0,
+      "unmatched_org": 384,
+      "out_of_period": 15430,
+      "strict_total": 30476,
+      "match_rate": 0.983233,
+      "samples": [
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "비상임감사 | 회의참석수당",
+          "year": "2021",
+          "value": 0,
+          "org_code": "C0331",
+          "actual": 3600,
+          "reason": "mismatched"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "비상임감사 | 회의참석수당",
+          "year": "2022",
+          "value": 0,
+          "org_code": "C0331",
+          "actual": 5200,
+          "reason": "mismatched"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "비상임감사 | 회의참석수당",
+          "year": "2023",
+          "value": 0,
+          "org_code": "C0331",
+          "actual": 1600,
+          "reason": "mismatched"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "비상임감사 | 회의참석수당",
+          "year": "2024",
+          "value": 0,
+          "org_code": "C0331",
+          "actual": 2800,
+          "reason": "mismatched"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "비상임감사 | 기타",
+          "year": "2021",
+          "value": 3600,
+          "org_code": "C0331",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "비상임감사 | 기타",
+          "year": "2022",
+          "value": 5200,
+          "org_code": "C0331",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "비상임감사 | 기타",
+          "year": "2023",
+          "value": 1600,
+          "org_code": "C0331",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "비상임감사 | 기타",
+          "year": "2024",
+          "value": 2800,
+          "org_code": "C0331",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "비상임이사 | 회의참석수당",
+          "year": "2021",
+          "value": 0,
+          "org_code": "C0331",
+          "actual": 5300,
+          "reason": "mismatched"
+        },
+        {
+          "file": "10. 임원연봉현황(250417).xlsx",
+          "category": "executive_pay",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "비상임이사 | 회의참석수당",
+          "year": "2022",
+          "value": 0,
+          "org_code": "C0331",
+          "actual": 4400,
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "12. 기관장업무추진비(250417).xlsx",
+      "category": "head_expense",
+      "records": 1700,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "org_count": 336,
+      "key_count": 1,
+      "matched": 1311,
+      "mismatched": 33,
+      "missing_key": 0,
+      "missing_year": 0,
+      "unmatched_org": 16,
+      "out_of_period": 340,
+      "strict_total": 1344,
+      "match_rate": 0.975446,
+      "samples": [
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2021",
+          "value": 4646,
+          "org_code": "C0931",
+          "actual": 4647,
+          "reason": "mismatched"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "(재)한국통계정보원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2021",
+          "value": 9161,
+          "org_code": "C1060",
+          "actual": 9162,
+          "reason": "mismatched"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "(재)한국통계정보원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2022",
+          "value": 12007,
+          "org_code": "C1060",
+          "actual": 12008,
+          "reason": "mismatched"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2021",
+          "value": 1870,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2022",
+          "value": 2620,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2023",
+          "value": 2200,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2024",
+          "value": 4260,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "국립해양과학관",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2021",
+          "value": 2423,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "국립해양과학관",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2022",
+          "value": 2694,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "12. 기관장업무추진비(250417).xlsx",
+          "category": "head_expense",
+          "org_name": "국립해양과학관",
+          "metric_key": "업무추진비 집행금액",
+          "year": "2023",
+          "value": 5139,
+          "reason": "unmatched_org"
+        }
+      ]
+    },
+    {
+      "file": "5-1. 신규채용현황(250417).xlsx",
+      "category": "recruitment",
+      "records": 18576,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "org_count": 340,
+      "key_count": 9,
+      "matched": 12097,
+      "mismatched": 143,
+      "missing_key": 0,
+      "missing_year": 0,
+      "unmatched_org": 144,
+      "out_of_period": 6192,
+      "strict_total": 12240,
+      "match_rate": 0.988317,
+      "samples": [
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 일반정규직총신규채용",
+          "year": "2021",
+          "value": 3,
+          "org_code": "C0847",
+          "actual": 2,
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 청년",
+          "year": "2022",
+          "value": 1,
+          "org_code": "C0847",
+          "actual": 2,
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 청년",
+          "year": "2023",
+          "value": 2,
+          "org_code": "C0847",
+          "actual": 3,
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 고졸인력",
+          "year": "2022",
+          "value": 1,
+          "org_code": "C0847",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "신규채용현황 | 상임임원총신규채용",
+          "year": "2021",
+          "value": 1,
+          "org_code": "C0931",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "신규채용현황 | 청년",
+          "year": "2021",
+          "value": 10,
+          "org_code": "C0931",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "신규채용현황 | 청년",
+          "year": "2022",
+          "value": 3,
+          "org_code": "C0931",
+          "actual": 10,
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "신규채용현황 | 청년",
+          "year": "2023",
+          "value": 4,
+          "org_code": "C0931",
+          "actual": 3,
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "신규채용현황 | 청년",
+          "year": "2024",
+          "value": 3,
+          "org_code": "C0931",
+          "actual": 4,
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-1. 신규채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "신규채용현황 | 여성",
+          "year": "2021",
+          "value": 5,
+          "org_code": "C0931",
+          "actual": 0,
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "5-1. 총신규채용(250417).xlsx",
+      "category": "recruitment",
+      "records": 2064,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "org_count": 340,
+      "key_count": 1,
+      "matched": 0,
+      "mismatched": 0,
+      "missing_key": 1360,
+      "missing_year": 0,
+      "unmatched_org": 16,
+      "out_of_period": 688,
+      "strict_total": 1360,
+      "match_rate": 0.0,
+      "samples": [
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2021",
+          "value": 3,
+          "org_code": "C0847",
+          "reason": "missing_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2022",
+          "value": 1,
+          "org_code": "C0847",
+          "reason": "missing_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2023",
+          "value": 2,
+          "org_code": "C0847",
+          "reason": "missing_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2024",
+          "value": 12,
+          "org_code": "C0847",
+          "reason": "missing_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2021",
+          "value": 6,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2022",
+          "value": 10,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2023",
+          "value": 15,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2024",
+          "value": 5,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2021",
+          "value": 27,
+          "org_code": "C0352",
+          "reason": "missing_key"
+        },
+        {
+          "file": "5-1. 총신규채용(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "신규채용현황 | 총신규채용",
+          "year": "2022",
+          "value": 75,
+          "org_code": "C0352",
+          "reason": "missing_key"
+        }
+      ]
+    },
+    {
+      "file": "5-2. 청년인턴채용현황(250417).xlsx",
+      "category": "recruitment",
+      "records": 12384,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "org_count": 340,
+      "key_count": 6,
+      "matched": 8096,
+      "mismatched": 64,
+      "missing_key": 0,
+      "missing_year": 0,
+      "unmatched_org": 96,
+      "out_of_period": 4128,
+      "strict_total": 8160,
+      "match_rate": 0.992157,
+      "samples": [
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(주)강원랜드",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-체험형",
+          "year": "2024",
+          "value": 652,
+          "org_code": "C0005",
+          "actual": 653,
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(주)강원랜드",
+          "metric_key": "청년인턴채용현황 | 여성-체험형",
+          "year": "2024",
+          "value": 359,
+          "org_code": "C0005",
+          "actual": 360,
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "(주)강원랜드",
+          "metric_key": "청년인턴채용현황 | 장애인-체험형",
+          "year": "2024",
+          "value": 0,
+          "org_code": "C0005",
+          "actual": 2,
+          "reason": "mismatched"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-체험형",
+          "year": "2021",
+          "value": 0,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-체험형",
+          "year": "2022",
+          "value": 0,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-체험형",
+          "year": "2023",
+          "value": 0,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-체험형",
+          "year": "2024",
+          "value": 0,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-채용형",
+          "year": "2021",
+          "value": 0,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-채용형",
+          "year": "2022",
+          "value": 0,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "5-2. 청년인턴채용현황(250417).xlsx",
+          "category": "recruitment",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "청년인턴채용현황 | 총인턴채용-채용형",
+          "year": "2023",
+          "value": 0,
+          "reason": "unmatched_org"
+        }
+      ]
+    },
+    {
+      "file": "13-1. 예산상복리후생비(250417).xlsx",
+      "category": "welfare",
+      "records": 184875,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "org_count": 338,
+      "key_count": 116,
+      "matched": 144505,
+      "mismatched": 1539,
+      "missing_key": 232,
+      "missing_year": 0,
+      "unmatched_org": 1624,
+      "out_of_period": 36975,
+      "strict_total": 146276,
+      "match_rate": 0.987893,
+      "samples": [
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "예산상 복리후생비 | 정규직(일반정규직) | 비급여성 > 의료비 및 건강검진비",
+          "year": "2021",
+          "value": 47576,
+          "org_code": "C0352",
+          "actual": 44245,
+          "reason": "mismatched"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "예산상 복리후생비 | 정규직(일반정규직) | 비급여성 > 의료비 및 건강검진비",
+          "year": "2022",
+          "value": 48880,
+          "org_code": "C0352",
+          "actual": 48762,
+          "reason": "mismatched"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "예산상 복리후생비 | 정규직(일반정규직) | 비급여성 > 의료비 및 건강검진비",
+          "year": "2024",
+          "value": 74739,
+          "org_code": "C0352",
+          "actual": 76209,
+          "reason": "mismatched"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "예산상 복리후생비 | 정규직(일반정규직) | 소계(B)",
+          "year": "2021",
+          "value": 80180,
+          "org_code": "C0352",
+          "actual": 76849,
+          "reason": "mismatched"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "예산상 복리후생비 | 정규직(일반정규직) | 소계(B)",
+          "year": "2022",
+          "value": 84490,
+          "org_code": "C0352",
+          "actual": 84372,
+          "reason": "mismatched"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "예산상 복리후생비 | 정규직(일반정규직) | 소계(B)",
+          "year": "2024",
+          "value": 110934,
+          "org_code": "C0352",
+          "actual": 112404,
+          "reason": "mismatched"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "예산상 복리후생비 | 정규직(일반정규직) | 총계(A+B)",
+          "year": "2021",
+          "value": 368443,
+          "org_code": "C0352",
+          "actual": 365112,
+          "reason": "mismatched"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "예산상 복리후생비 | 정규직(일반정규직) | 총계(A+B)",
+          "year": "2022",
+          "value": 377034,
+          "org_code": "C0352",
+          "actual": 376916,
+          "reason": "mismatched"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "예산상 복리후생비 | 정규직(일반정규직) | 총계(A+B)",
+          "year": "2024",
+          "value": 407570,
+          "org_code": "C0352",
+          "actual": 409040,
+          "reason": "mismatched"
+        },
+        {
+          "file": "13-1. 예산상복리후생비(250417).xlsx",
+          "category": "welfare",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "예산상 복리후생비 | 정규직(무기계약직) | 비급여성 > 의료비 및 건강검진비",
+          "year": "2021",
+          "value": 43763,
+          "org_code": "C0352",
+          "actual": 40265,
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+      "category": "work_life",
+      "records": 8600,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "org_count": 340,
+      "key_count": 5,
+      "matched": 4168,
+      "mismatched": 2632,
+      "missing_key": 0,
+      "missing_year": 0,
+      "unmatched_org": 80,
+      "out_of_period": 1720,
+      "strict_total": 6800,
+      "match_rate": 0.612941,
+      "samples": [
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-육아휴직사용자수 | 남성 육아휴직 사용률",
+          "year": "2022",
+          "value": 33.3,
+          "org_code": "C0847",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-육아휴직사용자수 | 남성 육아휴직 사용률",
+          "year": "2023",
+          "value": 50,
+          "org_code": "C0847",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-육아휴직사용자수 | 여성 육아휴직 사용률",
+          "year": "2021",
+          "value": 100,
+          "org_code": "C0847",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-육아휴직사용자수 | 여성 육아휴직 사용률",
+          "year": "2022",
+          "value": 66.7,
+          "org_code": "C0847",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-육아휴직사용자수 | 여성 육아휴직 사용률",
+          "year": "2023",
+          "value": 50,
+          "org_code": "C0847",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-육아휴직사용자수 | 여성 육아휴직 사용률",
+          "year": "2024",
+          "value": 100,
+          "org_code": "C0847",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-육아휴직사용자수 | 남성 육아휴직 사용률",
+          "year": "2022",
+          "value": 14.3,
+          "org_code": "C0454",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-육아휴직사용자수 | 남성 육아휴직 사용률",
+          "year": "2023",
+          "value": 25,
+          "org_code": "C0454",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-육아휴직사용자수 | 남성 육아휴직 사용률",
+          "year": "2024",
+          "value": 12.5,
+          "org_code": "C0454",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-1. 육아휴직 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "일가정-육아휴직사용자수 | 여성 육아휴직 사용률",
+          "year": "2021",
+          "value": 100,
+          "org_code": "C0454",
+          "actual": 0,
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+      "category": "work_life",
+      "records": 6880,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "org_count": 340,
+      "key_count": 4,
+      "matched": 4855,
+      "mismatched": 585,
+      "missing_key": 0,
+      "missing_year": 0,
+      "unmatched_org": 64,
+      "out_of_period": 1376,
+      "strict_total": 5440,
+      "match_rate": 0.892463,
+      "samples": [
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용자수",
+          "year": "2024",
+          "value": 1,
+          "org_code": "C0847",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(사)남북교류협력지원협회",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용률",
+          "year": "2024",
+          "value": 100,
+          "org_code": "C0847",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용자수",
+          "year": "2024",
+          "value": 6,
+          "org_code": "C0352",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용률",
+          "year": "2024",
+          "value": 85.7,
+          "org_code": "C0352",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용자수",
+          "year": "2024",
+          "value": 14,
+          "org_code": "C0331",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국물류지원단",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용률",
+          "year": "2024",
+          "value": 93.33,
+          "org_code": "C0331",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용자수",
+          "year": "2024",
+          "value": 3,
+          "org_code": "C0368",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용률",
+          "year": "2024",
+          "value": 100,
+          "org_code": "C0368",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)축산환경관리원",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용자수",
+          "year": "2024",
+          "value": 2,
+          "org_code": "C1030",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-2. 출산 휴가 사용자 수 및 사용률(250417).xlsx",
+          "category": "work_life",
+          "org_name": "(재)축산환경관리원",
+          "metric_key": "일가정-출산휴가사용자수 | 배우자 출산휴가 법정일수 사용률",
+          "year": "2024",
+          "value": 50,
+          "org_code": "C1030",
+          "actual": 0,
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+      "category": "work_life",
+      "records": 6860,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "org_count": 339,
+      "key_count": 4,
+      "matched": 5302,
+      "mismatched": 122,
+      "missing_key": 0,
+      "missing_year": 0,
+      "unmatched_org": 64,
+      "out_of_period": 1372,
+      "strict_total": 5424,
+      "match_rate": 0.977507,
+      "samples": [
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 임신기 단축 근무제",
+          "year": "2022",
+          "value": 14,
+          "org_code": "C0002",
+          "actual": 15,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 임신기 단축 근무제",
+          "year": "2023",
+          "value": 14,
+          "org_code": "C0002",
+          "actual": 15,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 육아휴직 기사용인원",
+          "year": "2021",
+          "value": 12,
+          "org_code": "C0002",
+          "actual": 13,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 육아휴직 기사용인원",
+          "year": "2022",
+          "value": 10,
+          "org_code": "C0002",
+          "actual": 17,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 육아휴직 기사용인원",
+          "year": "2024",
+          "value": 13,
+          "org_code": "C0002",
+          "actual": 12,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 합계",
+          "year": "2022",
+          "value": 36,
+          "org_code": "C0002",
+          "actual": 37,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 합계",
+          "year": "2023",
+          "value": 35,
+          "org_code": "C0002",
+          "actual": 36,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 임신기 단축 근무제",
+          "year": "2021",
+          "value": 4,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 임신기 단축 근무제",
+          "year": "2022",
+          "value": 4,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "24-3. 임신기육아기 단축근무제 사용자 수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "일가정-임신기육아기단축근무제사용자수 | 임신기 단축 근무제",
+          "year": "2023",
+          "value": 5,
+          "reason": "unmatched_org"
+        }
+      ]
+    },
+    {
+      "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+      "category": "work_life",
+      "records": 5130,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "org_count": 338,
+      "key_count": 3,
+      "matched": 3759,
+      "mismatched": 297,
+      "missing_key": 0,
+      "missing_year": 0,
+      "unmatched_org": 48,
+      "out_of_period": 1026,
+      "strict_total": 4056,
+      "match_rate": 0.926775,
+      "samples": [
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 남성",
+          "year": "2021",
+          "value": 226,
+          "org_code": "C0002",
+          "actual": 222,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 남성",
+          "year": "2022",
+          "value": 258,
+          "org_code": "C0002",
+          "actual": 248,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 남성",
+          "year": "2023",
+          "value": 283,
+          "org_code": "C0002",
+          "actual": 277,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 여성",
+          "year": "2022",
+          "value": 183,
+          "org_code": "C0002",
+          "actual": 178,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 여성",
+          "year": "2023",
+          "value": 168,
+          "org_code": "C0002",
+          "actual": 166,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 전체",
+          "year": "2021",
+          "value": 395,
+          "org_code": "C0002",
+          "actual": 391,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 전체",
+          "year": "2022",
+          "value": 441,
+          "org_code": "C0002",
+          "actual": 426,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 전체",
+          "year": "2023",
+          "value": 451,
+          "org_code": "C0002",
+          "actual": 443,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 남성",
+          "year": "2021",
+          "value": 0,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "24-5. 가족돌봄휴가 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "일가정-가족돌봄휴가사용자수 | 남성",
+          "year": "2022",
+          "value": 0,
+          "reason": "unmatched_org"
+        }
+      ]
+    },
+    {
+      "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+      "category": "work_life",
+      "records": 4770,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "org_count": 315,
+      "key_count": 3,
+      "matched": 3720,
+      "mismatched": 24,
+      "missing_key": 36,
+      "missing_year": 0,
+      "unmatched_org": 36,
+      "out_of_period": 954,
+      "strict_total": 3780,
+      "match_rate": 0.984127,
+      "samples": [
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 여성",
+          "year": "2021",
+          "value": 9,
+          "org_code": "C0002",
+          "actual": 10,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 여성",
+          "year": "2023",
+          "value": 7,
+          "org_code": "C0002",
+          "actual": 8,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 전체",
+          "year": "2021",
+          "value": 9,
+          "org_code": "C0002",
+          "actual": 10,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "가축위생방역지원본부",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 전체",
+          "year": "2023",
+          "value": 9,
+          "org_code": "C0002",
+          "actual": 10,
+          "reason": "mismatched"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 남성",
+          "year": "2021",
+          "value": 0,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 남성",
+          "year": "2022",
+          "value": 0,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 남성",
+          "year": "2023",
+          "value": 0,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 남성",
+          "year": "2024",
+          "value": 0,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 여성",
+          "year": "2021",
+          "value": 0,
+          "reason": "unmatched_org"
+        },
+        {
+          "file": "24-6. 가족돌봄휴직 사용자수(250417).xlsx",
+          "category": "work_life",
+          "org_name": "강릉원주대학교치과병원",
+          "metric_key": "일가정-가족돌봄휴직사용자수 | 여성",
+          "year": "2022",
+          "value": 0,
+          "reason": "unmatched_org"
+        }
+      ]
+    },
+    {
+      "file": "33. 수입지출현황[고유사업](250417).xlsx",
+      "category": "budget",
+      "records": 60660,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "org_count": 333,
+      "key_count": 30,
+      "matched": 39451,
+      "mismatched": 509,
+      "missing_key": 0,
+      "missing_year": 0,
+      "unmatched_org": 480,
+      "out_of_period": 20220,
+      "strict_total": 39960,
+      "match_rate": 0.987262,
+      "samples": [
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 인건비",
+          "year": "2021",
+          "value": 34402,
+          "org_code": "C0352",
+          "actual": 35360,
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 인건비",
+          "year": "2022",
+          "value": 35721,
+          "org_code": "C0352",
+          "actual": 36726,
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 인건비",
+          "year": "2023",
+          "value": 38008,
+          "org_code": "C0352",
+          "actual": 39053,
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 인건비",
+          "year": "2024",
+          "value": 38280,
+          "org_code": "C0352",
+          "actual": 39331,
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 사업비",
+          "year": "2021",
+          "value": 12955,
+          "org_code": "C0352",
+          "actual": 11997,
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 사업비",
+          "year": "2022",
+          "value": 14731,
+          "org_code": "C0352",
+          "actual": 13726,
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 사업비",
+          "year": "2023",
+          "value": 15202,
+          "org_code": "C0352",
+          "actual": 14157,
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)우체국금융개발원",
+          "metric_key": "수입지출현황(고유사업) | 지출 > 사업비",
+          "year": "2024",
+          "value": 15411,
+          "org_code": "C0352",
+          "actual": 14360,
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "수입지출현황(고유사업) | 수입 > 정부지원수입 > 간접지원 > 부대수입",
+          "year": "2022",
+          "value": 42,
+          "org_code": "C0931",
+          "actual": 0,
+          "reason": "mismatched"
+        },
+        {
+          "file": "33. 수입지출현황[고유사업](250417).xlsx",
+          "category": "budget",
+          "org_name": "(재)일제강제동원피해자지원재단",
+          "metric_key": "수입지출현황(고유사업) | 수입 > 정부지원수입 > 소계",
+          "year": "2022",
+          "value": 5622,
+          "org_code": "C0931",
+          "actual": 5580,
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "33. 수입지출현황[기금계정](250417).xlsx",
+      "category": "budget",
+      "records": 3600,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "org_count": 17,
+      "key_count": 570,
+      "matched": 2400,
+      "mismatched": 0,
+      "missing_key": 0,
+      "missing_year": 0,
+      "unmatched_org": 0,
+      "out_of_period": 1200,
+      "strict_total": 2400,
+      "match_rate": 1.0,
+      "samples": []
+    },
+    {
+      "file": "37-1. 법인세(250417).xlsx",
+      "category": "tax",
+      "records": 6500,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "org_count": 321,
+      "key_count": 5,
+      "matched": 5929,
+      "mismatched": 471,
+      "missing_key": 20,
+      "missing_year": 0,
+      "unmatched_org": 80,
+      "out_of_period": 0,
+      "strict_total": 6420,
+      "match_rate": 0.92352,
+      "samples": [
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "과세표준",
+          "year": "2024",
+          "value": 4123425,
+          "org_code": "C0368",
+          "actual": 4150151,
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "법인세 산출세액",
+          "year": "2024",
+          "value": 763451,
+          "org_code": "C0368",
+          "actual": 768529,
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "가산세",
+          "year": "2024",
+          "value": 0,
+          "org_code": "C0368",
+          "actual": 758,
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "결정세액",
+          "year": "2024",
+          "value": 763451,
+          "org_code": "C0368",
+          "actual": 769287,
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "과세표준",
+          "year": "2023",
+          "value": 3322609,
+          "org_code": "C0368",
+          "actual": 3348176,
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "법인세 산출세액",
+          "year": "2023",
+          "value": 611296,
+          "org_code": "C0368",
+          "actual": 616154,
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "가산세",
+          "year": "2023",
+          "value": 0,
+          "org_code": "C0368",
+          "actual": 1129,
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "결정세액",
+          "year": "2023",
+          "value": 611296,
+          "org_code": "C0368",
+          "actual": 617283,
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "과세표준",
+          "year": "2022",
+          "value": 1871224,
+          "org_code": "C0368",
+          "actual": 1894947,
+          "reason": "mismatched"
+        },
+        {
+          "file": "37-1. 법인세(250417).xlsx",
+          "category": "tax",
+          "org_name": "(재)우체국시설관리단",
+          "metric_key": "법인세 산출세액",
+          "year": "2022",
+          "value": 354245,
+          "org_code": "C0368",
+          "actual": 358989,
+          "reason": "mismatched"
+        }
+      ]
+    },
+    {
+      "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+      "category": "welfare_etc",
+      "records": 33354,
+      "compare_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "years_seen": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "org_count": 295,
+      "key_count": 471,
+      "matched": 22625,
+      "mismatched": 55,
+      "missing_key": 3811,
+      "missing_year": 0,
+      "unmatched_org": 196,
+      "out_of_period": 6667,
+      "strict_total": 26491,
+      "match_rate": 0.854064,
+      "samples": [
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 가족돌봄휴직",
+          "year": "2024",
+          "value": 0,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 형사사건 구속 기소 시",
+          "year": "2024",
+          "value": 0,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 가족돌봄휴직",
+          "year": "2023",
+          "value": 0,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 형사사건 구속 기소 시",
+          "year": "2023",
+          "value": 0,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 가족돌봄휴직",
+          "year": "2022",
+          "value": 0,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 형사사건 구속 기소 시",
+          "year": "2022",
+          "value": 0,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 가족돌봄휴직",
+          "year": "2021",
+          "value": 0,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(일반정규직) | 형사사건 구속 기소 시",
+          "year": "2021",
+          "value": 0,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(무기계약직) | 가족돌봄휴직",
+          "year": "2024",
+          "value": 0,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        },
+        {
+          "file": "14-1-2. 휴직급여 지급현황(250417).xlsx",
+          "category": "welfare_etc",
+          "org_name": "(재)예술경영지원센터",
+          "metric_key": "휴직급여지급현황 | 정규직(무기계약직) | 형사사건 구속 기소 시",
+          "year": "2024",
+          "value": 0,
+          "org_code": "C0454",
+          "reason": "missing_key"
+        }
+      ]
+    }
+  ]
+}

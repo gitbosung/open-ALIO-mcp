@@ -1,0 +1,12 @@
+{
+  "csv_path": "data\\crawl\\alio_records.csv",
+  "json_path": "data\\crawl\\alio_records.json",
+  "csv_header_ok": true,
+  "csv_rows": 936981,
+  "json_records": 936981,
+  "json_meta_record_count": 936981,
+  "extra_json_records_after_csv": 0,
+  "mismatch_count_capped": 0,
+  "sample_mismatches": [],
+  "consistent": true
+}
