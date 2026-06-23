@@ -178,6 +178,23 @@ MINISTRY_SPLIT_NOTES: dict[str, str] = {
     "산업통상자원부": "에너지 기능은 '기후에너지환경부'로 이관 — 에너지 공기업 일부는 ministry='기후에너지환경부' 소속",
 }
 
+# 도서·섬 지명 및 통용 지역 약칭 → 검색 키워드 목록
+# ALIO 기관 소재지(location/address)에는 행정구역 명칭으로 저장되므로
+# 비행정구역 지명(강화도 등)은 인접 행정구역으로 확장 매핑
+LOCATION_ALIASES: dict[str, list[str]] = {
+    "강화도": ["인천광역시 강화군", "인천광역시"],
+    "강화": ["인천광역시 강화군", "인천광역시"],
+    "영종도": ["인천광역시 중구"],
+    "용유도": ["인천광역시 중구"],
+    "여의도": ["서울특별시 영등포구"],
+    "제주도": ["제주특별자치도"],
+    "제주": ["제주특별자치도"],
+    "울릉도": ["경상북도 울릉군"],
+    "거제도": ["경상남도 거제시"],
+    "남해도": ["경상남도 남해군"],
+    "진도": ["전라남도 진도군"],
+}
+
 
 def _resolve_ministry(ministry: str) -> tuple[str, list[str]]:
     """구 부처명·약칭을 현행 명칭으로 치환하고 안내 caveat를 돌려준다."""
@@ -327,23 +344,46 @@ def search_institutions(
     query: str = "",
     org_type: str = "",
     ministry: str = "",
+    location: str = "",
     limit: int = 10,
 ) -> dict:
-    """공공기관을 이름·유형·주무부처로 검색합니다. org_code는 다른 도구의 진입점입니다."""
+    """공공기관을 이름·유형·주무부처·소재지로 검색합니다. org_code는 다른 도구의 진입점입니다.
+
+    location: 소재지 키워드 (예: '인천', '강화도', '세종', '부산'). 행정구역 명칭 부분일치.
+    도서·섬 지명(강화도·제주도 등)은 인접 행정구역으로 자동 확장됩니다.
+    """
     try:
         q = _resolve_query(query)
         ministry, ministry_caveats = _resolve_ministry(ministry)
         institutions = _get_institutions()
+        loc_q = location.strip()
+
+        # 도서·섬 지명 등 비행정구역 지명 → 인접 행정구역 키워드 목록으로 확장
+        loc_terms: list[str] = LOCATION_ALIASES.get(loc_q, [loc_q]) if loc_q else []
+        loc_expanded = loc_q in LOCATION_ALIASES
+
+        def _loc_match(inst: dict) -> bool:
+            if not loc_terms:
+                return True
+            combined = (inst.get("location") or "") + " " + (inst.get("address") or "")
+            return any(term in combined for term in loc_terms)
 
         def _match(inst: dict, name_q: str) -> bool:
             return (
                 (not name_q or name_q in (inst.get("name") or ""))
                 and (not org_type or org_type in (inst.get("org_type") or ""))
                 and (not ministry or ministry in (inst.get("ministry") or ""))
+                and _loc_match(inst)
             )
 
         matched = [inst for inst in institutions if _match(inst, q)]
         caveats: list[str] = list(ministry_caveats)
+
+        if loc_expanded:
+            caveats.append(
+                f"'{loc_q}'은(는) 비행정구역 지명으로, "
+                f"인접 행정구역 {loc_terms}(으)로 확장 검색했습니다."
+            )
 
         # 이름 직접 매칭 실패 → 별칭 키 부분일치 fallback ("심평" → 심사평가원 등)
         if not matched and q:
@@ -398,6 +438,11 @@ def search_institutions(
             out["caveats"].append(
                 "ministry 필터 결과 없음 — 부처명은 현행 정부조직 명칭으로 저장됩니다. "
                 f"보유 부처명: {', '.join(_available_ministries())}"
+            )
+        if not results and loc_q:
+            out["caveats"].append(
+                f"location='{loc_q}' 검색 결과 없음 — "
+                "행정구역 명칭(시·도·군·구) 또는 통용 지명으로 재시도하세요."
             )
         return out
     except AlioAPIError as e:
