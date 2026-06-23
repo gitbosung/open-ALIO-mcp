@@ -216,7 +216,8 @@ def _resolve_query(query: str) -> str:
     q = query.strip()
     if not q:
         return q
-    return ALIASES.get(q, ALIASES.get(q.lower(), q))
+    # 대소문자 구분 없이 매칭: 정확→소문자→대문자 순
+    return ALIASES.get(q, ALIASES.get(q.lower(), ALIASES.get(q.upper(), q)))
 
 
 def _alias_candidates(query: str) -> list[str]:
