@@ -10,7 +10,9 @@ from datetime import datetime
 
 from mcp.server.fastmcp import FastMCP
 
+from . import canonical_store
 from . import data_provider
+from . import disclosure_coverage
 from . import disclosure_store
 from . import guideline_store
 from . import handbook_store
@@ -34,6 +36,8 @@ from .alio_client import (
     normalize_institution,
     normalize_recruitment,
 )
+from .canonical_store import CanonicalStoreError
+from .disclosure_coverage import CoverageError
 from .disclosure_store import DisclosureError
 from .guideline_store import GuidelineError
 from .handbook_store import HandbookError
@@ -223,7 +227,13 @@ def _rank(name: str, q: str) -> int:
     return 2
 
 
-def _disclosure_caveats(category: str, *, series: dict | None = None, found: bool = True) -> list[str]:
+def _disclosure_caveats(
+    category: str,
+    *,
+    org_code: str | None = None,
+    series: dict | None = None,
+    found: bool = True,
+) -> list[str]:
     """공시 주기 주석 + (요청 연도 범위 대비) 공백 안내."""
     notes: list[str] = []
     try:
@@ -233,9 +243,16 @@ def _disclosure_caveats(category: str, *, series: dict | None = None, found: boo
     if phrase:
         notes.append(phrase)
         if not found:
-            notes.append(
-                "데이터가 비어 있다면 해당 공시 주기가 아직 도래하지 않았거나 기관이 미공시했을 수 있습니다."
-            )
+            has_coverage = False
+            if org_code:
+                try:
+                    has_coverage = disclosure_coverage.org_listed_for_category(org_code, category) is not None
+                except CoverageError:
+                    has_coverage = False
+            if not has_coverage:
+                notes.append(
+                    "데이터가 비어 있다면 해당 공시 주기가 아직 도래하지 않았거나 기관이 미공시했을 수 있습니다."
+                )
         elif series:
             # 연도별 시계열에 비어 있는 연도가 있으면 주기 영향 가능성 안내
             has_gap = any(
@@ -500,6 +517,35 @@ def list_disclosure_items(
 
 
 @mcp.tool()
+def get_disclosure_coverage(
+    org_code: str,
+    category: str = "",
+    item_no: str = "",
+) -> dict:
+    """기관이 특정 ALIO 공시 항목에 '공시 등록'되어 있는지 확인합니다.
+
+    ALIO itemOrganListJung.json 기준으로, 목록에 없으면 해당사항 없음·제도 비대상·
+    평가 비참여 등으로 공시가 없는 경우일 수 있음을 설명합니다.
+    category(staff·finance 등) 또는 item_no(예: 40211 청렴도) 중 하나는 지정하세요.
+    """
+    if not category and not item_no:
+        return {
+            "data": None,
+            "is_error": True,
+            "error": "category 또는 item_no 중 하나는 필수입니다.",
+        }
+    try:
+        result = disclosure_coverage.lookup(org_code, category=category, item_no=item_no)
+        return with_source(
+            result,
+            "ALIO 항목별 공시 보유 기관 목록 (disclosure_coverage.json)",
+            caveats=disclosure_coverage.get_meta().get("caveats", []),
+        )
+    except CoverageError as e:
+        return {"data": None, "is_error": True, "error": str(e)}
+
+
+@mcp.tool()
 def list_metric_items(category: str, item_query: str = "", org_code: str = "") -> dict:
     """카테고리 내 지표 항목명을 조회합니다.
 
@@ -550,15 +596,118 @@ def get_institution_metrics(
         )
         out["caveats"].extend(
             _disclosure_caveats(
-                category, series=result.get("series"), found=result["found"]
+                category,
+                org_code=org_code,
+                series=result.get("series"),
+                found=result["found"],
             )
         )
         if not result["found"]:
-            out["caveats"].append(
-                f"기관 {org_code}의 '{category}' 데이터 없음 — org_code 확인 또는 list_metric_categories 참조"
-            )
+            specific = disclosure_coverage.caveat_for_missing_metrics(org_code, category)
+            if specific:
+                out["caveats"].append(specific)
+            else:
+                out["caveats"].append(
+                    f"기관 {org_code}의 '{category}' 데이터 없음 — org_code 확인 또는 list_metric_categories 참조"
+                )
         return out
     except MetricsError as e:
+        return {"data": None, "is_error": True, "error": str(e)}
+
+
+_CANONICAL_CAVEATS = [
+    "Canonical v2 is a transition data layer. Use it for parser validation, attachments, text/rule tables, and structure inspection before category-level v2 metrics are promoted as the default MCP source.",
+    "Large canonical outputs are local build artifacts; build the SQLite store with `python scripts/build_canonical_store.py` or set OPEN_ALIO_CANONICAL_DB.",
+]
+
+
+@mcp.tool()
+def get_canonical_summary(org_code: str = "", item_no: str = "") -> dict:
+    """ALIO canonical v2 SQLite store summary, optionally filtered by institution or disclosure item."""
+    try:
+        result = canonical_store.summary(org_code=org_code, item_no=item_no)
+        return with_source(
+            result,
+            "ALIO canonical parser v2 SQLite store",
+            caveats=list(_CANONICAL_CAVEATS),
+        )
+    except CanonicalStoreError as e:
+        return {"data": None, "is_error": True, "error": str(e)}
+
+
+@mcp.tool()
+def search_canonical_records(
+    org_code: str = "",
+    item_no: str = "",
+    record_type: str = "",
+    period_year: int = 0,
+    metric_query: str = "",
+    limit: int = 50,
+) -> dict:
+    """Search canonical v2 records by institution, item, record_type, year, or metric/header text."""
+    try:
+        result = canonical_store.query_records(
+            org_code=org_code,
+            item_no=item_no,
+            record_type=record_type,
+            period_year=str(period_year) if period_year else "",
+            metric_query=metric_query,
+            limit=limit,
+        )
+        return with_source(
+            result,
+            "ALIO canonical parser v2 SQLite store",
+            caveats=list(_CANONICAL_CAVEATS),
+        )
+    except CanonicalStoreError as e:
+        return {"data": None, "is_error": True, "error": str(e)}
+
+
+@mcp.tool()
+def get_canonical_attachments(
+    org_code: str = "",
+    item_no: str = "",
+    period_year: int = 0,
+    limit: int = 50,
+) -> dict:
+    """Return attachment/file-link disclosure records from canonical v2."""
+    try:
+        result = canonical_store.attachments(
+            org_code=org_code,
+            item_no=item_no,
+            period_year=str(period_year) if period_year else "",
+            limit=limit,
+        )
+        return with_source(
+            result,
+            "ALIO canonical parser v2 attachment records",
+            caveats=list(_CANONICAL_CAVEATS),
+        )
+    except CanonicalStoreError as e:
+        return {"data": None, "is_error": True, "error": str(e)}
+
+
+@mcp.tool()
+def search_canonical_text_rules(
+    org_code: str = "",
+    item_no: str = "",
+    query: str = "",
+    limit: int = 50,
+) -> dict:
+    """Search text/rule disclosure rows from canonical v2."""
+    try:
+        result = canonical_store.text_rules(
+            org_code=org_code,
+            item_no=item_no,
+            query=query,
+            limit=limit,
+        )
+        return with_source(
+            result,
+            "ALIO canonical parser v2 text/rule records",
+            caveats=list(_CANONICAL_CAVEATS),
+        )
+    except CanonicalStoreError as e:
         return {"data": None, "is_error": True, "error": str(e)}
 
 
@@ -1795,6 +1944,21 @@ def get_server_status() -> dict:
         status["metrics_categories"] = len(idx.get("categories", []))
     except MetricsError as e:
         status["metrics_error"] = str(e)
+    try:
+        if canonical_store.available():
+            csummary = canonical_store.summary()
+            cmeta = csummary.get("meta", {})
+            status["canonical_v2"] = {
+                "available": True,
+                "db": csummary.get("db_path"),
+                "built_at": cmeta.get("built_at"),
+                "records": cmeta.get("record_count"),
+                "docs": cmeta.get("docs_seen"),
+            }
+        else:
+            status["canonical_v2"] = {"available": False}
+    except CanonicalStoreError as e:
+        status["canonical_v2"] = {"available": False, "error": str(e)}
     status["pdf_parsed_orgs"] = (
         len(data_provider.list_paths("parsed/by-org/"))
     )

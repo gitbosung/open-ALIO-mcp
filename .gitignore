@@ -57,9 +57,22 @@ rawdata/handbook/_probe*.txt
 rawdata/
 # 크롤·빌드 중간 산출물 (재생성 가능, push 금지 — pre-commit도 차단)
 data/crawl/
+data/canonical/*.jsonl
+data/canonical/*_summary.json
+data/canonical/*.db
+data/canonical/*.db-shm
+data/canonical/*.db-wal
+data/canonical/*.sqlite
+data/canonical/*.sqlite-shm
+data/canonical/*.sqlite-wal
+data/canonical/metrics_v2/
+data/canonical/metrics_v2_sample/
+data/_report_organ_counts.json
 data/items.json
 data/items_catalog.json
 data/metrics/_crawl_promotion_report.json
+data/validation_reports/canonical_v2_quality*.json
+data/validation_reports/canonical_v2_metrics*.json
 
 # Local parser/data archives: keep manifests in Git, keep bulky parsed data local.
 archive/*/data/

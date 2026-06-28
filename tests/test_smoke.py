@@ -25,9 +25,9 @@ def _assert_envelope(r: dict, name: str) -> None:
 
 
 def test_tool_registration() -> None:
-    """Tools 32 · Prompts 2 · Resources 5 등록 확인."""
+    """Tools 37 · Prompts 2 · Resources 5 등록 확인."""
     tools = server.mcp._tool_manager._tools
-    assert len(tools) == 32, f"tool 수 불일치: {len(tools)}"
+    assert len(tools) == 37, f"tool 수 불일치: {len(tools)}"
 
 
 def test_search_institutions_alias() -> None:
@@ -61,6 +61,20 @@ def test_disclosure_catalog() -> None:
     r = server.list_disclosure_items()
     _assert_envelope(r, "list_disclosure_items")
     assert r["data"]["count"] >= 50
+
+
+def test_disclosure_coverage_not_listed() -> None:
+    """청렴도 비대상 기관 — organlist 기준 not_listed."""
+    r = server.get_disclosure_coverage("C0847", item_no="40211")
+    _assert_envelope(r, "get_disclosure_coverage")
+    assert r["data"]["status"] == "not_listed"
+    assert "공시 등록이 없습니다" in r["data"]["caveat"]
+
+
+def test_disclosure_coverage_listed() -> None:
+    r = server.get_disclosure_coverage("C0247", category="staff")
+    _assert_envelope(r, "get_disclosure_coverage")
+    assert r["data"]["status"] == "listed"
 
 
 def test_input_validation() -> None:

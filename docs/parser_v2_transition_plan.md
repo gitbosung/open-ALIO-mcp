@@ -141,4 +141,124 @@ Recommended `record_type` values:
    - changed/corrected values
 8. For true 100% validation against 2025 Q1 rawdata, obtain or reconstruct the
    matching 2025 Q1 HTML snapshot if possible.
+9. After v2 canonical parsing is judged reliable enough for production MCP
+   answers, simplify the MCP data path instead of keeping a permanent v1/v2
+   dual stack:
+   - make v2-derived metrics the default source for validated categories
+   - remove temporary feature flags and comparison-only plumbing
+   - retire or archive v1 promotion paths that are no longer needed
+   - keep only minimal compatibility adapters required by existing tools
+   - update tests and docs so canonical-to-MCP is the single documented normal
+     flow
 
+## 2026-06-21 Implementation Progress
+
+Initial v2 parser/storage work has started without replacing v1 outputs:
+
+- Added `parse_alio_v2.py`.
+- Added tracked canonical schema docs under `data/canonical/`.
+- Added `crawl_alio.py parse-v2` as a post-crawl parser entrypoint.
+- Added Git ignore rules for generated canonical JSONL/summary artifacts.
+- Added `scripts/build_canonical_store.py` to stream v2 records directly into a
+  compact SQLite store.
+- Added `scripts/validate_canonical_store.py` for canonical v2 quality checks.
+- Added `src/open_alio_mcp/canonical_store.py` and initial MCP tools for
+  summary, record search, attachment records, and text/rule records.
+- Added `scripts/build_metrics_from_canonical.py` to derive isolated v2
+  candidate metrics for `finance`, `budget`, and `executive_pay`, then compare
+  them against current v1/runtime `data/metrics/*.json`.
+- Added focused parser tests for:
+  - `rowspan`/`colspan` expansion into row/column header paths
+  - attachment link metadata
+  - text/rule table classification
+  - SQLite store build/query behavior
+  - canonical-derived executive-pay metric key behavior
+
+Current v2 output is JSONL, one record per semantic data cell or non-table
+`table.nb` disclosure note. Large generated files remain local artifacts.  The
+SQLite store is now the preferred local query layer before deriving
+category-specific MCP metrics from canonical data.
+
+Initial targeted comparison using `20501,31201,31301,31401` HTML:
+
+- `executive_pay`: 28,768 common v1/v2 points, 0 mismatches, 7 skipped
+  canonical conflict groups.
+- `budget`: 18,046 common v1/v2 points, 0 mismatches, 20 skipped canonical
+  conflict groups.
+- `finance`: 47,913 common v1/v2 points, 0 mismatches, 624 skipped canonical
+  conflict groups.
+- Golden-org mismatch count was 0 for all three categories.
+
+Follow-up conflict-resolution pass:
+
+- Preserved split `기금계정`/`고유사업` context when ALIO emits account context
+  and table title in separate `table.nb` blocks.
+- Treated `수정 전`/`수정 후` correction columns as data columns, so preceding
+  label columns remain part of `row_header_path`.
+- Filtered superseded `수정 전` values before canonical metric grouping.
+- Kept parenthetical fund-account context such as
+  `공무원연금기금(연금충당부채 제외한 경우)` in v2 metric key adaptation.
+
+Updated targeted comparison after rebuilding
+`data/canonical/_metrics_seed_canonical.db`:
+
+- `executive_pay`: 28,768 common v1/v2 points, 0 mismatches, 0 skipped
+  canonical conflict groups.
+- `budget`: 18,046 common v1/v2 points, 0 mismatches, 0 skipped canonical
+  conflict groups.
+- `finance`: 48,657 common v1/v2 points, 0 mismatches, 434 skipped canonical
+  conflict groups.
+- Remaining finance conflicts are representative key-design issues around
+  table-title/accounting-basis context, for example connected vs separate
+  statements, K-IFRS vs K-GAAP, old vs new national accounting standards, and
+  summary vs program-level finance tables.
+- Golden-org mismatch count remains 0 for all three categories.
+
+Design review triage from `docs/parser_v2_review_notes.md`:
+
+- The current cell-as-record canonical model remains the right foundation.
+- Before promoting more v2-derived metrics, close parser silent-loss paths and
+  make coverage auditable.  In particular, skipped non-`border="1"` tables,
+  zero-record tables, and short standalone `table.nb` notes need fallback rows
+  or explicit gap accounting.
+- Add per-document coverage counts so a document can report tables/notes seen
+  vs captured, instead of only reporting whether the document produced any
+  records.
+- Implemented the first coverage gate: fallback records now carry
+  `unparsed_table`, `table_no_records`, or `skipped_short_nb` warnings, parser
+  summaries include per-document coverage rows, and the SQLite `source_docs`
+  table stores the same coverage counts.
+- After the coverage gate rebuild, the targeted metric comparison still has 0
+  common-point mismatches.  `finance` remains at 434 skipped conflict groups.
+  Inspecting the conflict rows and source HTML showed all 434 are table-title /
+  accounting-basis context collapses in the current v1-compatible finance key:
+  418 are K-GAAP/K-IFRS/AUP, connected/separate, or statement-form variants;
+  16 are old/new national accounting standard and program-level fund-table
+  variants.  Keep skip/report behavior until the v2 finance key deliberately
+  preserves this context.
+- Added a v2-only `finance_context` candidate metric that preserves normalized
+  `table_title` context in the metric key while leaving the v1-compatible
+  `finance` comparison path unchanged.  Targeted result:
+  51,906 v2-only points, 0 skipped conflicts, and no v1 common-point
+  comparison by design.
+- Wired the context-preserving finance candidate into the existing MCP finance
+  call shape.  Users still call `get_institution_metrics(category="finance")`;
+  the default response keeps the v1-compatible `series` and adds a lightweight
+  `basis` summary that identifies the representative ALIO table context for
+  each returned series.  The context-rich v2 data remains retained internally
+  for lossless storage.  When a caller asks for a specific accounting basis or
+  statement form through `item_query` (for example `K-GAAP`, `K-IFRS`, or a
+  table-title keyword), the lookup can return the matching context-specific
+  series instead of attaching all alternatives to every default response.
+- Treat table-level entities (`source_tables`), deterministic cell
+  `natural_key`, structured header matrices, and classification confidence as
+  near-term design work.  These should be designed carefully before broad
+  schema changes.
+- Therefore the next implementation step should be parser coverage/audit
+  hardening first, then rebuild the targeted canonical DB and return to finance
+  key-design if the zero-mismatch comparison still holds.
+
+Important follow-through: after v2 reliability gates pass, do not leave the MCP
+server with avoidable duplicate data paths. The intended end state is a simple
+canonical-to-derived-metrics-to-MCP flow, with v1 retained only as an archive or
+temporary fallback during the transition window.

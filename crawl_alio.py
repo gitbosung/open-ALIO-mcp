@@ -259,6 +259,24 @@ def cmd_parse(args: argparse.Namespace) -> None:
     parse_all(RAW_DIR, ROOT / args.out, json_out=json_out)
 
 
+def cmd_parse_v2(args: argparse.Namespace) -> None:
+    from parse_alio_v2 import parse_all, split_csv
+
+    summary = parse_all(
+        RAW_DIR,
+        ROOT / args.out,
+        summary_out=ROOT / args.summary_out,
+        orgs=split_csv(args.orgs or "") or None,
+        items=split_csv(args.items or "") or None,
+        limit=args.limit,
+    )
+    print(
+        "canonical v2 parse complete: "
+        f"docs={summary['docs_seen']} records={summary['record_count']} "
+        f"types={summary['record_type_counts']} out={args.out}"
+    )
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="ALIO 공시 페이지 수집/파싱")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -274,8 +292,20 @@ def main() -> None:
     p_parse.add_argument("--out", default="data/crawl/alio_records.csv")
     p_parse.add_argument("--json-out", default="data/crawl/alio_records.json")
 
+    p_parse_v2 = sub.add_parser("parse-v2", help="raw HTML → canonical v2 JSONL 파싱")
+    p_parse_v2.add_argument("--out", default="data/canonical/alio_canonical_records.jsonl")
+    p_parse_v2.add_argument("--summary-out", default="data/canonical/alio_canonical_summary.json")
+    p_parse_v2.add_argument("--orgs", help="기관코드 지정 (쉼표구분, 예: C0091,C0247)")
+    p_parse_v2.add_argument("--items", help="항목번호 지정 (쉼표구분, 예: 31201,70301)")
+    p_parse_v2.add_argument("--limit", type=int, help="filter 적용 후 파싱 문서 수 제한")
+
     args = ap.parse_args()
-    {"crawl": cmd_crawl, "discover": cmd_discover, "parse": cmd_parse}[args.cmd](args)
+    {
+        "crawl": cmd_crawl,
+        "discover": cmd_discover,
+        "parse": cmd_parse,
+        "parse-v2": cmd_parse_v2,
+    }[args.cmd](args)
 
 
 if __name__ == "__main__":

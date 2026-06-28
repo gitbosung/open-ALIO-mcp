@@ -13,6 +13,10 @@ from . import data_provider
 
 _cache: dict[str, dict] = {}
 _index: dict | None = None
+_optional_cache: dict[str, dict | None] = {}
+
+FINANCE_CONTEXT_REL = "canonical/metrics_v2/finance_context.json"
+FINANCE_CONTEXT_MARKER = " | table="
 
 
 class MetricsError(Exception):
@@ -44,6 +48,12 @@ def _load(category: str) -> dict:
             raise MetricsError(f"카테고리 '{category}' 없음. 가능한 값: {valid}")
         _cache[category] = data_provider.read_json(rel)
     return _cache[category]
+
+
+def _load_optional(rel: str) -> dict | None:
+    if rel not in _optional_cache:
+        _optional_cache[rel] = data_provider.read_json_or_none(rel)
+    return _optional_cache[rel]
 
 
 def _load_pdf_parsed(org_code: str) -> dict | None:
@@ -186,6 +196,197 @@ def _filter_years(series: dict[str, Any], year_from: int | None, year_to: int | 
     return out
 
 
+def _matches_query(text: str, query: str) -> bool:
+    if not query:
+        return True
+    haystack = text.casefold()
+    terms = [term.casefold() for term in query.split() if term.strip()]
+    return all(term in haystack for term in terms)
+
+
+def _split_finance_context_item(item: str) -> tuple[str, str]:
+    if FINANCE_CONTEXT_MARKER not in item:
+        return item, ""
+    base, context = item.rsplit(FINANCE_CONTEXT_MARKER, 1)
+    return base, context
+
+
+def _finance_context_lookup(
+    org_code: str,
+    item_query: str,
+    year_from: int | None,
+    year_to: int | None,
+    max_items: int,
+    truncate_groups: bool = True,
+) -> dict:
+    data = _load_optional(FINANCE_CONTEXT_REL)
+    if not data:
+        return {
+            "available": False,
+            "reason": "finance_context candidate not built; run scripts/build_metrics_from_canonical.py",
+        }
+
+    org = data.get("orgs", {}).get(org_code)
+    groups: dict[str, list[dict[str, Any]]] = {}
+    if org:
+        for item, ser in org.get("series", {}).items():
+            if not _matches_query(item, item_query):
+                continue
+            filtered = _filter_years(ser, year_from, year_to)
+            if not filtered:
+                continue
+            base, context = _split_finance_context_item(item)
+            latest_year, latest_value = _latest_year_value(filtered)
+            groups.setdefault(base, []).append(
+                {
+                    "context": context,
+                    "item": item,
+                    "latest": {"year": latest_year, "value": latest_value},
+                    "series": filtered,
+                }
+            )
+
+    for alternatives in groups.values():
+        alternatives.sort(key=lambda row: row["context"])
+
+    truncated = False
+    if truncate_groups and len(groups) > max_items:
+        keep = sorted(groups)[:max_items]
+        groups = {key: groups[key] for key in keep}
+        truncated = True
+
+    ambiguous = {
+        key: alternatives
+        for key, alternatives in groups.items()
+        if len({alt["context"] for alt in alternatives}) > 1
+    }
+    return {
+        "available": True,
+        "source": FINANCE_CONTEXT_REL,
+        "source_category": data.get("_meta", {}).get("category", "finance_context"),
+        "org_name": org.get("name") if org else None,
+        "policy": (
+            "Default finance calls return the representative v1-compatible series. "
+            "Context-rich finance rows are retained internally so callers can request a specific "
+            "accounting basis or statement form when needed."
+        ),
+        "found": bool(groups),
+        "groups": groups,
+        "group_count": len(groups),
+        "ambiguous_group_count": len(ambiguous),
+        "truncated": truncated,
+    }
+
+
+def _same_numeric_series(left: dict[str, Any], right: dict[str, Any]) -> bool:
+    left_nums = {str(k): v for k, v in left.items() if isinstance(v, (int, float))}
+    right_nums = {str(k): v for k, v in right.items() if isinstance(v, (int, float))}
+    return bool(left_nums) and left_nums == right_nums
+
+
+def _finance_default_basis(
+    series: dict[str, dict],
+    context_lookup: dict | None,
+) -> dict | None:
+    if context_lookup is None:
+        return None
+    if not context_lookup.get("available"):
+        return {
+            "available": False,
+            "source": FINANCE_CONTEXT_REL,
+            "reason": context_lookup.get("reason"),
+        }
+
+    groups = context_lookup.get("groups", {})
+    items: dict[str, dict[str, Any]] = {}
+    for item, ser in series.items():
+        alternatives = groups.get(item, [])
+        matching = [
+            alt
+            for alt in alternatives
+            if _same_numeric_series(ser, alt.get("series", {}))
+        ]
+        if len(matching) == 1:
+            status = "matched_context"
+            representative_context = matching[0]["context"]
+        elif len(matching) > 1:
+            status = "multiple_contexts_same_values"
+            representative_context = matching[0]["context"]
+        elif alternatives:
+            status = "context_candidates_differ"
+            representative_context = None
+        else:
+            status = "context_candidate_missing"
+            representative_context = None
+
+        items[item] = {
+            "representative_context": representative_context,
+            "status": status,
+            "has_other_contexts": max(len(alternatives) - len(matching), 0) > 0,
+            "other_context_count": max(len(alternatives) - len(matching), 0),
+            "matching_context_count": len(matching),
+        }
+
+    return {
+        "available": True,
+        "source": context_lookup.get("source", FINANCE_CONTEXT_REL),
+        "mode": "default_series",
+        "policy": context_lookup.get("policy"),
+        "items": items,
+        "item_count": len(items),
+        "ambiguous_item_count": sum(
+            1 for row in items.values() if row["status"] != "matched_context"
+        ),
+        "hint": (
+            "To retrieve another accounting basis or statement form, include that context "
+            "keyword in item_query, for example K-GAAP, K-IFRS, connected, separate, "
+            "or the Korean table title term."
+        ),
+    }
+
+
+def _finance_context_series(context_lookup: dict) -> tuple[dict[str, dict], dict]:
+    series: dict[str, dict] = {}
+    basis_items: dict[str, dict[str, Any]] = {}
+    for base_item, alternatives in context_lookup.get("groups", {}).items():
+        for alt in alternatives:
+            item = alt["item"]
+            series[item] = alt["series"]
+            basis_items[item] = {
+                "context": alt["context"],
+                "base_item": base_item,
+                "status": "requested_context",
+            }
+
+    return series, {
+        "available": True,
+        "source": context_lookup.get("source", FINANCE_CONTEXT_REL),
+        "mode": "context_query",
+        "policy": context_lookup.get("policy"),
+        "items": basis_items,
+        "item_count": len(basis_items),
+        "truncated": context_lookup.get("truncated", False),
+    }
+
+
+def _prune_basis_to_series(basis: dict | None, series: dict[str, dict]) -> dict | None:
+    if not basis or "items" not in basis:
+        return basis
+    items = {
+        item: basis["items"][item]
+        for item in series
+        if item in basis["items"]
+    }
+    pruned = dict(basis)
+    pruned["items"] = items
+    pruned["item_count"] = len(items)
+    if "ambiguous_item_count" in pruned:
+        pruned["ambiguous_item_count"] = sum(
+            1 for row in items.values() if row.get("status") != "matched_context"
+        )
+    return pruned
+
+
 def list_items(category: str, item_query: str = "", org_code: str = "") -> dict:
     """카테고리 내 지표 항목명 목록 (org_code 지정 시 해당 기관 보유 항목만)."""
     data = _load(category)
@@ -195,7 +396,7 @@ def list_items(category: str, item_query: str = "", org_code: str = "") -> dict:
     for org in targets:
         items.update(org["series"].keys())
     if item_query:
-        items = {i for i in items if item_query in i}
+        items = {i for i in items if _matches_query(i, item_query)}
     return {"meta": data["_meta"], "items": sorted(items)}
 
 
@@ -215,11 +416,13 @@ def get_metrics(
     caveats = list(meta.get("caveats", []))
     series: dict[str, dict] = {}
     name = None
+    finance_context: dict | None = None
+    basis: dict | None = None
 
     if org:
         name = org["name"]
         for item, ser in org["series"].items():
-            if item_query and item_query not in item:
+            if not _matches_query(item, item_query):
                 continue
             filtered = _filter_years(ser, year_from, year_to)
             if filtered:
@@ -227,12 +430,33 @@ def get_metrics(
 
     # 재무는 PDF 파싱 결과가 있으면 우선 병합 (Phase 3)
     if category == "finance":
+        finance_context = _finance_context_lookup(
+            org_code,
+            item_query,
+            year_from,
+            year_to,
+            max_items,
+            truncate_groups=not bool(series),
+        )
+        if finance_context.get("available") and finance_context.get("found"):
+            if not name and finance_context.get("org_name"):
+                name = finance_context["org_name"]
+            if not series:
+                series, basis = _finance_context_series(finance_context)
+            else:
+                basis = _finance_default_basis(series, finance_context)
+            caveats.append(
+                "Finance default series is v1-compatible; basis summarizes the representative ALIO table context. "
+                "Request a context keyword such as K-GAAP or K-IFRS in item_query for context-specific series."
+            )
+        else:
+            basis = _finance_default_basis(series, finance_context)
         pdf = _load_pdf_parsed(org_code)
         if pdf:
             for item, ser in pdf.items():
                 if item.startswith("_"):
                     continue
-                if item_query and item_query not in item:
+                if not _matches_query(item, item_query):
                     continue
                 filtered = _filter_years(ser, year_from, year_to)
                 if filtered:
@@ -254,7 +478,8 @@ def get_metrics(
             "item_query='현원' 또는 get_institution_staff_summary 권장"
         )
 
-    return {
+    basis = _prune_basis_to_series(basis, series)
+    result = {
         "org_code": org_code,
         "name": name,
         "category": category,
@@ -267,6 +492,9 @@ def get_metrics(
         "caveats": caveats,
         "found": bool(series),
     }
+    if basis is not None:
+        result["basis"] = basis
+    return result
 
 
 def _series_value(ser: dict[str, Any], key: str) -> float | None:
