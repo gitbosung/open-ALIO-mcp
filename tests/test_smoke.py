@@ -36,6 +36,19 @@ def test_search_institutions_alias() -> None:
     assert r["data"]["results"][0]["name"] == "한국전력공사"
 
 
+def test_search_institutions_alias_case_insensitive() -> None:
+    r = server.search_institutions(query="kiat")
+    _assert_envelope(r, "search_institutions")
+    assert r["data"]["results"][0]["name"] == "한국산업기술진흥원"
+
+
+def test_search_institutions_location_alias() -> None:
+    r = server.search_institutions(location="강화도", limit=3)
+    _assert_envelope(r, "search_institutions")
+    assert r["data"]["count"] >= 1
+    assert any("확장 검색" in note for note in r["caveats"])
+
+
 def test_search_institutions_count_basis() -> None:
     r = server.search_institutions(limit=1)
     _assert_envelope(r, "search_institutions")

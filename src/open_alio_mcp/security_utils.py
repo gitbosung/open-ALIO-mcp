@@ -212,7 +212,13 @@ CANONICAL_RECORD_TYPES = (
 )
 
 TOOL_ARG_SPECS: dict[str, dict[str, ArgSpec]] = {
-    "search_institutions": {"query": _text(), "org_type": _text(50), "ministry": _text(80), "limit": _int(1, 100)},
+    "search_institutions": {
+        "query": _text(),
+        "org_type": _text(50),
+        "ministry": _text(80),
+        "location": _text(80),
+        "limit": _int(1, 100),
+    },
     "get_institution_profile": {"org_code": _org_code(required=True), "include_detail": ArgSpec("bool")},
     "list_disclosure_items": {
         "query": _text(),
