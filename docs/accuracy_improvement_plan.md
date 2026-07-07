@@ -39,8 +39,9 @@ Updated: 2026-07-08
 
 **A-지금 (기준점: 이미 있는 `golden_samples.json` + 2025 Q1 XLSX 활용)** — 즉시 착수 가능:
 
-- [ ] **A-2. 골든 샘플을 v2 canonical로 대조** — `golden_samples.json`의 검증 수치(예: 신보 C0091 자산총계 15,774,985)를 **v2 canonical 조회 경로로도** 검증하는 테스트 추가. (spec §4.1, §7.1)
-- [ ] **A-3. 항목·값 단위 대조 하네스** — v2 → 골든/XLSX 값 비교, **항목별 정확 일치율** 리포트. 불일치를 5분류: `기간차 / 미크롤 / 첨부전용 / 파서구조손실 / 정정공시`. (기존 `build_metrics_from_canonical.py`의 v1비교 로직을 골든 대조로 승격)
+- [x] **A-2. 골든 샘플을 v2 canonical로 대조** — `scripts/validate_golden_canonical.py` 추가. `golden_samples.json`을 `canonical_store.query_records`(실제 조회 경로)로 대조. **첫 결과 7/8 MATCH** (신보 C0091 3계정 자산총계 15,774,985 포함 정확 일치). 1건 CTX_MISMATCH → B-5로 이관. (spec §4.1, §7.1) *(2026-07-08)*
+  - 실행: `python scripts/validate_golden_canonical.py --db data/canonical/_golden_canonical.db` (DB 빌드: `build_canonical_store.py --orgs C0247,C0091,C0001,C0005 --items 31201,32211,31501,20601,31701`). 리포트: `data/validation_reports/golden_vs_canonical.json`.
+- [ ] **A-3. 항목·값 단위 대조 하네스 확장** — A-2 하네스를 (1) 골든 8건을 넘어 전 항목 샘플로, (2) 불일치 5분류(`기간차 / 미크롤 / 첨부전용 / 파서구조손실 / 정정공시`) 자동 태깅으로 확장. (기존 `build_metrics_from_canonical.py`의 v1비교 로직을 골든 대조로 승격)
 - [ ] **A-5. 카테고리별 정확도 스코어카드** 산출물 정의 — 이후 모든 Phase의 합격/불합격 판정 기준.
 
 **A-나중 (기간 맞춘 2026 Q1 기준점 확보 후 — 현재 대기)**:
@@ -57,6 +58,7 @@ Updated: 2026-07-08
 - [ ] **B-2. 표 단위 엔티티 `source_tables`** (Issue 3·4) — table_id, 헤더 매트릭스(JSON), n_rows/cols, caption, confidence. 셀은 table_id FK. → 다층 헤더·차원 붕괴 방지(재무 연결/별도, 정원 정원/현원 구분).
 - [ ] **B-3. 결정적 `natural_key`** (Issue 5) — `(org_code, item_no, table_index, row_index, col_index, period_label)` + roster 반복행 순번. dedup·idempotent 재빌드.
 - [ ] **B-4. `normalized_value` 정밀도** (Issue 6, 낮음) — `raw_value`를 정본으로 문서화 + 손실 라운드트립 검증.
+- [ ] **B-5. 평면행 부모-컨텍스트 prefix (A-2에서 발견)** — col_year 단일 라벨열 표에서 통째 괄호인 자식행(`(남성)`/`(여성)`)을 직전 부모행으로 prefix. **현재 v2는 `row_header_path='(남성)'`만 저장** → 같은 `(남성)` 행이 여러 지표(1인당 평균 보수액·상시종업원수 등)에서 충돌·모호. v1은 Phase 2a에서 해결(`'1인당 평균 보수액 > (남성)'`)했으나 v2 파서에 미포팅. 검증: `C0001 20601` 골든이 MATCH 되어야 함. (spec §2 표 archetype "평면행 부모-컨텍스트")
 
 ### Phase C. 카테고리별 정확도 게이트 (재무 · 정원 먼저)
 

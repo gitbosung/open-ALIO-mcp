@@ -10,35 +10,35 @@ Updated: 2026-07-08
 
 **정확도 최우선**: MCP 값 == ALIO 원문 값. 전체 계획·순서·상태는
 **[docs/accuracy_improvement_plan.md](../docs/accuracy_improvement_plan.md)** 에서 추적한다 (이게 실행 트래커).
-다음 착수 지점: **Phase A-1/A-2**(측정 기반을 v2로 확장) + Open Question 2건(정원 항목번호 / 2026 Q1 기준점).
 
 ## 지금 상태
 
-- 배포: PyPI `open-alio-mcp==0.1.1` 사용 가능 (v1 데이터). `uvx open-alio-mcp` 로 실행.
-- v2/canonical 작업은 **아직 미배포(전환 중)** — PR #5. 배포는 정확도 게이트 통과 후(Plan Phase E).
-- main 최신: PR #4 머지됨 — `search_institutions(location=...)` + 별칭 대소문자 매칭.
+- 배포: PyPI `open-alio-mcp==0.1.1` 사용 가능 (v1 데이터). v2는 정확도 게이트 통과 후 배포(Plan Phase E).
+- **main에 v2 전체 병합됨** (PR #4·#5·#6 머지 완료). v2 코드·canonical·finance basis·계획서·핸드오프 체계 모두 main에 있음.
+- **A-2 완료**: `scripts/validate_golden_canonical.py` → 골든 **7/8 MATCH** (신보 3계정 자산총계 15,774,985 등 정확 일치).
 
-### 진행 중인 브랜치 / PR
+### 열린 PR / 브랜치
 
-- `codex/parser-v2-canonical-finance` → **PR #5 (draft)** "[codex] Add canonical parser v2 and finance basis metadata" (base: main)
-  - PR #4 내용을 이 브랜치에 병합 완료(`f4020f0`) + 병합 입력 검증 보강(`6471471`).
-- `chore/agent-handoff` → **PR #6** 프로세스·계획 문서(AGENTS.md / CLAUDE.md / 이 파일 / accuracy_improvement_plan.md).
-
-## 진행 중 작업 요약 (v2 / canonical)
-
-- ALIO HTML → canonical 셀 레코드 파서 `parse_alio_v2.py` (+ coverage 경고 3종) + SQLite store + MCP 도구 4종.
-- canonical 파생 metrics 후보 빌더 + `finance_context`(v2-only, 회계기준 context 보존).
-- finance 응답: 기본 대표값 + `basis`, 기준별은 `item_query` 요청 시만 (AGENTS.md §5 불변식).
-- disclosure coverage 도구(`get_disclosure_coverage`): 미공시 vs 비대상 구분.
+- `claude/accuracy-a2-golden-v2` → A-2 하네스 + 계획서 갱신 + 구 `.ai` 정리. main에 머지 대기.
 
 ## 다음 할 일
 
-> 상세·우선순위는 [accuracy_improvement_plan.md](../docs/accuracy_improvement_plan.md) 참조. 요약:
+> 상세·우선순위는 [accuracy_improvement_plan.md](../docs/accuracy_improvement_plan.md) 참조.
 
-1. **Plan Phase A** — 정확도 측정 기반을 v2로 확장 (골든 샘플·라이브 ALIO 대조를 v2 canonical에 연결). ← **다음 착수**
-2. Open Question 해소: 정원/현원 ALIO 항목번호 확정, 2026 Q1 기준점 확보 여부.
-3. (병행) PR #5 diff 리뷰 + `gh pr checks 5` 확인.
-4. PR #6 머지 후: PR #5의 구 `.ai/SESSION_STATE.md`, `.ai/NEXT_PROMPT.md` 삭제해 HANDOFF.md로 일원화.
+1. **B-5 파서 수정** — col_year 단일 라벨열 표의 자식행 `(남성)`에 부모행 prefix (v1 Phase 2a를 v2로 포팅). 검증: `C0001 20601` 골든이 MATCH 되도록. ← **다음 착수 유력**
+2. **A-3** — 골든 대조 하네스를 전 항목·5분류 태깅으로 확장.
+3. Open Question: 2026 Q1 기준점 확보 시 A-1/A-4(라이브 ALIO) 착수.
+
+## 로직 변경 시 재빌드 · 비교 (참고)
+
+```powershell
+# 골든 대조 (A-2)
+python scripts/build_canonical_store.py --orgs C0247,C0091,C0001,C0005 --items 31201,32211,31501,20601,31701 --out data/canonical/_golden_canonical.db
+python scripts/validate_golden_canonical.py --db data/canonical/_golden_canonical.db
+# 재무 v1/v2 비교
+python scripts/build_metrics_from_canonical.py --db data/canonical/_metrics_seed_canonical.db
+# 그다음 AGENTS.md §6 테스트 실행
+```
 
 ## 로직 변경 시 재빌드 · 비교 (참고)
 
