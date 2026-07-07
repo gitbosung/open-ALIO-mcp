@@ -19,7 +19,15 @@ git status -sb
 git log --oneline --decorate --graph -8
 ```
 
-그다음 **[.ai/HANDOFF.md](.ai/HANDOFF.md)** (현재 상태 · 다음 할 일)를 읽는다.
+**다른 기기 / 새 컴퓨터에서 시작할 때는** 먼저 최신을 받는다 (fetch만으로는 작업트리가 안 바뀐다):
+
+```
+git pull                              # 현재 브랜치를 원격 최신으로
+# 이어받을 브랜치가 따로 있으면:  git switch <브랜치> && git pull
+```
+
+그다음 **[.ai/HANDOFF.md](.ai/HANDOFF.md)** (현재 상태 · 다음 할 일)와
+정확도 작업 트래커 **[docs/accuracy_improvement_plan.md](docs/accuracy_improvement_plan.md)** 를 읽는다.
 열린 PR이 있으면 `gh pr view <번호>` 로 확인한다.
 
 ## 2. 브랜치 규칙

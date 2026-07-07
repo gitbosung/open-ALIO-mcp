@@ -4,19 +4,25 @@
 > 규칙 · 브랜치 · 핸드오프 절차는 [../AGENTS.md](../AGENTS.md) 참조.
 > 세션을 마칠 때 이 파일을 갱신한다: "지금 상태" · "다음 할 일"만 최신으로 유지하면 된다.
 
-Updated: 2026-07-06
+Updated: 2026-07-08
+
+## 최우선 방향
+
+**정확도 최우선**: MCP 값 == ALIO 원문 값. 전체 계획·순서·상태는
+**[docs/accuracy_improvement_plan.md](../docs/accuracy_improvement_plan.md)** 에서 추적한다 (이게 실행 트래커).
+다음 착수 지점: **Phase A-1/A-2**(측정 기반을 v2로 확장) + Open Question 2건(정원 항목번호 / 2026 Q1 기준점).
 
 ## 지금 상태
 
 - 배포: PyPI `open-alio-mcp==0.1.1` 사용 가능 (v1 데이터). `uvx open-alio-mcp` 로 실행.
-- v2/canonical 작업은 **아직 미배포(전환 중)** — 아래 PR #5에서 진행.
+- v2/canonical 작업은 **아직 미배포(전환 중)** — PR #5. 배포는 정확도 게이트 통과 후(Plan Phase E).
 - main 최신: PR #4 머지됨 — `search_institutions(location=...)` + 별칭 대소문자 매칭.
 
 ### 진행 중인 브랜치 / PR
 
 - `codex/parser-v2-canonical-finance` → **PR #5 (draft)** "[codex] Add canonical parser v2 and finance basis metadata" (base: main)
   - PR #4 내용을 이 브랜치에 병합 완료(`f4020f0`) + 병합 입력 검증 보강(`6471471`).
-- `chore/agent-handoff` → 에이전트 핸드오프 체계 정리(AGENTS.md / CLAUDE.md / 이 파일). ← 지금 이 작업.
+- `chore/agent-handoff` → **PR #6** 프로세스·계획 문서(AGENTS.md / CLAUDE.md / 이 파일 / accuracy_improvement_plan.md).
 
 ## 진행 중 작업 요약 (v2 / canonical)
 
@@ -27,11 +33,12 @@ Updated: 2026-07-06
 
 ## 다음 할 일
 
-1. PR #5 diff 리뷰 — 생성물이 섞이지 않았는지, 위험 지점 확인.
-2. `gh pr checks 5 --repo gitbosung/open-ALIO-mcp` 확인, 실패 시 로그 보고 수정.
-3. finance `basis` 필드 agent 친화성 검토 (`representative_context` / `has_other_contexts` / `status`).
-4. parser readiness 기준 구체화: `source_tables`, stable table IDs/header matrix, deterministic `natural_key`, `record_type` 신뢰도/모호성 처리.
-5. 핸드오프 체계(`chore/agent-handoff`) 머지 후: PR #5에 남아 있는 구 `.ai/SESSION_STATE.md`, `.ai/NEXT_PROMPT.md`는 삭제하고 이 HANDOFF.md로 일원화.
+> 상세·우선순위는 [accuracy_improvement_plan.md](../docs/accuracy_improvement_plan.md) 참조. 요약:
+
+1. **Plan Phase A** — 정확도 측정 기반을 v2로 확장 (골든 샘플·라이브 ALIO 대조를 v2 canonical에 연결). ← **다음 착수**
+2. Open Question 해소: 정원/현원 ALIO 항목번호 확정, 2026 Q1 기준점 확보 여부.
+3. (병행) PR #5 diff 리뷰 + `gh pr checks 5` 확인.
+4. PR #6 머지 후: PR #5의 구 `.ai/SESSION_STATE.md`, `.ai/NEXT_PROMPT.md` 삭제해 HANDOFF.md로 일원화.
 
 ## 로직 변경 시 재빌드 · 비교 (참고)
 
