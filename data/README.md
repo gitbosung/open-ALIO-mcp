@@ -12,6 +12,7 @@ MCP 서버가 읽는 **병합·정규화가 끝난 런타임 데이터**입니�
 | `institutions.json` | 기관 355개 공시 단위 (342 독립 지정 + 13 부설) — 기관코드·주무부처·설립목적 |
 | `metrics/` | 항목별 지표 JSON 11종 + `_index.json` |
 | `reference/disclosure_items.json` | ALIO 50개 공시항목 카탈로그 (정기/수시·공시주기·metric 매핑) |
+| `reference/disclosure_coverage.json` | 항목별 ALIO 공시 보유 기관 목록 (organlist 스냅샷, `build_disclosure_coverage.py`) |
 | `reference/related_laws.json` | 공공기관 핵심 법령·행정규칙 화이트리스트 |
 | `guidelines/` | 연도별 시달 지침 파싱 JSON + `_index.json` |
 | `handbook/` | 경영평가편람 파싱 JSON + `_index.json` |

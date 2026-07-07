@@ -203,8 +203,22 @@ METRIC_CATEGORIES = (
     "finance",
 )
 
+CANONICAL_RECORD_TYPES = (
+    "time_series",
+    "roster",
+    "attribute",
+    "text_rule",
+    "attachment",
+)
+
 TOOL_ARG_SPECS: dict[str, dict[str, ArgSpec]] = {
-    "search_institutions": {"query": _text(), "org_type": _text(50), "ministry": _text(80), "limit": _int(1, 100)},
+    "search_institutions": {
+        "query": _text(),
+        "org_type": _text(50),
+        "ministry": _text(80),
+        "location": _text(80),
+        "limit": _int(1, 100),
+    },
     "get_institution_profile": {"org_code": _org_code(required=True), "include_detail": ArgSpec("bool")},
     "list_disclosure_items": {
         "query": _text(),
@@ -215,6 +229,11 @@ TOOL_ARG_SPECS: dict[str, dict[str, ArgSpec]] = {
         "only_with_metric": ArgSpec("bool"),
         "limit": _int(1, 100),
     },
+    "get_disclosure_coverage": {
+        "org_code": _org_code(required=True),
+        "category": _choice("", *METRIC_CATEGORIES),
+        "item_no": _text(10),
+    },
     "list_metric_items": {"category": _choice(*METRIC_CATEGORIES), "item_query": _text(), "org_code": _org_code()},
     "get_institution_metrics": {
         "org_code": _org_code(required=True),
@@ -222,6 +241,27 @@ TOOL_ARG_SPECS: dict[str, dict[str, ArgSpec]] = {
         "item_query": _text(),
         "year_from": _year_optional(),
         "year_to": _year_optional(),
+    },
+    "get_canonical_summary": {"org_code": _org_code(), "item_no": _text(10)},
+    "search_canonical_records": {
+        "org_code": _org_code(),
+        "item_no": _text(10),
+        "record_type": _choice("", *CANONICAL_RECORD_TYPES),
+        "period_year": _year_optional(),
+        "metric_query": _text(),
+        "limit": _int(1, 200),
+    },
+    "get_canonical_attachments": {
+        "org_code": _org_code(),
+        "item_no": _text(10),
+        "period_year": _year_optional(),
+        "limit": _int(1, 200),
+    },
+    "search_canonical_text_rules": {
+        "org_code": _org_code(),
+        "item_no": _text(10),
+        "query": _text(),
+        "limit": _int(1, 200),
     },
     "get_institution_staff_summary": {"org_code": _org_code(), "query": _text(), "year_from": _year_optional(), "year_to": _year_optional()},
     "compare_institutions": {
